@@ -39,7 +39,7 @@ roboelectric = "4.16.1"
 testCoroutines = "1.11.0"
 coroutines = "1.11.0"
 mediaPipeGenerator = "0.10.26.1"
-protobuf = "4.26.1"
+protobuf = "4.36.2"
 serialization = "1.11.0"
 dokka = "2.2.0"
 
