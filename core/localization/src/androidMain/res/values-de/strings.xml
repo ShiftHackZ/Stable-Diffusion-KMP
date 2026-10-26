@@ -131,7 +131,7 @@
     <string name="hint_prompt">Prompt</string>
     <string name="hint_prompt_negative">Negativer Prompt</string>
     <string name="hint_zoom">Zoom: %1$sx</string>
-    <string name="hint_sampling_steps">Abtastschritte: %1$s</string>
+    <string name="hint_sampling_steps">Sampling-Schritte: %1$s</string>
     <string name="hint_batch">Stapel: %1$s</string>
     <string name="hint_batch_tag">Stapel</string>
     <string name="hint_multiple_models">Mehrere Modelle</string>
@@ -167,7 +167,7 @@
     <string name="provider_tag_multiple_models">Mehrere Modelle</string>
     <string name="provider_tag_offline">Offline</string>
     <string name="hint_cfg_scale">CFG-Skala: %1$s</string>
-    <string name="hint_sampler">Abtastverfahren</string>
+    <string name="hint_sampler">Sampler</string>
     <string name="hint_scheduler">Scheduler</string>
     <string name="hint_forge_modules">Forge-Module</string>
     <string name="hint_style_preset">Stilvoreinstellung</string>
@@ -224,7 +224,7 @@
     <string name="hint_args_swarm_ui_warning" tools:ignore="TypographyDashes,Typos">Stelle vor dem Verbinden sicher, dass:\n• deine Firewall den Port 7801 nicht blockiert\n• dein Smartphone mit demselben WLAN wie dein PC verbunden ist</string>
 
     <string name="hint_server_horde_title">Mit der Horde-AI-Cloud verbinden</string>
-    <string name="hint_server_horde_sub_title">Horde AI ist ein gemeinschaftlich betriebener, verteilter Verbund aus Mitarbeitern für die Bild- und Textgenerierung.</string>
+    <string name="hint_server_horde_sub_title">Horde AI ist ein gemeinschaftlich betriebener, verteilter Verbund von Rechenknoten zur Bild- und Textgenerierung.</string>
     <string name="hint_server_horde_usage">Du kannst den standardmäßigen API-Schlüssel verwenden, um dich anonym zu verbinden. Bei vielen gleichzeitigen Anfragen haben anonyme Konten jedoch die niedrigste Priorität.</string>
     <string name="hint_server_horde_api_key">API-Schlüssel</string>
     <string name="hint_server_horde_use_default_api_key">Standardmäßigen API-Schlüssel verwenden</string>
@@ -356,7 +356,7 @@
     <string name="settings_item_network_usage">Netzwerkverbrauch</string>
 
     <string name="settings_usage_storage_title">Speicherverbrauch</string>
-    <string name="settings_usage_storage_subtitle">%2$s belegt %1$s.</string>
+    <string name="settings_usage_storage_subtitle">Belegter Speicher: %1$s (%2$s).</string>
     <string name="settings_usage_storage_subtitle_empty">Es gibt noch keine App-Daten zum Löschen.</string>
     <string name="settings_usage_network_title">Netzwerkverbrauch</string>
     <string name="settings_usage_network_subtitle">Seit dem letzten Zurücksetzen wurden %1$s übertragen.</string>
