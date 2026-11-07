@@ -10,23 +10,28 @@
       docs: "docs/",
       donate: "donate.html",
       privacy: "privacy.html",
-      github: "https://github.com/ShiftHackZ/Stable-Diffusion-Android",
+      github: "https://github.com/ShiftHackZ/SDAI-KMP",
       company: "https://moroz.cc",
       telegram: "https://t.me/sdai_app",
       discord: "https://discord.gg/jzdR9m8Ves",
       fourPda: "https://4pda.to/forum/index.php?showtopic=1082639",
       nightly: "nightly.html",
       testFlight: "testflight.html",
-      googlePlay: "https://play.google.com/store/apps/details?id=com.shifthackz.aisdv1.app",
+      googlePlay:
+        "https://play.google.com/store/apps/details?id=com.shifthackz.aisdv1.app",
       fdroid: "https://f-droid.org/packages/com.shifthackz.aisdv1.app.foss",
-      appStore: "https://apps.apple.com/us/app/sdai-ai-image-generator/id6778314183"
-    }
+      appStore:
+        "https://apps.apple.com/us/app/sdai-ai-image-generator/id6778314183",
+    },
   };
 
   const icons = {
-    telegram: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.86 4.58 18.62 19.84c-.24 1.08-.88 1.34-1.78.83l-4.92-3.63-2.37 2.28c-.26.26-.48.48-.98.48l.35-5.02 9.14-8.26c.4-.35-.09-.55-.61-.2L6.15 13.43l-4.87-1.52c-1.06-.33-1.08-1.06.22-1.57L20.55 3c.88-.33 1.65.2 1.31 1.58Z"/></svg>',
-    discord: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.54 5.26A18.1 18.1 0 0 0 15.04 3.86c-.19.34-.42.8-.57 1.16a16.7 16.7 0 0 0-4.99 0 12.3 12.3 0 0 0-.58-1.16 18 18 0 0 0-4.5 1.4C1.55 9.49.78 13.61 1.16 17.68a18.3 18.3 0 0 0 5.51 2.79c.44-.6.84-1.24 1.17-1.91-.64-.24-1.25-.54-1.82-.89.15-.11.3-.23.44-.35a12.96 12.96 0 0 0 11.08 0l.44.35c-.58.35-1.19.65-1.83.89.34.67.73 1.31 1.17 1.91a18.2 18.2 0 0 0 5.52-2.79c.46-4.72-.78-8.81-3.3-12.42ZM8.68 15.18c-1.07 0-1.95-.99-1.95-2.2 0-1.2.86-2.19 1.95-2.19 1.08 0 1.96.99 1.95 2.19 0 1.21-.87 2.2-1.95 2.2Zm6.64 0c-1.07 0-1.95-.99-1.95-2.2 0-1.2.86-2.19 1.95-2.19 1.09 0 1.96.99 1.95 2.19 0 1.21-.86 2.2-1.95 2.2Z"/></svg>',
-    github: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.25c0 4.52 2.87 8.36 6.84 9.72.5.09.68-.22.68-.49 0-.24-.01-1.05-.01-1.91-2.78.62-3.37-1.22-3.37-1.22-.45-1.19-1.11-1.51-1.11-1.51-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.85.09-.66.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.37 9.37 0 0 1 5.01 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.64 1.03 2.76 0 3.95-2.34 4.82-4.57 5.08.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.59.69.49A10.11 10.11 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>'
+    telegram:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.86 4.58 18.62 19.84c-.24 1.08-.88 1.34-1.78.83l-4.92-3.63-2.37 2.28c-.26.26-.48.48-.98.48l.35-5.02 9.14-8.26c.4-.35-.09-.55-.61-.2L6.15 13.43l-4.87-1.52c-1.06-.33-1.08-1.06.22-1.57L20.55 3c.88-.33 1.65.2 1.31 1.58Z"/></svg>',
+    discord:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.54 5.26A18.1 18.1 0 0 0 15.04 3.86c-.19.34-.42.8-.57 1.16a16.7 16.7 0 0 0-4.99 0 12.3 12.3 0 0 0-.58-1.16 18 18 0 0 0-4.5 1.4C1.55 9.49.78 13.61 1.16 17.68a18.3 18.3 0 0 0 5.51 2.79c.44-.6.84-1.24 1.17-1.91-.64-.24-1.25-.54-1.82-.89.15-.11.3-.23.44-.35a12.96 12.96 0 0 0 11.08 0l.44.35c-.58.35-1.19.65-1.83.89.34.67.73 1.31 1.17 1.91a18.2 18.2 0 0 0 5.52-2.79c.46-4.72-.78-8.81-3.3-12.42ZM8.68 15.18c-1.07 0-1.95-.99-1.95-2.2 0-1.2.86-2.19 1.95-2.19 1.08 0 1.96.99 1.95 2.19 0 1.21-.87 2.2-1.95 2.2Zm6.64 0c-1.07 0-1.95-.99-1.95-2.2 0-1.2.86-2.19 1.95-2.19 1.09 0 1.96.99 1.95 2.19 0 1.21-.86 2.2-1.95 2.2Z"/></svg>',
+    github:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.25c0 4.52 2.87 8.36 6.84 9.72.5.09.68-.22.68-.49 0-.24-.01-1.05-.01-1.91-2.78.62-3.37-1.22-3.37-1.22-.45-1.19-1.11-1.51-1.11-1.51-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.85.09-.66.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.37 9.37 0 0 1 5.01 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.64 1.03 2.76 0 3.95-2.34 4.82-4.57 5.08.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.59.69.49A10.11 10.11 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>',
   };
 
   const external = 'target="_blank" rel="noopener noreferrer"';
@@ -35,13 +40,13 @@
     home: {
       label: "Get the app",
       title: "Start generating with SDAI today.",
-      text: "Install from your preferred mobile app store or distribution channel and join the community for updates and help."
+      text: "Install from your preferred mobile app store or distribution channel and join the community for updates and help.",
     },
     stable: {
       label: "Latest stable release",
       title: "Get the stable build for everyday use.",
-      text: "Install the current Google Play, F-Droid, or App Store release when you want the safest build. Keep beta channels for testing upcoming changes."
-    }
+      text: "Install the current Google Play, F-Droid, or App Store release when you want the safest build. Keep beta channels for testing upcoming changes.",
+    },
   };
 
   function setActiveNav() {
@@ -175,7 +180,10 @@
       const nextState = toggle.getAttribute("aria-expanded") !== "true";
       menu.classList.toggle("is-open", nextState);
       toggle.setAttribute("aria-expanded", String(nextState));
-      toggle.setAttribute("aria-label", nextState ? "Close navigation" : "Open navigation");
+      toggle.setAttribute(
+        "aria-label",
+        nextState ? "Close navigation" : "Open navigation",
+      );
     });
 
     menu.querySelectorAll("a").forEach((link) => {
@@ -201,7 +209,9 @@
 
   function renderStableReleaseCtas() {
     document.querySelectorAll("[data-stable-release-cta]").forEach((mount) => {
-      const copy = stableReleaseCta[mount.dataset.stableReleaseCta] || stableReleaseCta.home;
+      const copy =
+        stableReleaseCta[mount.dataset.stableReleaseCta] ||
+        stableReleaseCta.home;
       mount.outerHTML = `
         <section class="section final-cta">
           <div class="shell cta-grid">
@@ -233,7 +243,8 @@
 
     if (!track || slides.length < 2 || !progress) return;
 
-    const isPointerInside = () => slider.matches(":hover") || slider.contains(document.activeElement);
+    const isPointerInside = () =>
+      slider.matches(":hover") || slider.contains(document.activeElement);
 
     const resetProgress = () => {
       progress.style.transition = "none";
@@ -346,8 +357,10 @@
       categoryLabel,
       item.question,
       ...(item.answer || []),
-      ...(item.tags || [])
-    ].join(" ").toLowerCase();
+      ...(item.tags || []),
+    ]
+      .join(" ")
+      .toLowerCase();
     return text.includes(query);
   }
 
@@ -355,11 +368,11 @@
     const items = (data.categories || []).flatMap((category) => {
       return (category.items || []).map((item) => ({
         "@type": "Question",
-        "name": item.question,
-        "acceptedAnswer": {
+        name: item.question,
+        acceptedAnswer: {
           "@type": "Answer",
-          "text": (item.answer || []).join(" ")
-        }
+          text: (item.answer || []).join(" "),
+        },
       }));
     });
 
@@ -370,7 +383,7 @@
     script.textContent = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "mainEntity": items
+      mainEntity: items,
     });
     document.head.append(script);
   }
@@ -388,15 +401,20 @@
 
     try {
       const response = await fetch("faq.json", { cache: "no-store" });
-      if (!response.ok) throw new Error(`FAQ request failed: ${response.status}`);
+      if (!response.ok)
+        throw new Error(`FAQ request failed: ${response.status}`);
 
       const data = await response.json();
       const categories = Array.isArray(data.categories) ? data.categories : [];
-      const total = categories.reduce((sum, category) => sum + (category.items || []).length, 0);
+      const total = categories.reduce(
+        (sum, category) => sum + (category.items || []).length,
+        0,
+      );
       let activeCategory = "all";
       let query = "";
 
-      if (updated) updated.textContent = formatSupporterDate(data.updated || "");
+      if (updated)
+        updated.textContent = formatSupporterDate(data.updated || "");
       if (count) count.textContent = String(total);
 
       const renderTabs = () => {
@@ -405,7 +423,10 @@
         const allButton = document.createElement("button");
         allButton.type = "button";
         allButton.textContent = "All";
-        allButton.setAttribute("aria-pressed", String(activeCategory === "all"));
+        allButton.setAttribute(
+          "aria-pressed",
+          String(activeCategory === "all"),
+        );
         allButton.addEventListener("click", () => {
           activeCategory = "all";
           renderTabs();
@@ -417,7 +438,10 @@
           const button = document.createElement("button");
           button.type = "button";
           button.textContent = category.label;
-          button.setAttribute("aria-pressed", String(activeCategory === category.id));
+          button.setAttribute(
+            "aria-pressed",
+            String(activeCategory === category.id),
+          );
           button.addEventListener("click", () => {
             activeCategory = category.id;
             renderTabs();
@@ -429,7 +453,8 @@
 
       const renderFaq = () => {
         const matches = categories.flatMap((category) => {
-          if (activeCategory !== "all" && category.id !== activeCategory) return [];
+          if (activeCategory !== "all" && category.id !== activeCategory)
+            return [];
           return (category.items || [])
             .filter((item) => faqItemMatches(item, category.label, query))
             .map((item) => ({ item, category }));
@@ -465,7 +490,8 @@
     const parts = value.split("-");
     if (parts.length !== 3) return value;
     const [year, month, day] = parts;
-    if (year.length !== 4 || month.length !== 2 || day.length !== 2) return value;
+    if (year.length !== 4 || month.length !== 2 || day.length !== 2)
+      return value;
     return `${day}.${month}.${year}`;
   }
 
@@ -478,7 +504,11 @@
 
     const avatar = document.createElement("span");
     avatar.className = "supporter-avatar";
-    avatar.textContent = String(supporter.name || "?").trim().charAt(0).toUpperCase() || "?";
+    avatar.textContent =
+      String(supporter.name || "?")
+        .trim()
+        .charAt(0)
+        .toUpperCase() || "?";
 
     const name = document.createElement("strong");
     name.className = "supporter-name";
@@ -512,18 +542,23 @@
 
     try {
       const response = await fetch("supporters.json", { cache: "no-store" });
-      if (!response.ok) throw new Error(`Supporters request failed: ${response.status}`);
+      if (!response.ok)
+        throw new Error(`Supporters request failed: ${response.status}`);
 
       const rawSupporters = await response.json();
       const supporters = rawSupporters
         .filter((item) => item && item.name && item.date)
         .sort((left, right) => {
-          const byDate = new Date(right.date).getTime() - new Date(left.date).getTime();
+          const byDate =
+            new Date(right.date).getTime() - new Date(left.date).getTime();
           return byDate || Number(right.id || 0) - Number(left.id || 0);
         });
 
       if (count) count.textContent = String(supporters.length);
-      if (latest) latest.textContent = supporters[0] ? formatSupporterDate(supporters[0].date) : "None yet";
+      if (latest)
+        latest.textContent = supporters[0]
+          ? formatSupporterDate(supporters[0].date)
+          : "None yet";
 
       list.replaceChildren();
       supporters.forEach((supporter) => {
@@ -531,7 +566,9 @@
       });
 
       if (status) {
-        status.textContent = supporters.length ? "" : "No supporters are listed yet.";
+        status.textContent = supporters.length
+          ? ""
+          : "No supporters are listed yet.";
         status.classList.toggle("is-hidden", supporters.length > 0);
       }
     } catch (error) {

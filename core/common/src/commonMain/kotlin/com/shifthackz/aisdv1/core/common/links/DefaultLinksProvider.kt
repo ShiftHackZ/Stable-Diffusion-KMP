@@ -73,17 +73,17 @@ object DefaultLinksProvider : LinksProvider {
      */
     override val developerWebsiteUrl: String = "https://moroz.cc"
     /**
-     * Exposes the `gitHubSourceUrl` value used by the SDAI core common layer.
+     * Canonical repository URL opened by the app's source-code links.
      *
      * @author Dmitriy Moroz
      */
-    override val gitHubSourceUrl: String = "https://github.com/ShiftHackZ/Stable-Diffusion-Android"
+    override val gitHubSourceUrl: String = "https://github.com/ShiftHackZ/SDAI-KMP"
     /**
-     * Exposes the `licenseUrl` value used by the SDAI core common layer.
+     * License page in the canonical repository, opened by the app's license links.
      *
      * @author Dmitriy Moroz
      */
-    override val licenseUrl: String = "https://github.com/ShiftHackZ/Stable-Diffusion-Android/blob/master/LICENSE"
+    override val licenseUrl: String = "https://github.com/ShiftHackZ/SDAI-KMP/blob/master/LICENSE"
     /**
      * Exposes the `setupInstructionsUrl` value used by the SDAI core common layer.
      *
