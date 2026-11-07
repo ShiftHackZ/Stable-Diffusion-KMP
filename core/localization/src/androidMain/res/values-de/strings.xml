@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="tag_steps" translatable="false">Steps: %1$s</string>
+    <string name="tag_cfg" translatable="false">CFG: %1$s</string>
+    <string name="tag_denoising" translatable="false">Denoising: %1$s</string>
+
+    <string name="empty">Leer</string>
+    <string name="language">Deutsch</string>
+    <string name="locale">de</string>
+    <string name="ok">OK</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="retry">Erneut versuchen</string>
+    <string name="delete">Löschen</string>
+    <string name="download">Herunterladen</string>
+    <string name="width">Breite</string>
+    <string name="height">Höhe</string>
+    <string name="browse">Durchsuchen</string>
+    <string name="apply">Anwenden</string>
+    <string name="close">Schließen</string>
+    <string name="next">Weiter</string>
+    <string name="success">✅ Erfolg</string>
+    <string name="failure">❌ Fehlgeschlagen</string>
+
+    <string name="two">Zwei</string>
+    <string name="three">Drei</string>
+    <string name="four">Vier</string>
+    <string name="five">Fünf</string>
+
+    <string name="version">Version %1$s</string>
+    <string name="settings_footer_developed_by">Entwickelt von Moroz Inc.</string>
+
+    <string name="splash_status_initializing">Wird initialisiert …</string>
+    <string name="splash_status_fetching">Daten werden abgerufen …</string>
+    <string name="splash_status_launching">Anwendung wird gestartet!</string>
+
+    <string name="local_no_img2img_support_title">Nicht verfügbar</string>
+    <string name="local_no_img2img_support_sub_title">Der Bild-zu-Bild-Modus ist nicht verfügbar, wenn du die lokalen Ressourcen deines Smartphones zur Bilderzeugung verwendest.</string>
+    <string name="local_no_img2img_support_sub_title_2">Wechsle in den Konfigurationseinstellungen zur serverbasierten Generierung, um den Bild-zu-Bild-Modus zu verwenden.</string>
+
+    <string name="openai_no_img2img_support_sub_title">Die OpenAI-Bilderzeugung in dieser App unterstützt den Bild-zu-Bild-Modus nicht.</string>
+    <string name="openai_no_img2img_support_sub_title_2">Wechsle in den Konfigurationseinstellungen zu einem serverbasierten Anbieter, um den Bild-zu-Bild-Modus zu verwenden.</string>
+
+    <string name="action_generate">Generieren</string>
+    <string name="action_export">Exportieren</string>
+    <string name="action_delete_image">Bild löschen</string>
+    <string name="action_select">Auswählen</string>
+    <string name="action_connect">Verbinden</string>
+    <string name="action_setup">Einrichten</string>
+    <string name="action_share_image">Bild teilen</string>
+    <string name="action_share_prompt">Teilen</string>
+    <string name="action_send_to_txt2img">In txt2img verwenden</string>
+    <string name="action_send_to_img2img">In img2img verwenden</string>
+    <string name="action_close">Schließen</string>
+    <string name="action_save">Speichern</string>
+    <string name="action_update">Aktualisieren</string>
+    <string name="action_skip">Überspringen</string>
+    <string name="action_undo">Rückgängig</string>
+    <string name="action_clear">Leeren</string>
+    <string name="action_draw">Zeichnen</string>
+    <string name="action_options_show">Erweiterte Optionen anzeigen</string>
+    <string name="action_options_hide">Erweiterte Optionen ausblenden</string>
+    <string name="action_image_picker_gallery">Foto auswählen</string>
+    <string name="action_image_picker_camera">Neues Foto aufnehmen</string>
+    <string name="action_image_picker_random">Zufälliges Bild</string>
+    <string name="action_change_configuration">Konfiguration ändern</string>
+    <string name="action_back">Zurück</string>
+    <string name="action_menu">Menü</string>
+    <string name="action_copy">Kopieren</string>
+    <string name="action_refresh">Aktualisieren</string>
+    <string name="action_install_instructions">Installieren</string>
+    <string name="action_swap_dimensions">Breite und Höhe tauschen</string>
+    <string name="action_aspect_ratio">Seitenverhältnis</string>
+    <string name="action_scroll_to_top">Nach oben scrollen</string>
+    <string name="action_scroll_to_bottom">Nach unten scrollen</string>
+    <string name="action_send">Senden</string>
+    <string name="action_done">Fertig</string>
+    <string name="action_reset">Zurücksetzen</string>
+    <string name="action_show_password">Passwort anzeigen</string>
+    <string name="action_hide_password">Passwort ausblenden</string>
+    <string name="message_image_saved">Bild gespeichert</string>
+    <string name="message_share_sheet_opened">Teilen-Menü geöffnet</string>
+    <string name="message_image_saving">Wird gespeichert</string>
+    <string name="message_image_sharing">Wird geteilt</string>
+    <string name="message_image_data_received">Bilddaten empfangen</string>
+    <string name="message_image_unavailable">Bild nicht verfügbar</string>
+    <string name="title_generation_results">Ergebnisse</string>
+    <string name="title_provider">Anbieter</string>
+    <string name="title_lora_item">LoRA %1$s</string>
+    <string name="label_alias">Alias: %1$s</string>
+    <string name="generation_result_meta">%1$sx%2$s | %3$s Schritte</string>
+    <string name="history_result_meta">%1$sx%2$s | %3$s Schritte | CFG %4$s</string>
+    <string name="error_image_picking_unavailable">Die Bildauswahl ist auf dieser Plattform nicht verfügbar.</string>
+    <string name="error_image_saving_unavailable">Das Speichern generierter Bilder ist auf dieser Plattform nicht verfügbar.</string>
+    <string name="error_image_sharing_unavailable">Das Teilen generierter Bilder ist auf dieser Plattform nicht verfügbar.</string>
+    <string name="error_unable_to_save_image">Bild konnte nicht gespeichert werden.</string>
+    <string name="error_unable_to_share_image">Bild konnte nicht geteilt werden.</string>
+    <string name="error_img2img_openai_unsupported">OpenAI unterstützt den Bild-zu-Bild-Modus in dieser App nicht.</string>
+    <string name="error_img2img_local_android_only">Der lokale Bild-zu-Bild-Modus ist auf diesem Gerät nicht verfügbar.</string>
+    <string name="error_img2img_select_input">Wähle zuerst ein Eingabebild aus.</string>
+    <string name="error_generation_out_of_memory">Dem Server ist der GPU-Speicher ausgegangen. Verringere die Bildgröße, Hires-Skalierung oder -Schritte oder deaktiviere Hires.Fix.</string>
+    <string name="error_source_android_only">Dieser Anbieter ist auf diesem Gerät nicht verfügbar.</string>
+    <string name="error_source_img2img_unsupported">Dieser Anbieter unterstützt hier keinen Bild-zu-Bild-Modus.</string>
+    <string name="setup_localhost_url_title">Localhost-URL</string>
+    <string name="setup_localhost_url_text">Diese Adresse verweist auf das aktuelle Gerät. Fahre nur fort, wenn der Server von dieser Plattform aus erreichbar ist.</string>
+    <string name="srv_step_1">Anbieter auswählen</string>
+    <string name="srv_step_2">Konfigurieren</string>
+
+    <string name="srv_type_own" translatable="false">Automatic 1111</string>
+    <string name="srv_type_own_short" translatable="false">A1111</string>
+    <string name="srv_type_horde" translatable="false">Horde AI Cloud</string>
+    <string name="srv_type_horde_short" translatable="false">Horde</string>
+    <string name="srv_type_local" translatable="false">Local Diffusion Microsoft ONNX (Beta)</string>
+    <string name="srv_type_local_short" translatable="false">ONNX</string>
+    <string name="srv_type_media_pipe" translatable="false">Local Diffusion Google AI MediaPipe (Beta)</string>
+    <string name="srv_type_media_pipe_short" translatable="false">MediaPipe</string>
+    <string name="srv_type_sdxl" translatable="false">Local Diffusion stable-diffusion.cpp SDXL (Experimental)</string>
+    <string name="srv_type_sdxl_short" translatable="false">SDXL</string>
+    <string name="srv_type_bonsai" translatable="false">Silicon Diffusion PrismML Bonsai</string>
+    <string name="srv_type_bonsai_android" translatable="false">Local Diffusion PrismML Bonsai</string>
+    <string name="srv_type_bonsai_short" translatable="false">Bonsai</string>
+    <string name="srv_type_hugging_face" translatable="false">Hugging Face Inference</string>
+    <string name="srv_type_hugging_face_short" translatable="false">HuggingFace</string>
+    <string name="srv_type_open_ai" translatable="false">OpenAI</string>
+    <string name="srv_type_stability_ai" translatable="false">Stability AI</string>
+    <string name="srv_type_fal_ai" translatable="false">Fal.ai</string>
+    <string name="srv_type_arli_ai" translatable="false">ArliAI</string>
+    <string name="srv_type_swarm_ui" translatable="false">Swarm UI</string>
+
+    <string name="hint_prompt">Prompt</string>
+    <string name="hint_prompt_negative">Negativer Prompt</string>
+    <string name="hint_zoom">Zoom: %1$sx</string>
+    <string name="hint_sampling_steps">Sampling-Schritte: %1$s</string>
+    <string name="hint_batch">Stapel: %1$s</string>
+    <string name="hint_batch_tag">Stapel</string>
+    <string name="hint_multiple_models">Mehrere Modelle</string>
+    <string name="hint_offline_generation">Offline-Generierung</string>
+    <string name="hint_own_server">Eigener Server</string>
+    <string name="provider_search_hint">Anbieter suchen</string>
+    <string name="provider_filter_type_all">Alle</string>
+    <string name="provider_filter_type_self_hosted">Selbst gehostet</string>
+    <string name="provider_filter_type_cloud">Cloud</string>
+    <string name="provider_filter_type_local">Lokal</string>
+    <string name="provider_filter_readiness">Reifegrad</string>
+    <string name="provider_filter_tags">Tags</string>
+    <string name="provider_no_results">Keine Anbieter entsprechen diesen Filtern.</string>
+    <string name="provider_options_title">Anbieteroptionen</string>
+    <string name="provider_action_filters">Filter</string>
+    <string name="provider_action_sort">Sortieren</string>
+    <string name="provider_sort_title">Sortierung</string>
+    <string name="provider_sort_default">Standard</string>
+    <string name="provider_sort_recent">Zuletzt aktualisiert</string>
+    <string name="provider_sort_oldest">Am längsten nicht aktualisiert</string>
+    <string name="provider_readiness_experimental">Experimentell</string>
+    <string name="provider_readiness_alpha">Alpha</string>
+    <string name="provider_readiness_beta">Beta</string>
+    <string name="provider_readiness_stable">Stabil</string>
+    <string name="provider_version">%1$s</string>
+    <string name="provider_tag_text_to_image">Text zu Bild</string>
+    <string name="provider_tag_image_to_image">Bild zu Bild</string>
+    <string name="provider_tag_own_server">Eigener Server</string>
+    <string name="provider_tag_lora">LoRA</string>
+    <string name="provider_tag_textual_inversion">Textuelle Inversion</string>
+    <string name="provider_tag_hypernetworks">Hypernetzwerke</string>
+    <string name="provider_tag_batch">Stapel</string>
+    <string name="provider_tag_multiple_models">Mehrere Modelle</string>
+    <string name="provider_tag_offline">Offline</string>
+    <string name="hint_cfg_scale">CFG-Skala: %1$s</string>
+    <string name="hint_sampler">Sampler</string>
+    <string name="hint_scheduler">Scheduler</string>
+    <string name="hint_forge_modules">Forge-Module</string>
+    <string name="hint_style_preset">Stilvoreinstellung</string>
+    <string name="hint_clip_guidance_preset">CLIP-Steuerungsvoreinstellung</string>
+    <string name="hint_restore_faces">Gesichter wiederherstellen</string>
+    <string name="hint_hires_enabled">Hires-Fix</string>
+    <string name="hint_hires_upscaler">Hires-Upscaler</string>
+    <string name="hint_hires_scale">Hires-Skalierung: %1$s</string>
+    <string name="hint_hires_steps">Hires-Schritte: %1$s</string>
+    <string name="hint_hires_denoising">Hires-Entrauschung: %1$s</string>
+    <string name="hint_adetailer_enabled">ADetailer</string>
+    <string name="hint_adetailer_model">ADetailer-Modell</string>
+    <string name="hint_adetailer_confidence">ADetailer-Konfidenz: %1$s</string>
+    <string name="hint_adetailer_denoising">ADetailer-Entrauschung: %1$s</string>
+    <string name="hint_adetailer_not_installed">ADetailer ist nicht installiert</string>
+    <string name="hint_seed">Seed</string>
+    <string name="hint_sub_seed">Variations-Seed</string>
+    <string name="hint_nsfw">NSFW zulassen</string>
+    <string name="hint_sub_seed_strength">Variationsstärke: %1$s</string>
+    <string name="hint_denoising_strength">Entrauschungsstärke: %1$s</string>
+    <string name="hint_server_url">Server-URL</string>
+    <string name="hint_sd_model">SD-Modell</string>
+    <string name="hint_login">Anmelden</string>
+    <string name="hint_password">Passwort</string>
+    <string name="hint_model_open_ai">OpenAI-Modell</string>
+    <string name="hint_image_size">Bildgröße</string>
+    <string name="hint_fal_ai_endpoint">Fal.ai-Endpunkt</string>
+    <string name="hint_fal_ai_acceleration">Beschleunigung</string>
+    <string name="hint_sdxl_backend">Laufzeit-Backend</string>
+    <string name="hint_bonsai_backend">Laufzeit-Backend</string>
+    <string name="hint_fal_ai_sync_mode">Synchronisationsmodus</string>
+    <string name="title_input_image">Eingabebild</string>
+    <string name="hint_quality">Qualität</string>
+    <string name="hint_style">Stil</string>
+    <string name="hint_tag">Tag</string>
+    <string name="hint_hypernet" translatable="false">Nypernetwork</string>
+    <string name="hint_value">Wert</string>
+    <string name="hint_mask_blur">Maskenweichzeichnung: %1$s</string>
+    <string name="hint_only_masked_padding">Rand nur für Maske: %1$s px</string>
+    <string name="hint_mask_mode">Maskenmodus</string>
+    <string name="hint_mask_content">Maskeninhalt</string>
+    <string name="hint_in_paint_area">Inpainting-Bereich</string>
+    <string name="hint_autodetect">Automatisch erkennen</string>
+
+    <string name="auth_title">Autorisierung</string>
+    <string name="auth_anonymous">Anonym</string>
+    <string name="auth_http_basic">HTTP Basic</string>
+
+    <string name="hint_server_setup_title">Gib die URL deiner Stable Diffusion WebUI an</string>
+    <string name="hint_server_setup_sub_title">Eine mit der Gradio-Bibliothek implementierte Weboberfläche für Stable Diffusion.</string>
+    <string name="hint_valid_urls">Beispiele für Server-URLs:\n• http://192.168.0.2:%1$s\n• http://deinedomain.de:%1$s\n• https://deinedomain.de</string>
+    <string name="hint_demo_mode">In diesem Modus kannst du das Verhalten der App testen, auch wenn du keinen Stable-Diffusion-WebUI-Server hast.\n\nIm Demomodus ignoriert die App deinen Prompt, verwendet keinen KI-Server und gibt einige Beispielbilder zurück.</string>
+    <string name="hint_args_warning" tools:ignore="TypographyDashes,Typos">Stelle vor dem Verbinden sicher, dass:\n• die AUTOMATIC1111 WebUI mit den Optionen --api --listen läuft\n• deine Firewall den Port 7860 nicht blockiert\n• dein Smartphone mit demselben WLAN wie dein PC verbunden ist</string>
+    <string name="hint_args_swarm_ui_warning" tools:ignore="TypographyDashes,Typos">Stelle vor dem Verbinden sicher, dass:\n• deine Firewall den Port 7801 nicht blockiert\n• dein Smartphone mit demselben WLAN wie dein PC verbunden ist</string>
+
+    <string name="hint_server_horde_title">Mit der Horde-AI-Cloud verbinden</string>
+    <string name="hint_server_horde_sub_title">Horde AI ist ein gemeinschaftlich betriebener, verteilter Verbund von Rechenknoten zur Bild- und Textgenerierung.</string>
+    <string name="hint_server_horde_usage">Du kannst den standardmäßigen API-Schlüssel verwenden, um dich anonym zu verbinden. Bei vielen gleichzeitigen Anfragen haben anonyme Konten jedoch die niedrigste Priorität.</string>
+    <string name="hint_server_horde_api_key">API-Schlüssel</string>
+    <string name="hint_server_horde_use_default_api_key">Standardmäßigen API-Schlüssel verwenden</string>
+    <string name="hint_server_horde_about">Über Horde AI</string>
+    <string name="hint_server_horde_get_api_key">API-Schlüssel anfordern</string>
+
+    <string name="hint_hugging_face_title">Mit Hugging Face verbinden</string>
+    <string name="hint_hugging_face_sub_title">Die Hugging-Face-Inferenz-Cloud ermöglicht es, öffentlich zugängliche oder eigene private Machine-Learning-Modelle kostenlos zu testen und auszuwerten.</string>
+    <string name="hint_hugging_face_about">Über Hugging Face</string>
+    <string name="hint_hugging_face_model">Hugging-Face-Modell</string>
+
+    <string name="hint_open_ai_title">Mit OpenAI verbinden</string>
+    <string name="hint_open_ai_sub_title">Der OpenAI-Dienst ermöglicht die Bilderzeugung mit GPT-Image-Modellen.</string>
+    <string name="hint_open_ai_about">Über OpenAI</string>
+
+    <string name="hint_fal_ai_title">Mit Fal.ai verbinden</string>
+    <string name="hint_fal_ai_sub_title">Fal.ai bietet gehostete APIs für Bilderzeugungsmodelle mit warteschlangenbasierter Inferenz.</string>
+    <string name="hint_fal_ai_about">Fal.ai-API-Schlüssel</string>
+
+    <string name="hint_arli_ai_title">Mit ArliAI verbinden</string>
+    <string name="hint_arli_ai_sub_title">ArliAI bietet SDNext-kompatible Cloud-APIs zur Bilderzeugung.</string>
+    <string name="hint_arli_ai_about">ArliAI-API-Dokumentation</string>
+    <string name="hint_arli_ai_model">ArliAI-Modell-Checkpoint</string>
+
+    <string name="hint_stability_ai_title">Mit Stability AI verbinden</string>
+    <string name="hint_stability_ai_sub_title">Stability AI ist der von DreamStudio angebotene Dienst zur Bilderzeugung.</string>
+    <string name="hint_stability_ai_about">Über Stability AI</string>
+    <string name="hint_stability_ai_engine">Stability-AI-Engine</string>
+
+    <string name="hint_swarm_ui_title">Gib die URL deiner Swarm UI an</string>
+    <string name="hint_swarm_ui_sub_title">Eine modulare Weboberfläche für Stable Diffusion, die Werkzeuge leicht zugänglich macht und auf hohe Leistung sowie Erweiterbarkeit ausgelegt ist.</string>
+
+    <string name="hint_local_diffusion_title" translatable="false">Local Diffusion Microsoft ONNX</string>
+    <string name="hint_local_diffusion_sub_title">Diese Konfiguration verwendet die Microsoft-ONNX-Runtime und ermöglicht Stable-Diffusion-Bilderzeugung direkt auf deinem Smartphone, ohne Verbindung zu einem entfernten Server oder einer Cloud.</string>
+    <string name="hint_local_diffusion_warning">Achtung! Die lokale Diffusion befindet sich in der Beta-Phase. Erwarte im lokalen Modus keine Bilder in höchster Qualität. \n\nAuf leistungsschwächeren Smartphones funktioniert diese Implementierung möglicherweise nicht gut. Leistung und Geschwindigkeit hängen von den Ressourcen deines Smartphones (CPU, RAM) und der Bildgröße ab. Je kleiner das Bild, desto schneller die Generierung.</string>
+
+    <string name="hint_mediapipe_title" translatable="false">Local Diffusion Google AI MediaPipe</string>
+    <string name="hint_mediapipe_sub_title">Diese Konfiguration verwendet Google AI MediaPipe und ermöglicht Stable-Diffusion-Bilderzeugung direkt auf deinem Smartphone, ohne Verbindung zu einem entfernten Server oder einer Cloud.</string>
+    <string name="hint_sdxl_title" translatable="false">Local Diffusion SDXL</string>
+    <string name="hint_sdxl_sub_title">Diese Konfiguration verwendet stable-diffusion.cpp und ermöglicht die Ausführung von SDXL-, SDXL-Turbo-, LCM- oder quantisierten GGUF-Modellen auf deinem Smartphone.</string>
+    <string name="hint_core_ml_sub_title">Lokale Generierung auf dem iPhone.</string>
+    <string name="hint_bonsai_title" translatable="false">Silicon Diffusion PrismML Bonsai</string>
+    <string name="hint_bonsai_android_title" translatable="false">Local Diffusion PrismML Bonsai</string>
+    <string name="hint_bonsai_sub_title">Lokale Bonsai-Image-4B-Generierung auf dem iPhone.</string>
+    <string name="hint_bonsai_android_sub_title">Lokale Bonsai-Image-4B-Generierung auf unterstützten Geräten.</string>
+
+    <string name="drawer_web_ui">Weboberfläche</string>
+
+    <string name="home_tab_txt_to_img">Txt2Img</string>
+    <string name="home_tab_img_to_img">Img2Img</string>
+    <string name="home_tab_gallery">Galerie</string>
+    <string name="home_tab_settings">Einstellungen</string>
+
+    <string name="gallery_tab_image">Bild</string>
+    <string name="gallery_tab_original">Original</string>
+    <string name="gallery_tab_info">Info</string>
+    <string name="gallery_action_report">Melden</string>
+    <string name="gallery_action_blur">Weichzeichnen</string>
+    <string name="gallery_action_like">Gefällt mir</string>
+    <string name="gallery_action_unlike">Gefällt mir nicht mehr</string>
+    <string name="gallery_action_delete">Löschen</string>
+
+    <string name="title_text_to_image">Text zu Bild</string>
+    <string name="title_image_to_image">Bild zu Bild</string>
+    <string name="title_gallery">Galerie</string>
+    <string name="title_history">Verlauf</string>
+    <string name="title_gallery_details">Details</string>
+    <string name="title_settings">Einstellungen</string>
+    <string name="title_server_setup">Konfiguration</string>
+    <string name="title_select_sd_model">SD-KI-Modell auswählen</string>
+    <string name="title_clear_app_cache">App-Cache leeren</string>
+    <string name="title_debug_menu">Entwicklermodus</string>
+    <string name="title_debug_logger">Protokolle</string>
+    <string name="title_lora">LoRA</string>
+    <string name="title_hyper_net" translatable="false">Hypernetworks</string>
+    <string name="title_hyper_net_short" translatable="false">H-Net</string>
+    <string name="title_txt_inversion">Textuelle Inversion</string>
+    <string name="title_txt_inversion_short">Inversion</string>
+    <string name="title_tag_edit">Tag bearbeiten</string>
+    <string name="title_select_download_source">Quelle auswählen</string>
+
+    <string name="gallery_media_store_banner">Du hast %1$s Fotos in Download/SDAI gespeichert</string>
+    <string name="gallery_info_field_date">Erstellt</string>
+    <string name="gallery_info_field_type">Typ</string>
+    <string name="gallery_info_field_model">Modell</string>
+    <string name="gallery_info_field_prompt">Prompt</string>
+    <string name="gallery_info_field_negative_prompt">Negativer Prompt</string>
+    <string name="gallery_info_field_size">Größe</string>
+    <string name="gallery_info_field_sampling_steps">Abtastschritte</string>
+    <string name="gallery_info_field_cfg">CFG-Skala</string>
+    <string name="gallery_info_field_restore_faces">Gesichter wiederherstellen</string>
+    <string name="gallery_info_field_sampler">Abtastverfahren</string>
+    <string name="gallery_info_field_seed">Seed</string>
+    <string name="gallery_info_field_sub_seed">Variations-Seed</string>
+    <string name="gallery_info_field_sub_seed_strength">Variationsstärke</string>
+    <string name="gallery_info_field_denoising_strength">Entrauschungsstärke</string>
+
+    <string name="gallery_menu_unselect_all">Auswahl aufheben</string>
+    <string name="gallery_menu_selected">Ausgewählte Bilder: %1$s</string>
+    <string name="gallery_menu_delete_all">Alle löschen</string>
+    <string name="gallery_menu_export_all">Alle exportieren</string>
+    <string name="gallery_menu_selection_mode">Auswahlmodus</string>
+
+    <string name="settings_header_server">KI-Einstellungen</string>
+    <string name="settings_header_app">App-Einstellungen</string>
+    <string name="settings_header_info">Info</string>
+    <string name="settings_header_look_and_feel">Darstellung</string>
+    <string name="settings_header_community">Community</string>
+
+    <string name="settings_item_config">Konfiguration</string>
+    <string name="settings_item_sd_model">SD-Modell</string>
+    <string name="settings_item_stability_ai_credits">Stability-AI-Guthaben</string>
+    <string name="settings_item_local_nnapi">NNAPI verwenden (Beta)*</string>
+    <string name="settings_item_local_nnapi_warning">*NNAPI funktioniert möglicherweise nicht zuverlässig. Deaktiviere diese Option bei Fehlern, Abstürzen oder schlechter Leistung.</string>
+
+    <string name="settings_item_language">Sprache</string>
+    <string name="settings_item_demo">Demomodus</string>
+    <string name="settings_item_monitor_connection">Verbindung überwachen</string>
+    <string name="settings_item_background_generation">Hintergrundgenerierung*</string>
+    <string name="settings_item_background_generation_warning">*Die Hintergrundgenerierung kann vom System verzögert oder angehalten werden. Prüfe vor dem Aktivieren, ob die Generierung funktioniert.</string>
+    <string name="settings_item_background_generation_warning_ios">*Die Hintergrundgenerierung funktioniert mit Silicon Diffusion möglicherweise nicht zuverlässig. Stelle sicher, dass Silicon Diffusion auf deinem iPhone funktioniert, bevor du diese Option aktivierst.</string>
+    <string name="settings_item_auto_save">Bilder automatisch speichern</string>
+    <string name="settings_item_auto_save_warning">*Während der Hintergrundgenerierung werden Bilder immer in der Galerie der App gespeichert.</string>
+    <string name="settings_item_auto_save_media_store">In Downloads speichern</string>
+    <string name="settings_item_tagged_input">Eingabe mit Tags</string>
+    <string name="settings_item_advanced_form_default">Erweiterte Optionen immer anzeigen</string>
+    <string name="settings_item_clear_cache">App- und Galerie-Cache leeren</string>
+    <string name="settings_item_storage_usage">Speicherverbrauch</string>
+    <string name="settings_item_network_usage">Netzwerkverbrauch</string>
+
+    <string name="settings_usage_storage_title">Speicherverbrauch</string>
+    <string name="settings_usage_storage_subtitle">Belegter Speicher: %1$s (%2$s).</string>
+    <string name="settings_usage_storage_subtitle_empty">Es gibt noch keine App-Daten zum Löschen.</string>
+    <string name="settings_usage_network_title">Netzwerkverbrauch</string>
+    <string name="settings_usage_network_subtitle">Seit dem letzten Zurücksetzen wurden %1$s übertragen.</string>
+    <string name="settings_usage_category_cache">Cache</string>
+    <string name="settings_usage_category_gallery">Galerie</string>
+    <string name="settings_usage_category_models_onnx">ONNX-Modelle</string>
+    <string name="settings_usage_category_models_mediapipe">MediaPipe-Modelle</string>
+    <string name="settings_usage_category_models_sdxl">SDXL-Modelle</string>
+    <string name="settings_usage_category_models_core_ml">Core-ML-Modelle</string>
+    <string name="settings_usage_category_models_bonsai">Bonsai-Modelle</string>
+    <string name="settings_usage_category_traffic_models">KI-Modell-Downloads</string>
+    <string name="settings_usage_category_traffic_configs">Konfigurationsabgleich</string>
+    <string name="settings_usage_category_traffic_inference">Inferenz</string>
+    <string name="settings_usage_total">Gesamt</string>
+    <string name="settings_usage_empty">Leer</string>
+    <string name="settings_usage_list_separator">, </string>
+    <string name="settings_usage_list_last_separator"> und </string>
+    <string name="settings_usage_summary_cache">Cache</string>
+    <string name="settings_usage_summary_gallery">Galerie</string>
+    <string name="settings_usage_summary_models_onnx">ONNX-Modelle</string>
+    <string name="settings_usage_summary_models_mediapipe">MediaPipe-Modelle</string>
+    <string name="settings_usage_summary_models_sdxl">SDXL-Modelle</string>
+    <string name="settings_usage_summary_models_core_ml">Core-ML-Modelle</string>
+    <string name="settings_usage_summary_models_bonsai">Bonsai-Modelle</string>
+    <string name="settings_usage_clear_category">%1$s löschen</string>
+    <string name="settings_usage_clear_all_storage">Alle %1$s löschen</string>
+    <string name="settings_usage_reset_network">Statistik zurücksetzen</string>
+    <string name="settings_usage_delete_category_title">Speicherdaten löschen?</string>
+    <string name="settings_usage_delete_all_title">Alle Speicherdaten löschen?</string>
+    <string name="settings_usage_delete_cache_text">Der App-Cache (%1$s) wird gelöscht. Die App kann ihn später neu erstellen.</string>
+    <string name="settings_usage_delete_gallery_text">Alle Galerieelemente in der App (%1$s) werden endgültig gelöscht.</string>
+    <string name="settings_usage_delete_models_text">Heruntergeladene %2$s (%1$s) werden von diesem Gerät gelöscht. Du kannst sie später über die Anbietereinrichtung erneut herunterladen.</string>
+    <string name="settings_usage_delete_all_text">Alle hier angezeigten Daten (%1$s) werden gelöscht: %2$s.</string>
+    <string name="settings_usage_storage_note">Galerieelemente werden aus der Galerie in der App entfernt. Lokale Modelle kannst du über die Anbietereinrichtung erneut herunterladen.</string>
+    <string name="settings_usage_network_note">Enthält Modell-Downloads, Konfigurationsabgleich und Inferenzanfragen.</string>
+
+    <string name="settings_item_lf_lang">Sprache</string>
+    <string name="settings_item_lf_gallery_grid">Galerierastergröße</string>
+    <string name="settings_item_lf_dynamic_colors">Dynamische Farben</string>
+    <string name="settings_item_lf_system_dark_theme">Dunkles Systemdesign</string>
+    <string name="settings_item_lf_dark_theme">Dunkles Design</string>
+    <string name="settings_item_lf_dark_theme_color">Hintergrundfarbe</string>
+    <string name="settings_item_lf_accent_color">Akzentfarbe</string>
+
+    <string name="settings_item_report_problem">Problem melden</string>
+    <string name="settings_item_policy">Datenschutz und rechtliche Hinweise</string>
+    <string name="settings_item_instructions">Anleitung zur Servereinrichtung</string>
+    <string name="settings_item_donate">Spenden</string>
+    <string name="settings_item_on_boarding">Tutorial ansehen</string>
+    <string name="settings_item_source">Quellcode anzeigen</string>
+    <string name="settings_item_telegram">Telegram</string>
+    <string name="settings_item_discord">Discord</string>
+    <string name="settings_item_project_website">Projektwebsite</string>
+    <string name="settings_item_developer_website">Website des Entwicklers</string>
+    <string name="settings_item_license">Lizenz</string>
+
+    <string name="communicating_progress_title">Bitte warten, Verbindung zum Server wird hergestellt …</string>
+    <string name="communicating_progress_sub_title">Das kann eine Weile dauern</string>
+    <string name="communicating_random_image_title">Zufälliges Bild wird abgerufen …</string>
+    <string name="communicating_local_title">Lokale Diffusion wird ausgeführt</string>
+    <string name="communicating_core_ml_title">Silicon-Diffusion-Generierung</string>
+    <string name="communicating_wait_time">Wartezeit: %1$s</string>
+    <string name="communicating_status_queue">Warteschlangenplatz: %1$s</string>
+    <string name="communicating_status_steps">Verarbeitungsschritt: %1$s/%2$s</string>
+
+    <string name="exporting_progress_title">Galerie wird exportiert …</string>
+    <string name="exporting_progress_sub_title">Je nach Anzahl der Fotos kann das eine Weile dauern.</string>
+
+    <string name="interaction_export_title">Galerie exportieren</string>
+    <string name="interaction_export_sub_title">Alle Galeriebilder werden als *.zip-Archiv exportiert. Bei vielen Bildern kann das lange dauern. Möchtest du fortfahren?</string>
+    <string name="interaction_export_sub_title_selection">Die ausgewählten Galeriebilder werden als *.zip-Archiv exportiert. Möchtest du fortfahren?</string>
+    <string name="interaction_cache_sub_title">Dadurch werden die App-Einstellungen zurückgesetzt und alle generierten Bilder gelöscht. Möchtest du fortfahren?</string>
+
+    <string name="interaction_warning_title">Warnung</string>
+    <string name="interaction_warning_localhost_sub_title">Du versuchst, eine Verbindung zu einem Localhost-Server (127.0.0.1) herzustellen.\n\nDas funktioniert möglicherweise nur, wenn der Server auf diesem Gerät läuft oder eine Netzwerkroute eingerichtet ist.</string>
+
+    <string name="interaction_delete_generation_title">Bild löschen</string>
+    <string name="interaction_delete_generation_sub_title">Möchtest du dieses Bild wirklich endgültig löschen?</string>
+
+    <string name="interaction_delete_all_title">Alle Bilder löschen</string>
+    <string name="interaction_delete_all_sub_title">Möchtest du wirklich alle Bilder endgültig löschen?</string>
+
+    <string name="interaction_delete_selection_title">Bilder löschen</string>
+    <string name="interaction_delete_selection_sub_title">Möchtest du die ausgewählten Bilder wirklich endgültig löschen?</string>
+
+    <string name="interaction_delete_local_model_title">Modell löschen</string>
+    <string name="interaction_delete_local_model_sub_title">Möchtest du das Modell „%1$s“ wirklich löschen?</string>
+
+    <string name="interaction_in_paint_clear_title">Zeichnungen löschen</string>
+    <string name="interaction_in_paint_clear_sub_title">Möchtest du die Zeichnungen wirklich löschen?</string>
+
+    <string name="interaction_background_scheduled_title">Hintergrundgenerierung geplant</string>
+    <string name="interaction_background_scheduled_sub_title">Der Auftrag für die KI-Hintergrundgenerierung wurde erstellt.\n\nIn manchen Fällen startet das System die Hintergrundaufgabe verzögert.\n\nDu erhältst Benachrichtigungen zum Start, Fortschritt und Abschluss der Generierung.</string>
+
+    <string name="interaction_background_running_title">Hintergrundgenerierung läuft</string>
+    <string name="interaction_background_running_sub_title">Im Hintergrund läuft bereits eine Generierung. Bitte warte, bis sie abgeschlossen ist.</string>
+
+    <string name="gallery_empty_title">Hier ist noch nichts …</string>
+    <string name="gallery_empty_sub_title">Erzeuge ein Bild, dann wird es hier angezeigt!</string>
+
+    <string name="status_connected">⚡️ Verbunden</string>
+    <string name="status_disconnected">️❌ Getrennt</string>
+    <string name="status_communicating">️Verbindung wird hergestellt …</string>
+
+    <string name="error_title">Fehler</string>
+    <string name="error_empty">Das Feld darf nicht leer sein</string>
+    <string name="error_empty_url">Die Server-URL darf nicht leer sein</string>
+    <string name="error_empty_field">Das Feld darf nicht leer sein</string>
+    <string name="error_invalid">Ungültige Eingabe</string>
+    <string name="error_invalid_scheme">Die Server-URL muss mit <b>http://</b> oder <b>https://</b> beginnen</string>
+    <string name="error_invalid_port">Der Port muss zwischen 0 und 65535 liegen</string>
+    <string name="error_invalid_url">Ungültige Server-URL</string>
+    <string name="error_localhost_url">Du kannst keine Localhost-URL (127.0.0.1) verwenden, um eine Verbindung zum Server herzustellen.</string>
+    <string name="error_min_size">Die Mindestgröße beträgt %1$s</string>
+    <string name="error_max_size">Die Maximalgröße beträgt %1$s</string>
+    <string name="error_size_multiple">Die Größe muss durch %1$s teilbar sein</string>
+    <string name="error_download_fail">Download fehlgeschlagen</string>
+    <string name="error_generic">Bei der Verarbeitung deiner Anfrage ist ein Fehler aufgetreten. Bitte versuche es später erneut.</string>
+
+    <string name="notification_pending_title">Generierung ausstehend …</string>
+
+    <string name="notification_started_title">Hintergrundgenerierung gestartet!</string>
+
+    <string name="notification_running_title">Generierung läuft …</string>
+    <string name="notification_running_sub_title">Bitte warte, bis die Generierung abgeschlossen ist.</string>
+
+    <string name="notification_finish_title">Generierung abgeschlossen 🤩</string>
+    <string name="notification_finish_sub_title">Tippe hier, um die Anwendung zu öffnen.</string>
+
+    <string name="notification_fail_title">Generierung fehlgeschlagen 😞</string>
+    <string name="notification_fail_sub_title">Tippe hier, um die Anwendung zu öffnen.</string>
+
+    <string name="model_local_diffusion" translatable="false">Local Diffusion</string>
+
+    <string name="model_local_custom_switch">Eigenes Modell laden</string>
+    <string name="model_local_permission_header">Berechtigungen</string>
+    <string name="model_local_permission_title">Erlaube SDAI den Zugriff auf die ausgewählten Dateien, um ein eigenes Modell zu laden.</string>
+    <string name="model_local_permission_button">Berechtigung einrichten</string>
+    <string name="model_local_path_header">Modellpfad</string>
+    <string name="model_local_path_title">Pfad zum lokalen Modellordner</string>
+    <string name="model_local_path_button">Ordner auswählen</string>
+
+    <string name="model_local_custom_title">Lege das eigene Modell im lokalen Speicherordner deines Smartphones ab, um es zu verwenden.</string>
+    <string name="model_local_custom_sub_title">Die Ordnerstruktur sollte wie folgt aussehen:</string>
+
+    <string name="debug_section_main">Fehlersuche</string>
+    <string name="debug_section_ld" translatable="false">Local Diffusion</string>
+    <string name="debug_section_work_manager">Work-Manager-API</string>
+    <string name="debug_section_qa">QA-Aktionen</string>
+    <string name="debug_action_unlock">Entwicklermodus freigeschaltet!</string>
+    <string name="debug_action_logger">Protokolle anzeigen</string>
+    <string name="debug_action_logger_clear">Alle Protokolle löschen</string>
+    <string name="debug_action_work_restart_txt2img">Letzte txt2img-Aufgabe neu starten</string>
+    <string name="debug_action_work_restart_img2img">Letzte img2img-Aufgabe neu starten</string>
+    <string name="debug_action_work_cancel_all">Alle Worker abbrechen</string>
+    <string name="debug_action_ld_allow_cancel">Generierung unterbrechen lassen</string>
+    <string name="debug_action_ld_scheduler">Prozess-Scheduler</string>
+    <string name="debug_action_bad_base64">Ungültiges Base64 in die Datenbank einfügen</string>
+    <string name="debug_logger_empty">Keine Protokolle gefunden.</string>
+
+    <string name="extras_empty_title">Hier ist noch nichts …</string>
+    <string name="extras_empty_sub_title_lora">Füge auf dem Server %1$s Inhalte hinzu unter:\n\n%2$s</string>
+    <string name="extras_empty_sub_title_hypernet">Füge auf dem Server %1$s Inhalte hinzu unter:\n\n%2$s</string>
+    <string name="extras_empty_sub_title_embedding">Füge auf dem Server %1$s Inhalte hinzu unter:\n\n.%2$s</string>
+
+    <string name="in_paint_title" translatable="false">Inpaint</string>
+    <string name="in_paint_tab_1">Zeichnen</string>
+    <string name="in_paint_tab_2">Anpassen</string>
+
+    <string name="in_paint_mode_masked">Maskierten Bereich bearbeiten</string>
+    <string name="in_paint_mode_not_masked">Nicht maskierten Bereich bearbeiten</string>
+
+    <string name="in_paint_mask_content_fill">Füllen</string>
+    <string name="in_paint_mask_content_original">Original</string>
+    <string name="in_paint_mask_content_latent_noise">Latentes Rauschen</string>
+    <string name="in_paint_mask_content_latent_nothing">Latent: nichts</string>
+
+    <string name="in_paint_area_whole">Gesamtes Bild</string>
+    <string name="in_paint_area_only_masked">Nur maskierter Bereich</string>
+
+    <string name="donate_title_thanks">Vielen Dank an diese großartigen Unterstützer ❤</string>
+    <string name="donate_bs_title">SDAI ist eine Open-Source-Anwendung, die:</string>
+    <string name="donate_bs_sub_title">• dir ermöglicht, mit Stable-Diffusion-KI Bilder zu erstellen;\n• dir die freie Wahl deines Generierungsanbieters lässt;\n• keine Werbung oder Telemetrie enthält und dich nicht ausspioniert;\n• quelloffen ist;\n• kostenlos genutzt werden kann.</string>
+    <string name="donate_bs_ending">Wenn du diese Software nützlich findest, vielen Dank für deine Unterstützung und dafür, dass du zum Fortbestand des Projekts beiträgst.</string>
+
+    <string name="permission_storage">Speicher</string>
+    <string name="permission_notifications">Benachrichtigungen</string>
+
+    <string name="premission_rationale_title">Berechtigungen fehlen.</string>
+    <string name="premission_rationale_sub_title">Erlaube die Berechtigung „%1$s“ in den App-Einstellungen.</string>
+
+    <string name="scheduler_main">Hauptthread</string>
+    <string name="scheduler_io">E/A-Thread</string>
+    <string name="scheduler_computation">Berechnung</string>
+    <string name="scheduler_single_thread">Einzelner Thread</string>
+
+    <string name="on_boarding_page_universal_title">[SDAI]\nKI-Bildgenerator.</string>
+    <string name="on_boarding_page_universal_subtitle">Erstelle Bilder mit externen Anbietern und einem optimierten mobilen Arbeitsablauf.</string>
+    <string name="on_boarding_page_universal_create">Bilder erstellen</string>
+    <string name="on_boarding_page_universal_connect">Anbieter verbinden</string>
+    <string name="on_boarding_page_universal_android">Android</string>
+    <string name="on_boarding_page_universal_ios">iOS</string>
+    <string name="on_boarding_page_form_title">Erweiterte Funktionen zur [Stable-Diffusion-]\nKI-Generierung.</string>
+    <string name="on_boarding_page_local_title">[Offline] Lokale Diffusion\nmit KI.</string>
+    <string name="on_boarding_page_core_ml_title">[Offline] Silicon Diffusion\nmit KI.</string>
+    <string name="on_boarding_page_ui_title">Konfiguriere und passe alles an,\ndamit es [deins] wird!</string>
+    <string name="on_boarding_page_provider_title">[Freiheit], deinen\nKI-Anbieter selbst zu wählen.</string>
+
+    <string name="report_title">Bild melden</string>
+    <string name="report_submit">Meldung senden</string>
+    <string name="report_description">Beschreibung der Meldung</string>
+    <string name="report_sent">Deine Meldung wurde gesendet!</string>
+    <string name="report_done">Zurück</string>
+
+    <string name="report_reason_inappropriate_content">Unangemessener Inhalt</string>
+    <string name="report_reason_violence">Gewalt</string>
+    <string name="report_reason_hateful_speech">Hassrede</string>
+    <string name="report_reason_intellectual">Verletzung geistigen Eigentums</string>
+    <string name="report_reason_adult">Inhalte für Erwachsene</string>
+    <string name="report_reason_other">Sonstiges</string>
+
+    <string name="settings_item_benchmark">Benchmark</string>
+    <string name="title_benchmark">Benchmark</string>
+    <string name="benchmark_run">Benchmark starten</string>
+    <string name="benchmark_running">Benchmark läuft …</string>
+    <string name="benchmark_running_title">Benchmark läuft</string>
+    <string name="benchmark_running_sub_title">Eine sichere, inferenzähnliche CPU- und Speicherlast wird gemessen.</string>
+    <string name="benchmark_no_results">Noch keine Ergebnisse</string>
+    <string name="benchmark_score">Gerätebewertung</string>
+    <string name="benchmark_estimated_time_value">Geschätzte Generierungszeit: %1$s s</string>
+    <string name="benchmark_estimated_time_short">Geschätzte Zeit</string>
+    <string name="benchmark_seconds">%1$s s</string>
+    <string name="benchmark_last_run">Letzter Durchlauf</string>
+    <string name="benchmark_device">Gerät</string>
+    <string name="benchmark_hardware">Hardware</string>
+    <string name="benchmark_capabilities">Beschleunigung</string>
+    <string name="benchmark_no_capabilities">Es wurden keine speziellen Hardwarebeschleunigungs-APIs erkannt.</string>
+    <string name="benchmark_available">Verfügbar</string>
+    <string name="benchmark_unavailable">Nicht verfügbar</string>
+    <string name="benchmark_backend_supported">Unterstützt</string>
+    <string name="benchmark_backend_unavailable">Backend nicht verfügbar</string>
+    <string name="benchmark_backend_not_validated">Nicht validiert</string>
+    <string name="benchmark_backend_not_recommended">Nicht empfohlen</string>
+    <string name="benchmark_recommendations">Empfohlene Einstellungen</string>
+    <string name="benchmark_recommendations_empty">Führe einen Benchmark aus, um sichere Einstellungen für die lokale Generierung zu berechnen.</string>
+    <string name="benchmark_provider_recommended_settings">Empfohlene Einstellungen für %1$s</string>
+    <string name="benchmark_provider_not_recommended">Nicht empfohlen</string>
+    <string name="benchmark_recommended">Empfohlen</string>
+    <string name="benchmark_not_recommended">Nicht empfohlen</string>
+    <string name="benchmark_status">Status</string>
+    <string name="benchmark_cpu">CPU</string>
+    <string name="benchmark_gpu">GPU</string>
+    <string name="benchmark_ram">RAM</string>
+    <string name="benchmark_vram">VRAM</string>
+    <string name="benchmark_os">OS</string>
+    <string name="benchmark_processors">Kerne</string>
+    <string name="benchmark_recommended_size">Größe</string>
+    <string name="benchmark_recommended_steps">Schritte</string>
+    <string name="benchmark_recommended_cfg">CFG-Skala</string>
+    <string name="benchmark_recommended_providers">Anbieter</string>
+    <string name="benchmark_recommended_background">Hintergrundgenerierung</string>
+    <string name="benchmark_recommended_backend">SDXL-Backend</string>
+    <string name="benchmark_share_results">Benchmark-Ergebnisse teilen</string>
+    <string name="benchmark_unknown">Unbekannt</string>
+    <string name="benchmark_mb">%1$s MB</string>
+    <string name="benchmark_error_generic">Benchmark kann nicht ausgeführt werden.</string>
+    <string name="benchmark_first_local_generation_title">Benchmark ausführen?</string>
+    <string name="benchmark_first_local_generation_text">Du möchtest zum ersten Mal eine Generierung auf dem Gerät ausführen. Möchtest du einen Benchmark starten, um empfohlene Parameter zu ermitteln?</string>
+    <string name="benchmark_exceeded_title">Mit diesen Einstellungen fortfahren?</string>
+    <string name="benchmark_exceeded_text">Die ausgewählten Einstellungen überschreiten die Benchmark-Empfehlungen. Dem Gerät könnte der Speicher ausgehen oder die lokale Generierung fehlschlagen.</string>
+    <string name="benchmark_exceeded_do_not_ask">Nicht erneut fragen</string>
+    <string name="benchmark_limit_image_size">Die Bildgröße ist höher als empfohlen.</string>
+    <string name="benchmark_limit_sampling_steps">Die Anzahl der Abtastschritte ist höher als empfohlen.</string>
+    <string name="benchmark_limit_batch_count">Die Stapelgröße ist höher als empfohlen.</string>
+    <string name="benchmark_limit_hires_fix">Hires-Fix wird für dieses Gerät nicht empfohlen.</string>
+    <string name="benchmark_limit_provider">Der ausgewählte lokale Anbieter wird für dieses Gerät nicht empfohlen.</string>
+    <string name="benchmark_limit_backend">Das ausgewählte SDXL-Backend weicht von der Benchmark-Empfehlung ab.</string>
+    <string name="benchmark_issue_platform_unsupported">Dieser Anbieter wird auf der aktuellen Plattform nicht unterstützt.</string>
+    <string name="benchmark_issue_low_memory">Für eine stabile lokale Generierung ist nicht genügend Speicher verfügbar.</string>
+    <string name="benchmark_issue_low_score">Die Benchmark-Bewertung liegt unter dem sicheren Grenzwert für diesen Anbieter.</string>
+    <string name="benchmark_issue_onnx_slow_low_memory">ONNX wird auf Geräten mit dieser geringen Speicherausstattung nur für kleine Bildgrößen empfohlen.</string>
+    <string name="benchmark_issue_mediapipe_unstable_low_memory">MediaPipe wird auf Geräten mit wenig Speicher und Adreno-GPU nicht empfohlen, da es sofort abstürzen könnte.</string>
+    <string name="benchmark_issue_sdxl_tiny_experimental_only">SDXL funktioniert hier möglicherweise nur als sehr kleiner experimenteller CPU-Lauf und wird daher nicht empfohlen.</string>
+    <string name="benchmark_issue_sdxl_backend_not_validated">Die Vulkan-API wurde gefunden, aber das SDXL-Vulkan-Backend wurde nicht durch einen sicheren Benchmark validiert.</string>
+    <string name="benchmark_issue_accelerator_api_not_available">Die erforderliche Beschleunigungs-API wurde nicht gefunden.</string>
+</resources>

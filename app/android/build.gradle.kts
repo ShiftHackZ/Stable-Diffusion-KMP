@@ -45,7 +45,7 @@ android {
         buildConfigField("String", "SETUP_INSTRUCTIONS_URL", "\"https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki\"")
         buildConfigField("String", "SWARM_UI_INFO_URL", "\"https://github.com/mcmonkeyprojects/SwarmUI/tree/master/docs\"")
 
-        resourceConfigurations += listOf("en", "ru", "uk", "tr", "zh")
+        resourceConfigurations += listOf("en", "ru", "uk", "tr", "zh", "de")
         manifestPlaceholders["excludePermissions"] = "true"
     }
 
