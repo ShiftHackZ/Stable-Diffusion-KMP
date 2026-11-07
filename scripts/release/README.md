@@ -104,6 +104,11 @@ installing the pinned SDK. Android archive checksums were calculated from the
 official downloads and cross-checked against Google's repository metadata. JDK,
 Gradle and bundletool checksum sources are recorded in the profile.
 
+Build jobs install the SDK at `/opt/android-sdk`, matching the F-Droid build
+environment. Native debug information can include NDK header paths, which can
+affect linker build IDs even after debug sections are stripped from the APK.
+Signing and verification jobs use their own temporary SDK directory.
+
 Gradle runs with a 4 GiB heap, at most two workers, no parallel project execution,
 and the Kotlin compiler inside the Gradle process. Native Ninja compilation is limited
 to two workers, including direct Ninja invocations from AGP. Each selected output
@@ -121,7 +126,7 @@ For a local native Linux build, use a clean source checkout with initialized
 submodules and a separate checkout containing these workflow tools:
 
 ```sh
-bash /path/to/ci/scripts/release/setup.sh build /path/to/empty-toolchain-directory
+bash /path/to/ci/scripts/release/setup.sh build /path/to/empty-toolchain-directory /opt/android-sdk
 source /path/to/empty-toolchain-directory/environment.sh
 bash /path/to/ci/scripts/release/build.sh \
   /path/to/source foss apk /path/to/output FULL_SOURCE_COMMIT_SHA
@@ -129,7 +134,9 @@ bash /path/to/ci/scripts/release/build.sh \
 
 The build helper rejects local SDK and signing configuration in the source
 checkout. It applies the SDK/NDK/CMake profile through a Gradle init script without
-changing tracked source files.
+changing tracked source files. The optional third setup argument selects an empty,
+writable SDK directory; create `/opt/android-sdk` with the build user's ownership
+before setup. Without it, the SDK is installed inside the toolchain directory.
 
 ## First signed run and local F-Droid comparison
 
