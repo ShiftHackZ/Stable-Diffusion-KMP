@@ -1,5 +1,5 @@
 {
-  "name": "SDAI - Stable Diffusion AI",
+  "name": "SDAI",
   "short_name": "SDAI",
   "description": "Open-source AI image generation app for Android and iOS with self-hosted, hosted, and local providers.",
   "start_url": "/",

@@ -1,1 +1,1 @@
-Open-source Stable Diffusion client for Android and iOS workflows.
+Open-source AI image generation client for Android and iOS.

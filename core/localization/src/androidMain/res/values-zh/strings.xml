@@ -208,10 +208,10 @@
     <string name="auth_http_basic">HTTP 基本认证</string>
 
     <!-- 服务器设置提示 -->
-    <string name="hint_server_setup_title">请提供您的 Stable Diffusion WebUI URL</string>
-    <string name="hint_server_setup_sub_title">使用 Gradio 库实现的 Stable Diffusion 的 Web 界面。</string>
+    <string name="hint_server_setup_title">请提供您的 AUTOMATIC1111 WebUI URL</string>
+    <string name="hint_server_setup_sub_title">AUTOMATIC1111 是使用 Gradio 构建的 AI 图像生成 Web 界面。</string>
     <string name="hint_valid_urls">以下是服务器 URL 的示例：\n• http://192.168.0.2:%1$s\n• http://yourdomain.com:%1$s\n• https://yourdomain.com</string>
-    <string name="hint_demo_mode">此模式允许您测试应用程序的行为，即使您没有 Stable Diffusion WebUI 服务器\n\n在演示模式下，应用程序将忽略用户 prompt，不使用 AI 服务器，并返回一些模拟图像。</string>
+    <string name="hint_demo_mode">此模式允许您测试应用程序的行为，即使您没有 AUTOMATIC1111 WebUI 服务器\n\n在演示模式下，应用程序将忽略用户 prompt，不使用 AI 服务器，并返回一些模拟图像。</string>
     <string name="hint_args_warning" tools:ignore="TypographyDashes">在连接之前确保：\n• 您正在运行 AUTOMATIC1111 WebUI 并带有标志 --api --listen\n• 您的防火墙没有阻止 7860 端口\n• 手机与您的 PC 在同一 WiFi 下</string>
     <string name="hint_args_swarm_ui_warning" tools:ignore="TypographyDashes">在连接之前确保：\n• 您的防火墙没有阻止 7801 端口\n• 手机与您的 PC 在同一 WiFi 下</string>
 
@@ -253,13 +253,13 @@
 
     <!-- Swarm UI-->
     <string name="hint_swarm_ui_title">提供你的 Swarm UI URL</string>
-    <string name="hint_swarm_ui_sub_title">模块化的 Stable Diffusion Web 用户界面，专注于易访问、高性能和可扩展性。</string>
+    <string name="hint_swarm_ui_sub_title">模块化的 AI 图像生成 Web 用户界面，专注于易访问、高性能和可扩展性。</string>
 
     <!-- 本地扩散提示 -->
-    <string name="hint_local_diffusion_sub_title">此配置使用 Microsoft ONNX 运行时，您可以在手机端运行 Stable Diffusion AI 的生成功能，而无需连接至远程服务器/云。</string>
+    <string name="hint_local_diffusion_sub_title">此配置使用 Microsoft ONNX 运行时，您可以直接在手机上生成图像，而无需连接至远程服务器或云。</string>
     <string name="hint_local_diffusion_warning">警告！Local Diffusion 功能处于测试版。可能无法获得高质量图像。\n\n此功能在资源受限设备上可能不及预期。生成性能和速度取决于您的手机资源（CPU、RAM）和生成的图像大小（图像越小，生成越快）。</string>
 
-    <string name="hint_mediapipe_sub_title">此配置使用 Google AI MediaPipe 运行时，您可以在手机端运行 Stable Diffusion AI 的生成功能，而无需连接至远程服务器/云。</string>
+    <string name="hint_mediapipe_sub_title">此配置使用 Google AI MediaPipe 运行时，您可以直接在手机上生成图像，而无需连接至远程服务器或云。</string>
     <string name="hint_sdxl_sub_title">此配置使用 stable-diffusion.cpp，可在手机上运行 SDXL、SDXL-Turbo、LCM 或量化 GGUF 模型。</string>
     <string name="hint_core_ml_sub_title">在 iPhone 上进行本地生成。</string>
     <string name="hint_bonsai_sub_title">在 iPhone 上进行本地 Bonsai Image 4B 生成。</string>
@@ -554,7 +554,7 @@
 
     <string name="donate_title_thanks">感谢这些了不起的人们提供的支持 ❤</string>
     <string name="donate_bs_title">SDAI 是一款开源应用程序，它：</string>
-    <string name="donate_bs_sub_title">• 赋予您使用 Stable Diffusion AI 创建图像的能力；\n• 让您自由选择生成供应商；\n• 无广告、无遥测，无监控；\n• 是一款开源软件；\n• 欢迎您免费使用。</string>
+    <string name="donate_bs_sub_title">• 让您使用 AI 创建图像；\n• 让您自由选择生成供应商；\n• 无广告、无遥测，无监控；\n• 是一款开源软件；\n• 欢迎您免费使用。</string>
     <string name="donate_bs_ending">如果您觉得这个软件有价值，感谢您支持这个项目并帮助它继续发展。</string>
 
     <string name="permission_storage">存储</string>
@@ -574,7 +574,7 @@
     <string name="on_boarding_page_universal_connect">连接提供方</string>
     <string name="on_boarding_page_universal_android">Android</string>
     <string name="on_boarding_page_universal_ios">iOS</string>
-    <string name="on_boarding_page_form_title">高级功能\n[稳定扩散]。</string>
+    <string name="on_boarding_page_form_title">高级 [AI 图像]\n生成功能。</string>
     <string name="on_boarding_page_local_title">[离线]生成\n本地扩散。</string>
     <string name="on_boarding_page_core_ml_title">[离线] Silicon Diffusion\n生成。</string>
     <string name="on_boarding_page_ui_title">自定义应用程序，\n让它成为[您的]！</string>

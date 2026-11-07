@@ -1257,6 +1257,8 @@ function renderSiteSvg({ deck, platform, locale, slide, index, source, spec }) {
 function renderFeatureGraphic({ deck, locale, target }) {
   const spec = featureSpecs[target];
   if (!spec) return;
+  const copy = deck.locales[locale]?.featureGraphic;
+  if (!copy) throw new Error(`Missing feature graphic copy for ${locale}`);
 
   const { width, height } = spec;
   const id = `feature-${target}-${locale}`;
@@ -1272,7 +1274,7 @@ function renderFeatureGraphic({ deck, locale, target }) {
   const iconY = Math.round((height - iconSize) / 2);
   const textX = iconX + iconSize + Math.round(width * 0.065);
   const titleSize = Math.round(height * 0.24);
-  const lineSize = Math.round(height * 0.084);
+  const lineSize = Math.round(height * (locale === "en-US" ? 0.084 : 0.068));
   const smallSize = Math.round(height * 0.058);
   const dir =
     target === "fastlane"
@@ -1293,13 +1295,7 @@ function renderFeatureGraphic({ deck, locale, target }) {
         );
   mkdirp(dir);
 
-  const headline = "Stable Diffusion AI";
-  const subline =
-    {
-      "en-US": "Mobile image generation",
-      ru: "Мобильная AI-генерация",
-      uk: "Мобільна AI-генерація",
-    }[locale] || "Mobile image generation";
+  const { headline, subline } = copy;
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" font-family="${escapeXml(
     svgFontFamily

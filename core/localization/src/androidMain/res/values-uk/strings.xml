@@ -190,10 +190,10 @@
     <string name="auth_anonymous">Анонімна</string>
     <string name="auth_http_basic">HTTP Базова</string>
 
-    <string name="hint_server_setup_title">Вкажіть свою URL-адресу Stable Diffusion WebUI</string>
-    <string name="hint_server_setup_sub_title">Веб-інтерфейс для Stable Diffusion, реалізований за допомогою бібліотеки Gradio.</string>
+    <string name="hint_server_setup_title">Вкажіть свою URL-адресу AUTOMATIC1111 WebUI</string>
+    <string name="hint_server_setup_sub_title">AUTOMATIC1111 — вебінтерфейс для генерації зображень за допомогою ШІ, створений на основі Gradio.</string>
     <string name="hint_valid_urls">Ось приклади URL-адрес сервера:\nhttp://192.168.0.2:%1$s\nhttp://yourdomain.com:%1$s\nhttps://yourdomain.com</string>
-    <string name="hint_demo_mode">Цей режим дозволяє перевірити поведінку програми, навіть якщо у вас немає сервера Stable Diffusion WebUI.\n\nУ демонстраційному режимі програма ігнорує параметри генерації, не використовує сервер штучного інтелекту та повертає фіктивні зображення.</string>
+    <string name="hint_demo_mode">Цей режим дозволяє перевірити поведінку програми, навіть якщо у вас немає сервера AUTOMATIC1111 WebUI.\n\nУ демонстраційному режимі програма ігнорує параметри генерації, не використовує сервер штучного інтелекту та повертає фіктивні зображення.</string>
     <string name="hint_args_warning" tools:ignore="TypographyDashes">Перед підключенням переконайтеся, що:\n• ви використовуєте AUTOMATIC1111 WebUI з аргументами --api --listen\n• ваш брандмауер не блокує порт 7860\n• телефон підключено до однієї мережі Wi-Fi з вашим ПК</string>
     <string name="hint_args_swarm_ui_warning" tools:ignore="TypographyDashes">Перед підключенням переконайтеся, що:\n• ваш брандмауер не блокує порт 7801\n• телефон підключено до однієї мережі Wi-Fi з вашим ПК</string>
 
@@ -229,12 +229,12 @@
     <string name="hint_stability_ai_engine">Stability AI двигун</string>
 
     <string name="hint_swarm_ui_title">Вкажіть URL-адресу Swarm UI</string>
-    <string name="hint_swarm_ui_sub_title">Модульний веб-інтерфейс Stable Diffusion з наголосом на полегшення доступу до інструментів, високу продуктивність і розширюваність.</string>
+    <string name="hint_swarm_ui_sub_title">Модульний вебінтерфейс для генерації зображень за допомогою ШІ з наголосом на доступність інструментів, високу продуктивність і розширюваність.</string>
 
-    <string name="hint_local_diffusion_sub_title">Ця конфігурація використовує Microsoft ONNX та дозволяє запускати генерації Stable Diffusion на вашому телефоні без необхідності підключатися до віддаленого сервера/хмари.</string>
+    <string name="hint_local_diffusion_sub_title">Ця конфігурація використовує Microsoft ONNX та дозволяє створювати зображення на вашому телефоні без необхідності підключатися до віддаленого сервера або хмари.</string>
     <string name="hint_local_diffusion_warning">УВАГА! Функціональність Local Diffusion у бета-тестуванні. Не очікуйте високоякісних зображень у локальному режимі. \n\nЦя реалізація може не працювати належним чином на телефонах із слабкою потужністю. Продуктивність і швидкість генерації залежать від ресурсів вашого телефону (ЦП, ОЗУ) і розміру згенерованого зображення (чим менший розмір зображення, тим швидше генерується).</string>
 
-    <string name="hint_mediapipe_sub_title">Ця конфігурація використовує Google AI MediaPipe та дозволяє запускати генерації Stable Diffusion на вашому телефоні без необхідності підключатися до віддаленого сервера/хмари.</string>
+    <string name="hint_mediapipe_sub_title">Ця конфігурація використовує Google AI MediaPipe та дозволяє створювати зображення на вашому телефоні без необхідності підключатися до віддаленого сервера або хмари.</string>
     <string name="hint_sdxl_sub_title">Ця конфігурація використовує stable-diffusion.cpp і дає змогу запускати SDXL, SDXL-Turbo, LCM або квантовані GGUF-моделі на телефоні.</string>
     <string name="hint_core_ml_sub_title">Локальна генерація на iPhone.</string>
     <string name="hint_bonsai_sub_title">Локальна генерація Bonsai Image 4B на iPhone.</string>
@@ -502,7 +502,7 @@
 
     <string name="donate_title_thanks">Дякую цим чудовим людям за підтримку ❤</string>
     <string name="donate_bs_title">SDAI – це програма з відкритим кодом, яка:</string>
-    <string name="donate_bs_sub_title">• Надає Вам можливість створювати зображення за допомогою Stable Diffusion AI;\n• Дає Вам свободу вибору постачальника генерації;\n• Не містить реклами, телеметрії та не шпигує за вами;\n• ПО з відкритим кодом;\n• Ви можете використовувати його безкоштовно.</string>
+    <string name="donate_bs_sub_title">• Надає Вам можливість створювати зображення за допомогою ШІ;\n• Дає Вам свободу вибору постачальника генерації;\n• Не містить реклами, телеметрії та не шпигує за вами;\n• ПО з відкритим кодом;\n• Ви можете використовувати його безкоштовно.</string>
     <string name="donate_bs_ending">Якщо програма була Вам корисна, дякую за підтримку проєкту та допомогу в його розвитку.</string>
 
     <string name="permission_storage">Сховище</string>
@@ -522,7 +522,7 @@
     <string name="on_boarding_page_universal_connect">Підключення провайдерів</string>
     <string name="on_boarding_page_universal_android">Android</string>
     <string name="on_boarding_page_universal_ios">iOS</string>
-    <string name="on_boarding_page_form_title">Розширені можливості\n[Stable Diffusion].</string>
+    <string name="on_boarding_page_form_title">Розширені можливості\n[ШІ-генерації зображень].</string>
     <string name="on_boarding_page_local_title">[Офлайн] генерація\nLocal Diffusion.</string>
     <string name="on_boarding_page_core_ml_title">[Офлайн] генерація\nSilicon Diffusion.</string>
     <string name="on_boarding_page_ui_title">Налаштуйте додаток,\nзробіть його [своїм]!</string>

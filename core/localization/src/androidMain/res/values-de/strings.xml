@@ -216,10 +216,10 @@
     <string name="auth_anonymous">Anonym</string>
     <string name="auth_http_basic">HTTP Basic</string>
 
-    <string name="hint_server_setup_title">Gib die URL deiner Stable Diffusion WebUI an</string>
-    <string name="hint_server_setup_sub_title">Eine mit der Gradio-Bibliothek implementierte Weboberfläche für Stable Diffusion.</string>
+    <string name="hint_server_setup_title">Gib die URL deiner AUTOMATIC1111 WebUI an</string>
+    <string name="hint_server_setup_sub_title">AUTOMATIC1111 ist eine mit Gradio entwickelte Weboberfläche zur KI-Bilderzeugung.</string>
     <string name="hint_valid_urls">Beispiele für Server-URLs:\n• http://192.168.0.2:%1$s\n• http://deinedomain.de:%1$s\n• https://deinedomain.de</string>
-    <string name="hint_demo_mode">In diesem Modus kannst du das Verhalten der App testen, auch wenn du keinen Stable-Diffusion-WebUI-Server hast.\n\nIm Demomodus ignoriert die App deinen Prompt, verwendet keinen KI-Server und gibt einige Beispielbilder zurück.</string>
+    <string name="hint_demo_mode">In diesem Modus kannst du das Verhalten der App testen, auch wenn du keinen AUTOMATIC1111-WebUI-Server hast.\n\nIm Demomodus ignoriert die App deinen Prompt, verwendet keinen KI-Server und gibt einige Beispielbilder zurück.</string>
     <string name="hint_args_warning" tools:ignore="TypographyDashes,Typos">Stelle vor dem Verbinden sicher, dass:\n• die AUTOMATIC1111 WebUI mit den Optionen --api --listen läuft\n• deine Firewall den Port 7860 nicht blockiert\n• dein Smartphone mit demselben WLAN wie dein PC verbunden ist</string>
     <string name="hint_args_swarm_ui_warning" tools:ignore="TypographyDashes,Typos">Stelle vor dem Verbinden sicher, dass:\n• deine Firewall den Port 7801 nicht blockiert\n• dein Smartphone mit demselben WLAN wie dein PC verbunden ist</string>
 
@@ -255,14 +255,14 @@
     <string name="hint_stability_ai_engine">Stability-AI-Engine</string>
 
     <string name="hint_swarm_ui_title">Gib die URL deiner Swarm UI an</string>
-    <string name="hint_swarm_ui_sub_title">Eine modulare Weboberfläche für Stable Diffusion, die Werkzeuge leicht zugänglich macht und auf hohe Leistung sowie Erweiterbarkeit ausgelegt ist.</string>
+    <string name="hint_swarm_ui_sub_title">Eine modulare Weboberfläche zur KI-Bilderzeugung, die Werkzeuge leicht zugänglich macht und auf hohe Leistung sowie Erweiterbarkeit ausgelegt ist.</string>
 
     <string name="hint_local_diffusion_title" translatable="false">Local Diffusion Microsoft ONNX</string>
-    <string name="hint_local_diffusion_sub_title">Diese Konfiguration verwendet die Microsoft-ONNX-Runtime und ermöglicht Stable-Diffusion-Bilderzeugung direkt auf deinem Smartphone, ohne Verbindung zu einem entfernten Server oder einer Cloud.</string>
+    <string name="hint_local_diffusion_sub_title">Diese Konfiguration verwendet die Microsoft-ONNX-Runtime und ermöglicht die Bilderzeugung direkt auf deinem Smartphone, ohne Verbindung zu einem entfernten Server oder einer Cloud.</string>
     <string name="hint_local_diffusion_warning">Achtung! Die lokale Diffusion befindet sich in der Beta-Phase. Erwarte im lokalen Modus keine Bilder in höchster Qualität. \n\nAuf leistungsschwächeren Smartphones funktioniert diese Implementierung möglicherweise nicht gut. Leistung und Geschwindigkeit hängen von den Ressourcen deines Smartphones (CPU, RAM) und der Bildgröße ab. Je kleiner das Bild, desto schneller die Generierung.</string>
 
     <string name="hint_mediapipe_title" translatable="false">Local Diffusion Google AI MediaPipe</string>
-    <string name="hint_mediapipe_sub_title">Diese Konfiguration verwendet Google AI MediaPipe und ermöglicht Stable-Diffusion-Bilderzeugung direkt auf deinem Smartphone, ohne Verbindung zu einem entfernten Server oder einer Cloud.</string>
+    <string name="hint_mediapipe_sub_title">Diese Konfiguration verwendet Google AI MediaPipe und ermöglicht die Bilderzeugung direkt auf deinem Smartphone, ohne Verbindung zu einem entfernten Server oder einer Cloud.</string>
     <string name="hint_sdxl_title" translatable="false">Local Diffusion SDXL</string>
     <string name="hint_sdxl_sub_title">Diese Konfiguration verwendet stable-diffusion.cpp und ermöglicht die Ausführung von SDXL-, SDXL-Turbo-, LCM- oder quantisierten GGUF-Modellen auf deinem Smartphone.</string>
     <string name="hint_core_ml_sub_title">Lokale Generierung auf dem iPhone.</string>
@@ -539,7 +539,7 @@
 
     <string name="donate_title_thanks">Vielen Dank an diese großartigen Unterstützer ❤</string>
     <string name="donate_bs_title">SDAI ist eine Open-Source-Anwendung, die:</string>
-    <string name="donate_bs_sub_title">• dir ermöglicht, mit Stable-Diffusion-KI Bilder zu erstellen;\n• dir die freie Wahl deines Generierungsanbieters lässt;\n• keine Werbung oder Telemetrie enthält und dich nicht ausspioniert;\n• quelloffen ist;\n• kostenlos genutzt werden kann.</string>
+    <string name="donate_bs_sub_title">• dir ermöglicht, mit KI Bilder zu erstellen;\n• dir die freie Wahl deines Generierungsanbieters lässt;\n• keine Werbung oder Telemetrie enthält und dich nicht ausspioniert;\n• quelloffen ist;\n• kostenlos genutzt werden kann.</string>
     <string name="donate_bs_ending">Wenn du diese Software nützlich findest, vielen Dank für deine Unterstützung und dafür, dass du zum Fortbestand des Projekts beiträgst.</string>
 
     <string name="permission_storage">Speicher</string>
@@ -559,7 +559,7 @@
     <string name="on_boarding_page_universal_connect">Anbieter verbinden</string>
     <string name="on_boarding_page_universal_android">Android</string>
     <string name="on_boarding_page_universal_ios">iOS</string>
-    <string name="on_boarding_page_form_title">Erweiterte Funktionen zur [Stable-Diffusion-]\nKI-Generierung.</string>
+    <string name="on_boarding_page_form_title">Erweiterte Funktionen zur\n[KI-Bilderzeugung].</string>
     <string name="on_boarding_page_local_title">[Offline] Lokale Diffusion\nmit KI.</string>
     <string name="on_boarding_page_core_ml_title">[Offline] Silicon Diffusion\nmit KI.</string>
     <string name="on_boarding_page_ui_title">Konfiguriere und passe alles an,\ndamit es [deins] wird!</string>

@@ -1,4 +1,4 @@
-SDAI (Stable Diffusion AI) is an open-source mobile AI image generation client for Android and iOS. It gives artists, hobbyists, and builders one clean workflow for prompting, tuning generation settings, reviewing results, and switching between the providers they already use.
+SDAI is an open-source mobile AI image generation client for Android and iOS. It gives artists, hobbyists, and builders one clean workflow for prompting, tuning generation settings, reviewing results, and switching between the providers they already use.
 
 Choose the backend that fits the moment:
 - Your own AUTOMATIC1111 or SwarmUI server
@@ -8,10 +8,12 @@ Choose the backend that fits the moment:
 - Stability AI / DreamStudio API
 - Android local diffusion with ONNX where available
 
-SDAI keeps familiar Stable Diffusion controls close at hand: positive and negative prompts where supported, seed, steps, CFG scale, image size, sampler, model or engine selection, LoRA, embeddings, hypernetworks, Img2Img, Inpaint, batch generation, and provider-specific options.
+SDAI keeps familiar image generation controls close at hand: positive and negative prompts where supported, seed, steps, CFG scale, image size, sampler, model or engine selection, LoRA, embeddings, hypernetworks, Img2Img, Inpaint, batch generation, and provider-specific options.
 
 The app is built for mobile instead of locking you into a single cloud service. You can use your own server, connect API keys for hosted providers, or generate on device with supported Android local engines. Generated images stay in the in-app gallery with details, zoom, sharing, native save/export flows, and ZIP export.
 
-No ads. No telemetry. No provider lock-in. SDAI is community-driven free software, so you can inspect the code, report issues, translate the app, and help improve the next mobile Stable Diffusion workflow.
+No ads. No telemetry. No provider lock-in. SDAI is community-driven free software, so you can inspect the code, report issues, translate the app, and help improve mobile image generation.
 
 Note: this F-Droid listing is for the Android FOSS build. iOS uses the shared SDAI mobile experience for remote generation providers, while some local diffusion features are Android-only.
+
+SDAI is an independent project, not affiliated with, endorsed by, or sponsored by Stability AI or Stable Diffusion.

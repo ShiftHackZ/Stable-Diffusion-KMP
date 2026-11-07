@@ -190,10 +190,10 @@
     <string name="auth_anonymous">Anonim</string>
     <string name="auth_http_basic">HTTP Temel</string>
 
-    <string name="hint_server_setup_title">Lütfen Stable Diffusion WebUI(AUTOMATIC1111) URL adresinizi yazın.</string>
-    <string name="hint_server_setup_sub_title">Gradio kütüphanesi kullanılarak uygulanan Stable Diffusion için bir web arayüzü.</string>
+    <string name="hint_server_setup_title">Lütfen AUTOMATIC1111 WebUI URL adresinizi yazın.</string>
+    <string name="hint_server_setup_sub_title">AUTOMATIC1111, Gradio ile geliştirilmiş bir yapay zekâ görüntü oluşturma web arayüzüdür.</string>
     <string name="hint_valid_urls">Bazı sunucu örnekleri:\n• http://192.168.0.2:%1$s\n• http://alanadiniz.com:%1$s\n• https://alanadiniz.com</string>
-    <string name="hint_demo_mode">Bu mod, Stable Diffusion WebUI sunucunuz olmasa bile uygulama davranışını test etmenize olanak tanır.\n\nDemo modunda uygulama kullanıcı istemini görmezden gelir, AI sunucusunu kullanmaz ve bazı sahte görüntüler döndürür.</string>
+    <string name="hint_demo_mode">Bu mod, AUTOMATIC1111 WebUI sunucunuz olmasa bile uygulama davranışını test etmenize olanak tanır.\n\nDemo modunda uygulama kullanıcı istemini görmezden gelir, AI sunucusunu kullanmaz ve bazı sahte görüntüler döndürür.</string>
     <string name="hint_args_warning" tools:ignore="TypographyDashes,Typos">Bağlanmadan önce şunlardan emin olun:\n• AUTOMATIC1111 WebUI\'yi --api --listen bayraklarıyla çalıştırıyorsunuz\n• Güvenlik duvarınız 7860 portunu engellemiyor\n• Telefon, bilgisayarınızla aynı WiFi\'da.</string>
     <string name="hint_args_swarm_ui_warning" tools:ignore="TypographyDashes,Typos">Bağlanmadan önce şunlardan emin olun:\n• Güvenlik duvarınız 7801 portunu engellemiyor\n• Telefon, bilgisayarınızla aynı WiFi\'da.</string>
 
@@ -229,12 +229,12 @@
     <string name="hint_stability_ai_engine">Stability AI motoru</string>
 
     <string name="hint_swarm_ui_title">Swarm UI URL\'nizi sağlayın</string>
-    <string name="hint_swarm_ui_sub_title">Araçlara kolay erişim, yüksek performans ve genişletilebilirlik üzerine odaklanan Modüler, Kararlı Yaygın Web Kullanıcı Arayüzü.</string>
+    <string name="hint_swarm_ui_sub_title">Araçlara kolay erişim, yüksek performans ve genişletilebilirlik üzerine odaklanan modüler bir yapay zekâ görüntü oluşturma web arayüzü.</string>
 
-    <string name="hint_local_diffusion_sub_title">Bu yapılandırma Microsoft ONNX çalışma zamanını kullanır ve uzak bir sunucuya/buluta bağlanmaya gerek kalmadan telefonunuzda Stable Diffusion AI nesillerini çalıştırmanıza olanak tanır.</string>
+    <string name="hint_local_diffusion_sub_title">Bu yapılandırma Microsoft ONNX çalışma zamanını kullanır ve uzak bir sunucuya veya buluta bağlanmadan telefonunuzda görüntü oluşturmanıza olanak tanır.</string>
     <string name="hint_local_diffusion_warning">Uyarı! Yerel Yayılma işlevi beta testindedir. Yerel modu kullanarak yüksek kaliteli görüntüler beklemeyin. \n\nBu uygulama, güçlü olmayan telefonlarda iyi çalışmayabilir. Oluşturma performansı ve hızı, telefonunuzun kaynaklarına (CPU, RAM) ve oluşturulan görüntünün boyutuna bağlıdır (görüntü boyutu ne kadar küçükse, oluşturma o kadar hızlı olur).</string>
 
-    <string name="hint_mediapipe_sub_title">Bu yapılandırma Google AI MediaPipe çalışma zamanını kullanır ve uzak bir sunucuya/buluta bağlanmaya gerek kalmadan telefonunuzda Stable Diffusion AI nesillerini çalıştırmanıza olanak tanır.</string>
+    <string name="hint_mediapipe_sub_title">Bu yapılandırma Google AI MediaPipe çalışma zamanını kullanır ve uzak bir sunucuya veya buluta bağlanmadan telefonunuzda görüntü oluşturmanıza olanak tanır.</string>
     <string name="hint_sdxl_sub_title">Bu yapılandırma stable-diffusion.cpp kullanır ve telefonunuzda SDXL, SDXL-Turbo, LCM veya kuantize GGUF modellerini çalıştırmanızı sağlar.</string>
     <string name="hint_core_ml_sub_title">iPhone üzerinde yerel üretim.</string>
     <string name="hint_bonsai_sub_title">iPhone cihazında yerel Bonsai Image 4B üretimi.</string>
@@ -502,7 +502,7 @@
 
     <string name="donate_title_thanks">Destekleri için bu harika insanlara teşekkürler ❤</string>
     <string name="donate_bs_title">SDAI, şu özelliklere sahip açık kaynaklı bir uygulamadır:</string>
-    <string name="donate_bs_sub_title">• Stable Diffusion AI ile görüntü oluşturma gücü sunar;\n• Üretim sağlayıcınızı seçme özgürlüğü verir;\n• AD, telemetri içermez ve sizi gözetlemez;\n• Açık kaynaklı bir yazılımdır;\n• Ücretsiz olarak kullanabilirsiniz.</string>
+    <string name="donate_bs_sub_title">• Yapay zekâ ile görüntü oluşturma olanağı sunar;\n• Üretim sağlayıcınızı seçme özgürlüğü verir;\n• AD, telemetri içermez ve sizi gözetlemez;\n• Açık kaynaklı bir yazılımdır;\n• Ücretsiz olarak kullanabilirsiniz.</string>
     <string name="donate_bs_ending">Bu yazılımı değerli buluyorsanız, projeyi desteklediğiniz ve yaşamasına yardımcı olduğunuz için teşekkürler.</string>
 
     <string name="permission_storage">Depolamak</string>
@@ -522,7 +522,7 @@
     <string name="on_boarding_page_universal_connect">Sağlayıcıları bağla</string>
     <string name="on_boarding_page_universal_android">Android</string>
     <string name="on_boarding_page_universal_ios">iOS</string>
-    <string name="on_boarding_page_form_title">Gelişmiş Özellikler\n[Kararlı Dağıtım].</string>
+    <string name="on_boarding_page_form_title">Gelişmiş [AI görüntü]\noluşturma özellikleri.</string>
     <string name="on_boarding_page_local_title">[Çevrimdışı] nesil\nYerel Dağıtım.</string>
     <string name="on_boarding_page_core_ml_title">[Çevrimdışı] Silicon Diffusion\nüretimi.</string>
     <string name="on_boarding_page_ui_title">Uygulamayı özelleştirin,\n[kendinizin] yapın!</string>

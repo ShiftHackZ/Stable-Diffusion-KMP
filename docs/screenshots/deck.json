@@ -7,6 +7,10 @@
     "en-US": {
       "languageCode": "en",
       "languageName": "English",
+      "featureGraphic": {
+        "headline": "AI Image Generator",
+        "subline": "Mobile image generation"
+      },
       "mockPrompt": "man, photorealistic, black hair, aviator glasses, handsome, beautiful, nature background",
       "mockNegativePrompt": "bad anatomy, bad fingers, distorted, jpeg artifacts",
       "labels": {
@@ -46,7 +50,7 @@
         },
         "providers": {
           "headline": ["Choose your", "AI provider"],
-          "subline": "Connect Automatic1111, SwarmUI, AI Horde, Hugging Face, OpenAI, Stability AI, or supported local Android engines."
+          "subline": "Connect AUTOMATIC1111, SwarmUI, AI Horde, Hugging Face, OpenAI, Stability AI, or supported local Android engines."
         },
         "gallery": {
           "headline": ["Build your", "image library"],
@@ -65,6 +69,10 @@
     "ru": {
       "languageCode": "ru",
       "languageName": "Русский",
+      "featureGraphic": {
+        "headline": "Генератор изображений с ИИ",
+        "subline": "Мобильная AI-генерация"
+      },
       "mockPrompt": "man, photorealistic, black hair, aviator glasses, handsome, beautiful, nature background",
       "mockNegativePrompt": "bad anatomy, bad fingers, distorted, jpeg artifacts",
       "labels": {
@@ -104,7 +112,7 @@
         },
         "providers": {
           "headline": ["Выбирай", "AI provider"],
-          "subline": "Automatic1111, SwarmUI, AI Horde, Hugging Face, OpenAI, Stability AI или поддерживаемые локальные движки Android."
+          "subline": "AUTOMATIC1111, SwarmUI, AI Horde, Hugging Face, OpenAI, Stability AI или поддерживаемые локальные движки Android."
         },
         "gallery": {
           "headline": ["Собирай", "свою галерею"],
@@ -123,6 +131,10 @@
     "uk": {
       "languageCode": "uk",
       "languageName": "Українська",
+      "featureGraphic": {
+        "headline": "Генератор зображень зі ШІ",
+        "subline": "Мобільна AI-генерація"
+      },
       "mockPrompt": "man, photorealistic, black hair, aviator glasses, handsome, beautiful, nature background",
       "mockNegativePrompt": "bad anatomy, bad fingers, distorted, jpeg artifacts",
       "labels": {
@@ -162,7 +174,7 @@
         },
         "providers": {
           "headline": ["Обирай", "AI provider"],
-          "subline": "Automatic1111, SwarmUI, AI Horde, Hugging Face, OpenAI, Stability AI або підтримувані локальні рушії Android."
+          "subline": "AUTOMATIC1111, SwarmUI, AI Horde, Hugging Face, OpenAI, Stability AI або підтримувані локальні рушії Android."
         },
         "gallery": {
           "headline": ["Збирай", "свою галерею"],

@@ -20,7 +20,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "AI Stable Diffusion Client v1"
+rootProject.name = "SDAI"
 
 val modules = listOf(
         ":app",
