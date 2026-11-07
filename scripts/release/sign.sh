@@ -78,8 +78,8 @@ if [[ "$extension" == apk ]]; then
   "$build_tools/aapt2" dump badging "$unsigned_file" > "$signing_dir/badging.txt" 2> "$signing_dir/aapt2.log" \
     || fail 'Could not inspect APK metadata.'
   package_line="$(sed -n '/^package: /{p;q;}' "$signing_dir/badging.txt")"
-  actual_id="$(printf '%s\n' "$package_line" | sed -n "s/.*name='\([^']*\)'.*/\1/p")"
-  actual_version="$(printf '%s\n' "$package_line" | sed -n "s/.*versionName='\([^']*\)'.*/\1/p")"
+  actual_id="$(printf '%s\n' "$package_line" | sed -n "s/^package: name='\([^']*\)'.*/\1/p")"
+  actual_version="$(printf '%s\n' "$package_line" | sed -n "s/.* versionName='\([^']*\)'.*/\1/p")"
   [[ "$actual_id" == "$application_id" && "$actual_version" == "$version_name" ]] \
     || fail 'APK application ID or version does not match the release request.'
   if grep -q '^application-debuggable' "$signing_dir/badging.txt"; then
