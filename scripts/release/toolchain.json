@@ -1,0 +1,69 @@
+{
+  "profile": "linux-x86_64-jdk17-sdk36-r2",
+  "jdkVersion": "17.0.21+9",
+  "gradleVersion": "8.13",
+  "compileSdk": 36,
+  "platformRevision": 2,
+  "buildToolsVersion": "35.0.0",
+  "ndkVersion": "27.0.12077973",
+  "cmakeVersion": "3.22.1",
+  "bundletoolVersion": "1.18.3",
+  "androidSdkLicenseSha1": "9002c006f4b8d9a16e715a9fa4df30ddb8abf9d9",
+  "sources": {
+    "jdk": "https://api.github.com/repos/adoptium/temurin17-binaries/releases/tags/jdk-17.0.21%2B9",
+    "gradle": "https://services.gradle.org/distributions/gradle-8.13-bin.zip.sha256",
+    "android": "https://dl.google.com/android/repository/repository2-3.xml",
+    "bundletool": "https://api.github.com/repos/google/bundletool/releases/tags/1.18.3"
+  },
+  "artifacts": {
+    "jdk": {
+      "url": "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.21%2B9/OpenJDK17U-jdk_x64_linux_hotspot_17.0.21_9.tar.gz",
+      "sha256": "8b9b611d917e3dfd8419d3566b5949226f69b052fed7e109c1368add1dfe8711",
+      "archiveRoot": "jdk-17.0.21+9",
+      "destination": "jdk"
+    },
+    "gradle": {
+      "url": "https://services.gradle.org/distributions/gradle-8.13-bin.zip",
+      "sha256": "20f1b1176237254a6fc204d8434196fa11a4cfb387567519c61556e8710aed78",
+      "archiveRoot": "gradle-8.13",
+      "destination": "gradle"
+    },
+    "platform": {
+      "url": "https://dl.google.com/android/repository/platform-36_r02.zip",
+      "sha256": "37607369a28c5b640b3a7998868d45898ebcb777565a0e85f9acf36f29631d2e",
+      "sourceSha1": "2c1a80dd4d9f7d0e6dd336ec603d9b5c55a6f576",
+      "archiveRoot": "android-36",
+      "destination": "android-sdk/platforms/android-36",
+      "revision": "2"
+    },
+    "buildTools": {
+      "url": "https://dl.google.com/android/repository/build-tools_r35_linux.zip",
+      "sha256": "bd3a4966912eb8b30ed0d00b0cda6b6543b949d5ffe00bea54c04c81e1561d88",
+      "sourceSha1": "2cfaa0bbb2336e9ec18ed3ecea84fa2e2af607bc",
+      "archiveRoot": "android-15",
+      "destination": "android-sdk/build-tools/35.0.0",
+      "revision": "35.0.0"
+    },
+    "ndk": {
+      "url": "https://dl.google.com/android/repository/android-ndk-r27-linux.zip",
+      "sha256": "2f17eb8bcbfdc40201c0b36e9a70826fcd2524ab7a2a235e2c71186c302da1dc",
+      "sourceSha1": "5e5cd517bdb98d7e0faf2c494a3041291e71bdcc",
+      "archiveRoot": "android-ndk-r27",
+      "destination": "android-sdk/ndk/27.0.12077973",
+      "revision": "27.0.12077973"
+    },
+    "cmake": {
+      "url": "https://dl.google.com/android/repository/cmake-3.22.1-linux.zip",
+      "sha256": "9196644852a978012caf7a4067ba1898debf6cc204c3341562771e31080d6869",
+      "sourceSha1": "fd0a48b4a758310df8c7aa51f59840ed48fe7ed8",
+      "archiveRoot": ".",
+      "destination": "android-sdk/cmake/3.22.1",
+      "revision": "3.22.1"
+    },
+    "bundletool": {
+      "url": "https://github.com/google/bundletool/releases/download/1.18.3/bundletool-all-1.18.3.jar",
+      "sha256": "a099cfa1543f55593bc2ed16a70a7c67fe54b1747bb7301f37fdfd6d91028e29",
+      "destination": "bundletool.jar"
+    }
+  }
+}
