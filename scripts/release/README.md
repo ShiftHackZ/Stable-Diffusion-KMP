@@ -162,12 +162,15 @@ result with `apksigner`. The helper uses the same method through
 For a signed comparison APK, its previous signature is excluded during copying;
 both original APK signatures are also verified. Neither input is modified.
 
-Local verification needs Python 3, Java, and Android Build Tools 35.0.0 on macOS or
-Linux. It needs no keystore, Linux build machine or Docker. Use an installed SDK
-for the local operating system; `setup.sh` installs Linux binaries only.
+Local verification needs Python 3.12, Java, and Android Build Tools 35.0.0 on macOS
+or Linux. Use Python 3.12 for the verification virtual environment, matching CI.
+Python 3.14 changes ZIP filename flags when `apksigcopier` 1.1.1 recreates JAR
+signature entries, which can cause a false signature-copy mismatch.
+Verification needs no keystore, Linux build machine or Docker. Use an installed
+SDK for the local operating system; `setup.sh` installs Linux binaries only.
 
 ```sh
-python3 -m venv /tmp/sdai-apk-verify
+python3.12 -m venv /tmp/sdai-apk-verify
 /tmp/sdai-apk-verify/bin/pip install --require-hashes -r scripts/release/requirements.txt
 export PATH="/tmp/sdai-apk-verify/bin:$ANDROID_HOME/build-tools/35.0.0:$PATH"
 
