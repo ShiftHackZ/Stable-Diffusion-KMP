@@ -1,0 +1,22 @@
+import groovy.json.JsonSlurper
+
+// Apply the release profile without modifying the target commit's source files.
+def profile = new JsonSlurper().parse(new File(System.getenv('SDAI_RELEASE_PROFILE')))
+gradle.beforeProject { project ->
+    project.afterEvaluate {
+        def android = project.extensions.findByName('android')
+        if (android != null) {
+            android.buildToolsVersion = profile.buildToolsVersion
+            android.ndkVersion = profile.ndkVersion
+            if (android.externalNativeBuild.cmake.path != null) {
+                android.externalNativeBuild.cmake.version = profile.cmakeVersion
+                android.defaultConfig.externalNativeBuild.cmake.arguments(
+                    "-DCMAKE_MAKE_PROGRAM=${System.getenv('SDAI_NINJA_WRAPPER')}"
+                )
+            }
+            if (project.plugins.hasPlugin('com.android.application')) {
+                android.buildTypes.getByName('release').signingConfig = null
+            }
+        }
+    }
+}

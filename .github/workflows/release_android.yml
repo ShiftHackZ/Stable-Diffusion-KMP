@@ -1,0 +1,315 @@
+name: Android Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_ref:
+        description: Branch, tag, or commit to build.
+        required: true
+        default: master
+      foss:
+        description: FOSS output
+        type: choice
+        options: [skip, apk, aab, both]
+        default: apk
+      full:
+        description: Full output
+        type: choice
+        options: [skip, apk, aab, both]
+        default: apk
+      playstore:
+        description: Play Store output
+        type: choice
+        options: [skip, apk, aab, both]
+        default: aab
+      sign:
+        description: Produce signed release outputs (no prior unsigned run required).
+        type: boolean
+        default: true
+      foss_reference_url:
+        description: Optional signed FOSS APK URL for comparison with an existing release.
+        default: ""
+      foss_reference_sha256:
+        description: Required SHA-256 when a FOSS reference URL is provided.
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-release-${{ github.ref }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  plan:
+    name: Resolve source and outputs
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      source_sha: ${{ steps.plan.outputs.source_sha }}
+      version_name: ${{ steps.plan.outputs.version_name }}
+      version_code: ${{ steps.plan.outputs.version_code }}
+      targets: ${{ steps.plan.outputs.targets }}
+      builds: ${{ steps.plan.outputs.builds }}
+    steps:
+      - name: Require the default workflow branch for release signing
+        if: inputs.sign
+        env:
+          WORKFLOW_REF: ${{ github.ref }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          if [[ "$WORKFLOW_REF" != "refs/heads/$DEFAULT_BRANCH" ]]; then
+            echo 'Run the workflow from the default branch to sign. target_ref may select any source revision.' >&2
+            exit 1
+          fi
+
+      - name: Checkout workflow tools
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: ci
+          persist-credentials: false
+          sparse-checkout: scripts/release
+
+      - name: Resolve target revision
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ inputs.target_ref }}
+          path: source
+          persist-credentials: false
+
+      - name: Select outputs
+        id: plan
+        env:
+          FOSS_OUTPUT: ${{ inputs.foss }}
+          FULL_OUTPUT: ${{ inputs.full }}
+          PLAYSTORE_OUTPUT: ${{ inputs.playstore }}
+          FOSS_REFERENCE_URL: ${{ inputs.foss_reference_url }}
+          FOSS_REFERENCE_SHA256: ${{ inputs.foss_reference_sha256 }}
+        run: python3 ci/scripts/release/plan.py source
+
+  build:
+    name: Build ${{ matrix.flavor }} ${{ matrix.format }} (${{ matrix.attempt }}/2)
+    needs: plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix: ${{ fromJSON(needs.plan.outputs.builds) }}
+    steps:
+      - name: Reclaim space from the preinstalled Android SDK
+        run: |
+          if [[ "$RUNNER_ENVIRONMENT" == github-hosted && "$ANDROID_HOME" == /usr/local/lib/android/sdk ]]; then
+            sudo rm -rf -- /usr/local/lib/android/sdk
+          fi
+          df -h "$RUNNER_TEMP"
+
+      - name: Checkout workflow tools
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: ci
+          persist-credentials: false
+          sparse-checkout: scripts/release
+
+      - name: Checkout immutable source and submodules
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.plan.outputs.source_sha }}
+          path: source
+          fetch-depth: 0
+          submodules: recursive
+          persist-credentials: false
+
+      - name: Install pinned native Linux toolchain
+        run: bash ci/scripts/release/setup.sh build "$RUNNER_TEMP/release-tools"
+
+      - name: Build unsigned artifact
+        env:
+          FLAVOR: ${{ matrix.flavor }}
+          FORMAT: ${{ matrix.format }}
+          SOURCE_SHA: ${{ needs.plan.outputs.source_sha }}
+        run: bash ci/scripts/release/build.sh source "$FLAVOR" "$FORMAT" "$RUNNER_TEMP/output" "$SOURCE_SHA"
+
+      - name: Preserve unsigned output and build evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: unsigned-${{ matrix.flavor }}-${{ matrix.format }}-${{ matrix.attempt }}
+          path: ${{ runner.temp }}/output/
+          if-no-files-found: warn
+          compression-level: 0
+          retention-days: 14
+
+  verify:
+    name: Verify ${{ matrix.flavor }} ${{ matrix.format }}
+    needs: [plan, build]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.plan.outputs.targets) }}
+    steps:
+      - name: Checkout workflow tools
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: ci
+          persist-credentials: false
+          sparse-checkout: scripts/release
+
+      - name: Install verification tools
+        run: |
+          bash ci/scripts/release/setup.sh sign "$RUNNER_TEMP/release-tools"
+          python3 -m venv "$RUNNER_TEMP/apksigcopier"
+          "$RUNNER_TEMP/apksigcopier/bin/pip" install --require-hashes -r ci/scripts/release/requirements.txt
+          echo "$RUNNER_TEMP/apksigcopier/bin" >> "$GITHUB_PATH"
+
+      - name: Download first build
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: unsigned-${{ matrix.flavor }}-${{ matrix.format }}-1
+          path: first
+
+      - name: Download independent rebuild
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: unsigned-${{ matrix.flavor }}-${{ matrix.format }}-2
+          path: second
+
+      - name: Compare builds and validate package identity
+        env:
+          FLAVOR: ${{ matrix.flavor }}
+          FORMAT: ${{ matrix.format }}
+          VERSION_NAME: ${{ needs.plan.outputs.version_name }}
+          VERSION_CODE: ${{ needs.plan.outputs.version_code }}
+          SOURCE_SHA: ${{ needs.plan.outputs.source_sha }}
+          FOSS_REFERENCE_URL: ${{ inputs.foss_reference_url }}
+          FOSS_REFERENCE_SHA256: ${{ inputs.foss_reference_sha256 }}
+          ANDROID_RELEASE_CERT_SHA256: ${{ vars.ANDROID_RELEASE_CERT_SHA256 }}
+        run: |
+          reference_args=()
+          if [[ "$FLAVOR" == foss && "$FORMAT" == apk && -n "$FOSS_REFERENCE_URL" ]]; then
+            reference_args=("$FOSS_REFERENCE_URL" "$FOSS_REFERENCE_SHA256")
+          fi
+          python3 ci/scripts/release/verify.py \
+            "first/unsigned.$FORMAT" "second/unsigned.$FORMAT" "$RUNNER_TEMP/verified" \
+            "$FLAVOR" "$FORMAT" "$VERSION_NAME" "$VERSION_CODE" "$SOURCE_SHA" \
+            "${reference_args[@]}"
+          cp first/toolchain.json first/submodules.txt first/environment.txt "$RUNNER_TEMP/verified/"
+
+      - name: Save verification diagnostics
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: verification-failure-${{ matrix.flavor }}-${{ matrix.format }}
+          path: ${{ runner.temp }}/verified/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Save verified unsigned artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: verified-${{ matrix.flavor }}-${{ matrix.format }}
+          path: ${{ runner.temp }}/verified/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
+
+  sign:
+    name: Sign ${{ matrix.flavor }} ${{ matrix.format }}
+    if: inputs.sign
+    needs: [plan, verify]
+    runs-on: ubuntu-24.04
+    environment: android-release
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.plan.outputs.targets) }}
+    steps:
+      - name: Checkout trusted signing tools
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: ci
+          persist-credentials: false
+          sparse-checkout: scripts/release
+
+      - name: Install pinned signing tools
+        run: |
+          bash ci/scripts/release/setup.sh sign "$RUNNER_TEMP/release-tools"
+          python3 -m venv "$RUNNER_TEMP/apksigcopier"
+          "$RUNNER_TEMP/apksigcopier/bin/pip" install --require-hashes -r ci/scripts/release/requirements.txt
+          echo "$RUNNER_TEMP/apksigcopier/bin" >> "$GITHUB_PATH"
+
+      - name: Download verified artifact
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: verified-${{ matrix.flavor }}-${{ matrix.format }}
+          path: verified
+
+      - name: Download independent APK rebuild for signature-copy verification
+        if: matrix.format == 'apk'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: unsigned-${{ matrix.flavor }}-${{ matrix.format }}-2
+          path: independent
+
+      - name: Sign and verify certificate
+        env:
+          FLAVOR: ${{ matrix.flavor }}
+          FORMAT: ${{ matrix.format }}
+          VERSION_NAME: ${{ needs.plan.outputs.version_name }}
+          ANDROID_RELEASE_KEYSTORE_BASE64: ${{ secrets.ANDROID_RELEASE_KEYSTORE_BASE64 }}
+          ANDROID_RELEASE_STORE_PASSWORD: ${{ secrets.ANDROID_RELEASE_STORE_PASSWORD }}
+          ANDROID_RELEASE_KEY_ALIAS: ${{ secrets.ANDROID_RELEASE_KEY_ALIAS }}
+          ANDROID_RELEASE_KEY_PASSWORD: ${{ secrets.ANDROID_RELEASE_KEY_PASSWORD }}
+          ANDROID_RELEASE_CERT_SHA256: ${{ vars.ANDROID_RELEASE_CERT_SHA256 }}
+          ANDROID_PLAY_KEYSTORE_BASE64: ${{ secrets.ANDROID_PLAY_KEYSTORE_BASE64 }}
+          ANDROID_PLAY_STORE_PASSWORD: ${{ secrets.ANDROID_PLAY_STORE_PASSWORD }}
+          ANDROID_PLAY_KEY_ALIAS: ${{ secrets.ANDROID_PLAY_KEY_ALIAS }}
+          ANDROID_PLAY_KEY_PASSWORD: ${{ secrets.ANDROID_PLAY_KEY_PASSWORD }}
+          ANDROID_PLAY_CERT_SHA256: ${{ vars.ANDROID_PLAY_CERT_SHA256 }}
+        run: |
+          bash ci/scripts/release/sign.sh "$FLAVOR" "$FORMAT" "verified/unsigned.$FORMAT" "$RUNNER_TEMP/signed" "$VERSION_NAME"
+          cp verified/metadata.json verified/toolchain.json verified/submodules.txt "$RUNNER_TEMP/signed/"
+
+      - name: Verify signed APK against the independent rebuild
+        if: matrix.format == 'apk'
+        env:
+          FLAVOR: ${{ matrix.flavor }}
+          VERSION_NAME: ${{ needs.plan.outputs.version_name }}
+          RELEASE_CERT: ${{ vars.ANDROID_RELEASE_CERT_SHA256 }}
+          PLAY_CERT: ${{ vars.ANDROID_PLAY_CERT_SHA256 }}
+        run: |
+          expected_cert="$RELEASE_CERT"
+          if [[ "$FLAVOR" == playstore && -n "$PLAY_CERT" ]]; then
+            expected_cert="$PLAY_CERT"
+          fi
+          python3 ci/scripts/release/compare_apk.py \
+            "$RUNNER_TEMP/signed/sdai-$FLAVOR-release-$VERSION_NAME.apk" independent/unsigned.apk \
+            --unsigned --expected-cert-sha256 "$expected_cert" \
+            --report "$RUNNER_TEMP/signed/signature-copy-comparison.json"
+
+      - name: Save signature-copy failure report
+        if: failure() && matrix.format == 'apk'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: signature-copy-failure-${{ matrix.flavor }}
+          path: ${{ runner.temp }}/signed/signature-copy-comparison.json
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Save signed release artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sdai-${{ matrix.flavor }}-${{ matrix.format }}-${{ needs.plan.outputs.version_name }}
+          path: ${{ runner.temp }}/signed/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
