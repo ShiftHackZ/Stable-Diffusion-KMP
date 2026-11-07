@@ -5,7 +5,7 @@
 ![F-Droid](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Ff-droid.org%2Fapi%2Fv1%2Fpackages%2Fcom.shifthackz.aisdv1.app.foss&query=%24.packages%5B0%5D.versionName&label=F-Droid&link=https%3A%2F%2Ff-droid.org%2Fpackages%2Fcom.shifthackz.aisdv1.app.foss%2F)
 [![App Store](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fitunes.apple.com%2Flookup%3Fid%3D6778314183%26country%3Dus&query=%24.results%5B0%5D.version&label=App%20Store&logo=appstore&logoColor=white&color=blue)](https://apps.apple.com/us/app/sdai-ai-image-generator/id6778314183)
 
-[Website](https://sdai.moroz.cc) | [Google Play](https://play.google.com/store/apps/details?id=com.shifthackz.aisdv1.app) | [F-Droid](https://f-droid.org/packages/com.shifthackz.aisdv1.app.foss) | [App Store](https://apps.apple.com/us/app/sdai-ai-image-generator/id6778314183) | [Nightly Build](https://github.com/ShiftHackZ/Stable-Diffusion-Android/releases/download/nightly/sdai-full-nightly.apk) | [Telegram](https://t.me/sdai_app) | [Discord](https://discord.gg/jzdR9m8Ves) | [4PDA](https://4pda.to/forum/index.php?showtopic=1082639)
+[Website](https://sdai.moroz.cc) | [Google Play](https://play.google.com/store/apps/details?id=com.shifthackz.aisdv1.app) | [F-Droid](https://f-droid.org/packages/com.shifthackz.aisdv1.app.foss) | [App Store](https://apps.apple.com/us/app/sdai-ai-image-generator/id6778314183) | [Nightly Build](https://github.com/ShiftHackZ/SDAI-KMP/releases/download/nightly/sdai-full-nightly.apk) | [Telegram](https://t.me/sdai_app) | [Discord](https://discord.gg/jzdR9m8Ves) | [4PDA](https://4pda.to/forum/index.php?showtopic=1082639)
 
 <p>
   <a href="https://play.google.com/store/apps/details?id=com.shifthackz.aisdv1.app"><img src="docs/assets/badge-google-play.svg" alt="Get it on Google Play" height="54"></a>
@@ -194,12 +194,12 @@ Android flavor availability is driven by the Gradle flavor configuration and run
 
 The iOS app is not split into Android-style flavors. It uses the shared mobile UI, remote-provider stack, Silicon Diffusion Core ML, and Silicon Diffusion PrismML Bonsai. Android ONNX, MediaPipe, SDXL, and Local Diffusion PrismML Bonsai local runtimes remain Android-specific.
 
-For a historical overview of flavor policy, see the project wiki page: [Build flavor difference](https://github.com/ShiftHackZ/Stable-Diffusion-Android/wiki/Build-flavor-difference).
+For a historical overview of flavor policy, see the project wiki page: [Build flavor difference](https://github.com/ShiftHackZ/SDAI-KMP/wiki/Build-flavor-difference).
 
 ## Legacy Android 0.x.x Versions
 
 The old Android-only `0.x.x` release line is no longer maintained. It remains available for archival and reference purposes in the
-[`archive/version-0.x.x`](https://github.com/ShiftHackZ/Stable-Diffusion-Android/tree/archive/version-0.x.x) branch.
+[`archive/version-0.x.x`](https://github.com/ShiftHackZ/SDAI-KMP/tree/archive/version-0.x.x) branch.
 
 ## Supported Languages
 
@@ -212,6 +212,7 @@ SDAI uses the language provided by the OS when a translation is available.
 | Turkish              | 0.4.1         | Translated |
 | Russian              | 0.5.5         | Translated |
 | Chinese (Simplified) | 0.6.2         | Translated |
+| German               | 1.2.0         | Translated |
 
 Translation contributions are welcome.
 
@@ -228,18 +229,19 @@ Machine-readable citation metadata is available in [`CITATION.cff`](CITATION.cff
 
 If you mention SDAI in research, articles, benchmarks, tutorials, app collections, or public project documentation, please cite it as:
 
-> SDAI, version 1.1.2, an open-source cross-platform AI image generation client by Dmytro Moroz (Moroz Inc.). https://github.com/ShiftHackZ/Stable-Diffusion-KMP
+> SDAI, version 1.2.0, an open-source cross-platform AI image generation client by Dmytro Moroz (Moroz Inc.). https://github.com/ShiftHackZ/SDAI-KMP
 
 BibTeX:
 
 ```bibtex
 @software{Moroz_SDAI_2026,
   author = {Moroz, Dmytro},
+  date = {2026-11-08},
   license = {AGPL-3.0-only},
-  month = jul,
+  month = nov,
   title = {{SDAI}},
-  url = {https://github.com/ShiftHackZ/Stable-Diffusion-KMP},
-  version = {1.1.2},
+  url = {https://github.com/ShiftHackZ/SDAI-KMP},
+  version = {1.2.0},
   year = {2026}
 }
 ```
@@ -247,5 +249,5 @@ BibTeX:
 APA:
 
 ```
-Moroz, D. (2026). SDAI (Version 1.1.2) [Computer software]. https://github.com/ShiftHackZ/Stable-Diffusion-KMP
+Moroz, D. (2026). SDAI (Version 1.2.0) [Computer software]. https://github.com/ShiftHackZ/SDAI-KMP
 ```

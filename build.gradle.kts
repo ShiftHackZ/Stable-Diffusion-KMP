@@ -69,7 +69,7 @@ subprojects {
                     localDirectory.set(projectDir.resolve("src"))
                     remoteUrl.set(
                         URI(
-                            "https://github.com/ShiftHackZ/Stable-Diffusion-Android/tree/master/" +
+                            "https://github.com/ShiftHackZ/SDAI-KMP/tree/master/" +
                                 projectDir.relativeTo(rootProject.projectDir).path +
                                 "/src"
                         )

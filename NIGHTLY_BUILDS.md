@@ -5,13 +5,13 @@ SDAI publishes an Android `full` flavor nightly APK from `develop` through GitHu
 The public APK URL is stable:
 
 ```text
-https://github.com/ShiftHackZ/Stable-Diffusion-Android/releases/download/nightly/sdai-full-nightly.apk
+https://github.com/ShiftHackZ/SDAI-KMP/releases/download/nightly/sdai-full-nightly.apk
 ```
 
 The release page is:
 
 ```text
-https://github.com/ShiftHackZ/Stable-Diffusion-Android/releases/tag/nightly
+https://github.com/ShiftHackZ/SDAI-KMP/releases/tag/nightly
 ```
 
 ## What Gets Built

@@ -40,8 +40,8 @@ android {
         buildConfigField("String", "DONATE_URL", "\"https://sdai.moroz.cc/donate.html\"")
         buildConfigField("String", "PROJECT_WEBSITE_URL", "\"https://sdai.moroz.cc\"")
         buildConfigField("String", "DEVELOPER_WEBSITE_URL", "\"https://moroz.cc\"")
-        buildConfigField("String", "GITHUB_SOURCE_URL", "\"https://github.com/ShiftHackZ/Stable-Diffusion-Android\"")
-        buildConfigField("String", "LICENSE_URL", "\"https://github.com/ShiftHackZ/Stable-Diffusion-Android/blob/master/LICENSE\"")
+        buildConfigField("String", "GITHUB_SOURCE_URL", "\"https://github.com/ShiftHackZ/SDAI-KMP\"")
+        buildConfigField("String", "LICENSE_URL", "\"https://github.com/ShiftHackZ/SDAI-KMP/blob/master/LICENSE\"")
         buildConfigField("String", "SETUP_INSTRUCTIONS_URL", "\"https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki\"")
         buildConfigField("String", "SWARM_UI_INFO_URL", "\"https://github.com/mcmonkeyprojects/SwarmUI/tree/master/docs\"")
 
