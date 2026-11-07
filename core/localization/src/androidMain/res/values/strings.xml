@@ -216,10 +216,10 @@
     <string name="auth_anonymous">Anonymous</string>
     <string name="auth_http_basic">HTTP Basic</string>
 
-    <string name="hint_server_setup_title">Provide your Stable Diffusion WebUI URL</string>
-    <string name="hint_server_setup_sub_title">A web interface for Stable Diffusion, implemented using Gradio library.</string>
+    <string name="hint_server_setup_title">Provide your AUTOMATIC1111 WebUI URL</string>
+    <string name="hint_server_setup_sub_title">AUTOMATIC1111 is a web interface for AI image generation, built with Gradio.</string>
     <string name="hint_valid_urls">Here are the examples of server URLs:\n• http://192.168.0.2:%1$s\n• http://yourdomain.com:%1$s\n• https://yourdomain.com</string>
-    <string name="hint_demo_mode">This mode allows you to test the application behavior, even if you don\'t have Stable Diffusion WebUI server.\n\nIn demo mode app ignores user prompt, does not use AI server, and returns some mock images.</string>
+    <string name="hint_demo_mode">This mode allows you to test the application behavior, even if you don\'t have an AUTOMATIC1111 WebUI server.\n\nIn demo mode app ignores user prompt, does not use AI server, and returns some mock images.</string>
     <string name="hint_args_warning" tools:ignore="TypographyDashes,Typos">Before connecting ensure that:\n• you are running AUTOMATIC1111 WebUI with flags --api --listen\n• your firewall is not blocking 7860 port\n• phone is on the same WiFi with your PC</string>
     <string name="hint_args_swarm_ui_warning" tools:ignore="TypographyDashes,Typos">Before connecting ensure that:\n• your firewall is not blocking 7801 port\n• phone is on the same WiFi with your PC</string>
 
@@ -255,14 +255,14 @@
     <string name="hint_stability_ai_engine">Stability AI Engine</string>
 
     <string name="hint_swarm_ui_title">Provide your Swarm UI URL</string>
-    <string name="hint_swarm_ui_sub_title">A Modular Stable Diffusion Web-User-Interface, with an emphasis on making tools easily accessible, high performance, and extensibility.</string>
+    <string name="hint_swarm_ui_sub_title">A modular web interface for AI image generation, with an emphasis on accessible tools, high performance, and extensibility.</string>
 
     <string name="hint_local_diffusion_title" translatable="false">Local Diffusion Microsoft ONNX</string>
-    <string name="hint_local_diffusion_sub_title">This configuration uses Microsoft ONNX runtime and allows to run Stable Diffusion AI generations on your phone, with no need to connect to remote server/cloud.</string>
+    <string name="hint_local_diffusion_sub_title">This configuration uses the Microsoft ONNX runtime to generate images on your phone, with no need to connect to a remote server or cloud.</string>
     <string name="hint_local_diffusion_warning">Warning! Local Diffusion functionality is in beta-test. Don\'t expect for high quality images using local mode. \n\nThis implementation may not work well on non-powerful phones. Generation performance and speed depends on your phone resources (CPU, RAM) and the size of generated image (the smaller the image size, the faster the generation).</string>
 
     <string name="hint_mediapipe_title" translatable="false">Local Diffusion Google AI MediaPipe</string>
-    <string name="hint_mediapipe_sub_title">This configuration uses Google AI MediaPipe and allows to run Stable Diffusion AI generations on your phone, with no need to connect to remote server/cloud.</string>
+    <string name="hint_mediapipe_sub_title">This configuration uses Google AI MediaPipe to generate images on your phone, with no need to connect to a remote server or cloud.</string>
     <string name="hint_sdxl_title" translatable="false">Local Diffusion SDXL</string>
     <string name="hint_sdxl_sub_title">This configuration uses stable-diffusion.cpp and allows to run SDXL, SDXL-Turbo, LCM, or quantized GGUF models on your phone.</string>
     <string name="hint_core_ml_sub_title">Local generation on iPhone.</string>
@@ -539,7 +539,7 @@
 
     <string name="donate_title_thanks">Thanks to this amazing people for the support ❤</string>
     <string name="donate_bs_title">SDAI is an open source application that:</string>
-    <string name="donate_bs_sub_title">• Brings you power of creating images with Stable Diffusion AI;\n• Gives you freedom to choose your generation provider;\n• Has no ADs, telemetry and does not spy on you;\n• Is an open source software;\n• You are welcome to use it for free.</string>
+    <string name="donate_bs_sub_title">• Lets you create images with AI;\n• Gives you freedom to choose your generation provider;\n• Has no ADs, telemetry and does not spy on you;\n• Is an open source software;\n• You are welcome to use it for free.</string>
     <string name="donate_bs_ending">If you find this software valuable, thank you for supporting the project and helping it stay alive.</string>
 
     <string name="permission_storage">Storage</string>
@@ -559,7 +559,7 @@
     <string name="on_boarding_page_universal_connect">Connect providers</string>
     <string name="on_boarding_page_universal_android">Android</string>
     <string name="on_boarding_page_universal_ios">iOS</string>
-    <string name="on_boarding_page_form_title">Advanced [Stable Diffusion]\nAI generation features.</string>
+    <string name="on_boarding_page_form_title">Advanced [AI image]\ngeneration features.</string>
     <string name="on_boarding_page_local_title">[Offline] Local Diffusion\nAI generation.</string>
     <string name="on_boarding_page_core_ml_title">[Offline] Silicon Diffusion\nAI generation.</string>
     <string name="on_boarding_page_ui_title">Configure, customize,\nmake it [yours]!</string>

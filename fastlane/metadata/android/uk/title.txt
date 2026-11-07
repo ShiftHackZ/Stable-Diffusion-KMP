@@ -1,1 +1,1 @@
-SDAI - Stable Diffusion AI
+SDAI

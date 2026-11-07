@@ -5,9 +5,9 @@ type: software
 version: "1.1.2"
 date-released: "2026-07-19"
 abstract: >-
-  SDAI is an open-source, cross-platform AI image generation client for
+  SDAI is an independent, open-source AI image generation client for
   Android and iOS. It provides a unified mobile workflow for self-hosted
-  Stable Diffusion servers, hosted image APIs, crowdsourced generation,
+  AUTOMATIC1111 and SwarmUI servers, hosted image APIs, crowdsourced generation,
   and supported on-device generation runtimes.
 authors:
   - family-names: "Moroz"
@@ -21,7 +21,8 @@ url: "https://sdai.moroz.cc"
 keywords:
   - "artificial intelligence"
   - "image generation"
-  - "Stable Diffusion"
+  - "diffusion models"
+  - "AUTOMATIC1111"
   - "Android"
   - "iOS"
   - "Kotlin Multiplatform"

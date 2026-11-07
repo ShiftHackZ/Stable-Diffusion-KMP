@@ -1,11 +1,11 @@
-# Stable Diffusion AI (SDAI)
+# SDAI
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21442838.svg)](https://doi.org/10.5281/zenodo.21442838)
 ![Google Play](https://img.shields.io/endpoint?color=blue&logo=google-play&logoColor=white&url=https%3A%2F%2Fplay.cuzi.workers.dev%2Fplay%3Fi%3Dcom.shifthackz.aisdv1.app%26l%3DGoogle%2520Play%26m%3D%24version)
 ![F-Droid](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Ff-droid.org%2Fapi%2Fv1%2Fpackages%2Fcom.shifthackz.aisdv1.app.foss&query=%24.packages%5B0%5D.versionName&label=F-Droid&link=https%3A%2F%2Ff-droid.org%2Fpackages%2Fcom.shifthackz.aisdv1.app.foss%2F)
 [![App Store](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fitunes.apple.com%2Flookup%3Fid%3D6778314183%26country%3Dus&query=%24.results%5B0%5D.version&label=App%20Store&logo=appstore&logoColor=white&color=blue)](https://apps.apple.com/us/app/sdai-ai-image-generator/id6778314183)
 
-[Website](https://sdai.moroz.cc) | [Google Play](https://4pda.to/forum/index.php?showtopic=1082639) | [F-Droid](https://f-droid.org/packages/com.shifthackz.aisdv1.app.foss) | [App Store](https://apps.apple.com/us/app/sdai-ai-image-generator/id6778314183) | [Nightly Build](https://github.com/ShiftHackZ/Stable-Diffusion-Android/releases/download/nightly/sdai-full-nightly.apk) | [Telegram](https://t.me/sdai_app) | [Discord](https://discord.gg/jzdR9m8Ves) | [4PDA](https://4pda.to/forum/index.php?showtopic=1082639)
+[Website](https://sdai.moroz.cc) | [Google Play](https://play.google.com/store/apps/details?id=com.shifthackz.aisdv1.app) | [F-Droid](https://f-droid.org/packages/com.shifthackz.aisdv1.app.foss) | [App Store](https://apps.apple.com/us/app/sdai-ai-image-generator/id6778314183) | [Nightly Build](https://github.com/ShiftHackZ/Stable-Diffusion-Android/releases/download/nightly/sdai-full-nightly.apk) | [Telegram](https://t.me/sdai_app) | [Discord](https://discord.gg/jzdR9m8Ves) | [4PDA](https://4pda.to/forum/index.php?showtopic=1082639)
 
 <p>
   <a href="https://play.google.com/store/apps/details?id=com.shifthackz.aisdv1.app"><img src="docs/assets/badge-google-play.svg" alt="Get it on Google Play" height="54"></a>
@@ -13,7 +13,9 @@
   <a href="https://apps.apple.com/us/app/sdai-ai-image-generator/id6778314183"><img src="docs/assets/badge-app-store-readme.png" alt="Download on the App Store" height="54"></a>
 </p>
 
-SDAI is an open-source, cross-platform AI image generation client for Android and iOS. It gives you one clean mobile workflow for self-hosted Stable Diffusion servers, hosted image APIs, crowdsourced generation, and platform-specific local generation where supported.
+SDAI is an independent, open-source AI image generation client for Android and iOS. It brings self-hosted AUTOMATIC1111 and SwarmUI servers, hosted image APIs, crowdsourced generation, and supported on-device generation into one mobile app.
+
+**SDAI is not affiliated with, endorsed by, or sponsored by Stability AI or the Stable Diffusion project.** References to third-party models, software and services describe compatibility only.
 
 No ads. No telemetry. No lock-in to a single provider.
 
@@ -30,7 +32,7 @@ Root-level Markdown documents:
 ## Why SDAI
 
 - Choose the backend that fits the moment: your own AUTOMATIC1111 or SwarmUI server, AI Horde, Hugging Face, OpenAI, Stability AI, Fal.ai, ArliAI, or local diffusion where the platform supports it.
-- Generate with familiar Stable Diffusion controls: prompts, negative prompts where supported, seed, steps, CFG scale, image size, model selectors, LoRA, embeddings, and more.
+- Generate with familiar controls: prompts, negative prompts where supported, seed, steps, CFG scale, image size, model selectors, LoRA, embeddings, and more.
 - Use one shared mobile experience across Android and iOS for remote generation workflows.
 - Work locally when privacy or connectivity matters with Android ONNX, MediaPipe, stable-diffusion.cpp SDXL, Android Local Diffusion PrismML Bonsai, iOS Silicon Diffusion Core ML, or iOS Silicon Diffusion PrismML Bonsai.
 - Keep your creations in a local gallery with image details, zoom, sharing, native platform save flows, and zip export.
@@ -52,43 +54,43 @@ Android builds are distributed in three flavors:
 
 iOS uses the shared mobile experience with remote generation providers, Silicon Diffusion Core ML, and Silicon Diffusion PrismML Bonsai for on-device generation on supported devices. Android also exposes Local Diffusion PrismML Bonsai on builds where the native runtime is packaged, with device suitability checked through setup and benchmark flows.
 
-| Provider / backend | What it connects to | iOS    | Android `playstore` | Android `full` | Android `foss` | Notes |
-| --- | --- |--------| --- | --- | --- | --- |
-| AUTOMATIC1111 WebUI | Your own Stable-Diffusion-WebUI API server | 🟢 Yes | 🟢 Yes | 🟢 Yes | 🟢 Yes | Own server, demo mode, txt2img, img2img, inpaint, models, LoRA, embeddings, hypernetworks. |
-| SwarmUI | Your own SwarmUI server | 🟢 Yes | 🟢 Yes | 🟢 Yes | 🟢 Yes | Own server with SwarmUI model, LoRA, and embeddings discovery. |
-| AI Horde | Crowdsourced Stable Horde workers | 🟢 Yes | 🟢 Yes | 🟢 Yes | 🟢 Yes | Works with the default anonymous key or your own Horde API key. |
-| Hugging Face Inference API | Hosted Hugging Face image models | 🟢 Yes | 🟢 Yes | 🟢 Yes | 🟢 Yes | Requires a Hugging Face API key and selected model. |
-| OpenAI Images API | OpenAI image generation with GPT Image models | 🟢 Yes | 🟢 Yes | 🟢 Yes | 🟢 Yes | Requires an OpenAI API key. |
-| Stability AI | Stability AI / DreamStudio image API | 🟢 Yes | 🟢 Yes | 🟢 Yes | 🟢 Yes | Requires a Stability AI API key and engine selection. |
-| Fal.ai | Fal.ai hosted image generation endpoints | 🟢 Yes | 🟢 Yes | 🟢 Yes | 🟢 Yes | Requires a Fal.ai API key. Supports compatible FLUX txt2img/img2img endpoints through the shared generation form. |
-| ArliAI | ArliAI SDNext-compatible hosted image API | 🟢 Yes | 🟢 Yes | 🟢 Yes | 🟢 Yes | Alpha provider. Requires an ArliAI API key. Supports txt2img/img2img, checkpoint discovery, sampler selection, steps, CFG scale, negative prompt, and batch generation. |
-| Local Diffusion: Microsoft ONNX Runtime | On-device ONNX model inference | 🔴 No  | 🟢 Yes | 🟢 Yes | 🟢 Yes | Android-only txt2img. Custom local model paths are available outside the Play build. |
-| Local Diffusion: Google AI MediaPipe | On-device MediaPipe image generator | 🔴 No  | 🟢 Yes | 🟢 Yes | 🔴 No | Android-only txt2img. Excluded from the FOSS flavor. |
-| Local Diffusion: stable-diffusion.cpp SDXL | On-device SDXL-compatible model inference | 🔴 No  | 🟢 Yes | 🟢 Yes | 🟢 Yes | Android-only txt2img through stable-diffusion.cpp. Supports catalog GGUF/safetensors/ckpt models, CPU/OpenCL/Vulkan backend selection, and custom local model paths outside the Play build. |
-| Silicon Diffusion Core ML | On-device Core ML Stable Diffusion runtime | 🟢 Yes | 🔴 No | 🔴 No | 🔴 No | iOS-only txt2img and img2img with explicit downloadable/imported Core ML model assets. SDXL catalog entries are disabled until device-gated QA is stable. |
-| Local / Silicon Diffusion PrismML Bonsai | On-device PrismML Bonsai Image 4B runtime | 🟢 Yes | 🟢 Yes | 🟢 Yes | 🟢 Yes | iOS uses the Silicon Diffusion MLX runtime and is marked beta. Android uses the Local Diffusion NDK/ART runtime, is marked experimental, supports Auto/CPU/Vulkan backend selection, and should be device-checked before heavy runs. |
+| Provider / backend                         | What it connects to                           | iOS    | Android `playstore` | Android `full` | Android `foss` | Notes                                                                                                                                                                                                                                |
+| ------------------------------------------ | --------------------------------------------- | ------ | ------------------- | -------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| AUTOMATIC1111 WebUI                        | Your own AUTOMATIC1111 API server             | 🟢 Yes | 🟢 Yes              | 🟢 Yes         | 🟢 Yes         | Own server, demo mode, txt2img, img2img, inpaint, models, LoRA, embeddings, hypernetworks.                                                                                                                                           |
+| SwarmUI                                    | Your own SwarmUI server                       | 🟢 Yes | 🟢 Yes              | 🟢 Yes         | 🟢 Yes         | Own server with SwarmUI model, LoRA, and embeddings discovery.                                                                                                                                                                       |
+| AI Horde                                   | Crowdsourced Stable Horde workers             | 🟢 Yes | 🟢 Yes              | 🟢 Yes         | 🟢 Yes         | Works with the default anonymous key or your own Horde API key.                                                                                                                                                                      |
+| Hugging Face Inference API                 | Hosted Hugging Face image models              | 🟢 Yes | 🟢 Yes              | 🟢 Yes         | 🟢 Yes         | Requires a Hugging Face API key and selected model.                                                                                                                                                                                  |
+| OpenAI Images API                          | OpenAI image generation with GPT Image models | 🟢 Yes | 🟢 Yes              | 🟢 Yes         | 🟢 Yes         | Requires an OpenAI API key.                                                                                                                                                                                                          |
+| Stability AI                               | Stability AI / DreamStudio image API          | 🟢 Yes | 🟢 Yes              | 🟢 Yes         | 🟢 Yes         | Requires a Stability AI API key and engine selection.                                                                                                                                                                                |
+| Fal.ai                                     | Fal.ai hosted image generation endpoints      | 🟢 Yes | 🟢 Yes              | 🟢 Yes         | 🟢 Yes         | Requires a Fal.ai API key. Supports compatible FLUX txt2img/img2img endpoints through the shared generation form.                                                                                                                    |
+| ArliAI                                     | ArliAI SDNext-compatible hosted image API     | 🟢 Yes | 🟢 Yes              | 🟢 Yes         | 🟢 Yes         | Alpha provider. Requires an ArliAI API key. Supports txt2img/img2img, checkpoint discovery, sampler selection, steps, CFG scale, negative prompt, and batch generation.                                                              |
+| Local Diffusion: Microsoft ONNX Runtime    | On-device ONNX model inference                | 🔴 No  | 🟢 Yes              | 🟢 Yes         | 🟢 Yes         | Android-only txt2img. Custom local model paths are available outside the Play build.                                                                                                                                                 |
+| Local Diffusion: Google AI MediaPipe       | On-device MediaPipe image generator           | 🔴 No  | 🟢 Yes              | 🟢 Yes         | 🔴 No          | Android-only txt2img. Excluded from the FOSS flavor.                                                                                                                                                                                 |
+| Local Diffusion: stable-diffusion.cpp SDXL | On-device SDXL-compatible model inference     | 🔴 No  | 🟢 Yes              | 🟢 Yes         | 🟢 Yes         | Android-only txt2img through stable-diffusion.cpp. Supports catalog GGUF/safetensors/ckpt models, CPU/OpenCL/Vulkan backend selection, and custom local model paths outside the Play build.                                          |
+| Silicon Diffusion Core ML                  | On-device Core ML image generation runtime    | 🟢 Yes | 🔴 No               | 🔴 No          | 🔴 No          | iOS-only txt2img and img2img with explicit downloadable/imported Core ML model assets. SDXL catalog entries are disabled until device-gated QA is stable.                                                                            |
+| Local / Silicon Diffusion PrismML Bonsai   | On-device PrismML Bonsai Image 4B runtime     | 🟢 Yes | 🟢 Yes              | 🟢 Yes         | 🟢 Yes         | iOS uses the Silicon Diffusion MLX runtime and is marked beta. Android uses the Local Diffusion NDK/ART runtime, is marked experimental, supports Auto/CPU/Vulkan backend selection, and should be device-checked before heavy runs. |
 
 ## AI Feature Matrix
 
-| AI-specific feature | Supported providers | Notes |
-| --- | --- | --- |
-| Text to image | AUTOMATIC1111, SwarmUI, AI Horde, Hugging Face, OpenAI, Stability AI, Fal.ai, ArliAI, Local ONNX, Local MediaPipe, Local SDXL, Local/Silicon Diffusion PrismML Bonsai, Silicon Diffusion Core ML | Core generation path exists for every provider exposed by the current platform/build. |
-| Image to image | AUTOMATIC1111, SwarmUI, AI Horde, Hugging Face, Stability AI, Fal.ai, ArliAI, Silicon Diffusion Core ML | OpenAI and Android local diffusion providers are txt2img-only in the app. Core ML img2img requires a compatible downloaded model archive. |
-| Inpaint mask controls | AUTOMATIC1111 | Mask image, mask blur, mask mode, masked content, inpaint area, and only-masked padding are mapped to the A1111 img2img API. |
-| Negative prompt | AUTOMATIC1111, SwarmUI, Hugging Face, Stability AI, ArliAI, Local ONNX, Local SDXL, Local/Silicon Diffusion PrismML Bonsai, Silicon Diffusion Core ML | Horde, OpenAI, and MediaPipe flows do not expose/send a negative prompt. |
-| Batch generation | AUTOMATIC1111, SwarmUI, AI Horde, Hugging Face, OpenAI, Stability AI, Fal.ai, ArliAI | Fal.ai uses native `num_images`; ArliAI uses the SDNext-compatible batch size field; local providers are treated as single-image generation flows. |
-| Model or engine selection | AUTOMATIC1111, SwarmUI, Hugging Face, OpenAI, Stability AI, Fal.ai, ArliAI, Local ONNX, Local MediaPipe, Local SDXL, Local/Silicon Diffusion PrismML Bonsai, Silicon Diffusion Core ML | Depending on provider, this selects an SD checkpoint, SwarmUI model, HF model, OpenAI model, Stability engine, Fal.ai endpoint, ArliAI checkpoint, or local model. Android SDXL and Bonsai also expose runtime backend selection where supported. |
-| LoRA picker | AUTOMATIC1111, SwarmUI | Remote LoRA lists are fetched from the active compatible server. |
-| Textual inversion / embeddings picker | AUTOMATIC1111, SwarmUI | Remote embeddings are fetched from the active compatible server. |
-| Hypernetwork picker | AUTOMATIC1111 | Hypernetwork discovery is implemented for A1111. |
-| Sampler selection | AUTOMATIC1111, Stability AI, ArliAI, Local SDXL | A1111 samplers are fetched from the server; Stability AI and ArliAI use provider-specific sampler lists; Local SDXL maps compatible samplers to stable-diffusion.cpp. |
-| Restore faces | AUTOMATIC1111 | Exposed only for A1111 generation. |
-| OpenAI model, size, and quality | OpenAI | Uses current GPT Image model options exposed by the Images API. |
-| Stability style preset and clip guidance | Stability AI | Passed to Stability AI requests when selected. |
-| NSFW flag | AI Horde, Fal.ai, Silicon Diffusion Core ML | Exposed for Horde requests, mapped to Fal.ai safety-checker settings, and mapped to the local Core ML safety checker. |
-| Offline generation | Local ONNX, Local MediaPipe, Local SDXL, Local/Silicon Diffusion PrismML Bonsai, Silicon Diffusion Core ML | Runs after the selected local model is available on the current platform. |
-| On-device benchmark | Local ONNX, Local MediaPipe, Local SDXL, Local/Silicon Diffusion PrismML Bonsai, Silicon Diffusion Core ML | Runs a safe inference-like CPU and memory workload, includes Android Bonsai Vulkan compute probing, stores the latest local result, and recommends local provider settings without loading model files or starting AI runtimes. |
-| Generation interrupt | AUTOMATIC1111, AI Horde, Local ONNX, Local SDXL, Local/Silicon Diffusion PrismML Bonsai, Silicon Diffusion Core ML | Other providers rely on request completion when no platform-level interrupt is exposed. |
+| AI-specific feature                      | Supported providers                                                                                                                                                                              | Notes                                                                                                                                                                                                                                             |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Text to image                            | AUTOMATIC1111, SwarmUI, AI Horde, Hugging Face, OpenAI, Stability AI, Fal.ai, ArliAI, Local ONNX, Local MediaPipe, Local SDXL, Local/Silicon Diffusion PrismML Bonsai, Silicon Diffusion Core ML | Core generation path exists for every provider exposed by the current platform/build.                                                                                                                                                             |
+| Image to image                           | AUTOMATIC1111, SwarmUI, AI Horde, Hugging Face, Stability AI, Fal.ai, ArliAI, Silicon Diffusion Core ML                                                                                          | OpenAI and Android local diffusion providers are txt2img-only in the app. Core ML img2img requires a compatible downloaded model archive.                                                                                                         |
+| Inpaint mask controls                    | AUTOMATIC1111                                                                                                                                                                                    | Mask image, mask blur, mask mode, masked content, inpaint area, and only-masked padding are mapped to the A1111 img2img API.                                                                                                                      |
+| Negative prompt                          | AUTOMATIC1111, SwarmUI, Hugging Face, Stability AI, ArliAI, Local ONNX, Local SDXL, Local/Silicon Diffusion PrismML Bonsai, Silicon Diffusion Core ML                                            | Horde, OpenAI, and MediaPipe flows do not expose/send a negative prompt.                                                                                                                                                                          |
+| Batch generation                         | AUTOMATIC1111, SwarmUI, AI Horde, Hugging Face, OpenAI, Stability AI, Fal.ai, ArliAI                                                                                                             | Fal.ai uses native `num_images`; ArliAI uses the SDNext-compatible batch size field; local providers are treated as single-image generation flows.                                                                                                |
+| Model or engine selection                | AUTOMATIC1111, SwarmUI, Hugging Face, OpenAI, Stability AI, Fal.ai, ArliAI, Local ONNX, Local MediaPipe, Local SDXL, Local/Silicon Diffusion PrismML Bonsai, Silicon Diffusion Core ML           | Depending on provider, this selects an SD checkpoint, SwarmUI model, HF model, OpenAI model, Stability engine, Fal.ai endpoint, ArliAI checkpoint, or local model. Android SDXL and Bonsai also expose runtime backend selection where supported. |
+| LoRA picker                              | AUTOMATIC1111, SwarmUI                                                                                                                                                                           | Remote LoRA lists are fetched from the active compatible server.                                                                                                                                                                                  |
+| Textual inversion / embeddings picker    | AUTOMATIC1111, SwarmUI                                                                                                                                                                           | Remote embeddings are fetched from the active compatible server.                                                                                                                                                                                  |
+| Hypernetwork picker                      | AUTOMATIC1111                                                                                                                                                                                    | Hypernetwork discovery is implemented for A1111.                                                                                                                                                                                                  |
+| Sampler selection                        | AUTOMATIC1111, Stability AI, ArliAI, Local SDXL                                                                                                                                                  | A1111 samplers are fetched from the server; Stability AI and ArliAI use provider-specific sampler lists; Local SDXL maps compatible samplers to stable-diffusion.cpp.                                                                             |
+| Restore faces                            | AUTOMATIC1111                                                                                                                                                                                    | Exposed only for A1111 generation.                                                                                                                                                                                                                |
+| OpenAI model, size, and quality          | OpenAI                                                                                                                                                                                           | Uses current GPT Image model options exposed by the Images API.                                                                                                                                                                                   |
+| Stability style preset and clip guidance | Stability AI                                                                                                                                                                                     | Passed to Stability AI requests when selected.                                                                                                                                                                                                    |
+| NSFW flag                                | AI Horde, Fal.ai, Silicon Diffusion Core ML                                                                                                                                                      | Exposed for Horde requests, mapped to Fal.ai safety-checker settings, and mapped to the local Core ML safety checker.                                                                                                                             |
+| Offline generation                       | Local ONNX, Local MediaPipe, Local SDXL, Local/Silicon Diffusion PrismML Bonsai, Silicon Diffusion Core ML                                                                                       | Runs after the selected local model is available on the current platform.                                                                                                                                                                         |
+| On-device benchmark                      | Local ONNX, Local MediaPipe, Local SDXL, Local/Silicon Diffusion PrismML Bonsai, Silicon Diffusion Core ML                                                                                       | Runs a safe inference-like CPU and memory workload, includes Android Bonsai Vulkan compute probing, stores the latest local result, and recommends local provider settings without loading model files or starting AI runtimes.                   |
+| Generation interrupt                     | AUTOMATIC1111, AI Horde, Local ONNX, Local SDXL, Local/Silicon Diffusion PrismML Bonsai, Silicon Diffusion Core ML                                                                               | Other providers rely on request completion when no platform-level interrupt is exposed.                                                                                                                                                           |
 
 ## Core Workflow
 
@@ -123,7 +125,7 @@ iOS uses the shared mobile experience with remote generation providers, Silicon 
 
 ### Option 1: AUTOMATIC1111 WebUI
 
-Use this if you already run [Stable-Diffusion-WebUI](https://github.com/AUTOMATIC1111/stable-diffusion-webui) locally, on a server, or in a notebook environment.
+Use this if you already run [AUTOMATIC1111 WebUI](https://github.com/AUTOMATIC1111/stable-diffusion-webui) locally, on a server, or in a notebook environment.
 
 1. Follow the setup instructions in the WebUI repository.
 2. Start WebUI with API access enabled, for example with `--api --listen`.
@@ -174,7 +176,7 @@ Use this on Android for on-device SDXL-compatible txt2img generation through sta
 
 ### Option 12: Silicon Diffusion Core ML
 
-Use this on iOS for on-device Stable Diffusion generation through Core ML. Download a supported Core ML model from the in-app catalog or import a compatible local model package, select it during setup, and generate without sending prompts or source images to a remote service.
+Use this on iOS for on-device image generation through Core ML. Download a supported Core ML model from the in-app catalog or import a compatible local model package, select it during setup, and generate without sending prompts or source images to a remote service.
 
 The first-party catalog intentionally starts with Apple/Hugging Face Stable Diffusion 1.x and 2.x palettized Core ML archives. SDXL archives are not exposed by default until memory and execution-plan compatibility are stable across a tested device matrix.
 
@@ -203,13 +205,13 @@ The old Android-only `0.x.x` release line is no longer maintained. It remains av
 
 SDAI uses the language provided by the OS when a translation is available.
 
-| Language | Since version | Status |
-| --- | --- | --- |
-| English | 0.1.0 | Translated |
-| Ukrainian | 0.1.0 | Translated |
-| Turkish | 0.4.1 | Translated |
-| Russian | 0.5.5 | Translated |
-| Chinese (Simplified) | 0.6.2 | Translated |
+| Language             | Since version | Status     |
+| -------------------- | ------------- | ---------- |
+| English              | 0.1.0         | Translated |
+| Ukrainian            | 0.1.0         | Translated |
+| Turkish              | 0.4.1         | Translated |
+| Russian              | 0.5.5         | Translated |
+| Chinese (Simplified) | 0.6.2         | Translated |
 
 Translation contributions are welcome.
 

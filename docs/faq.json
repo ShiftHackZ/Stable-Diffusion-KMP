@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-19",
+  "updated": "2026-11-07",
   "title": "Frequently Asked Questions",
   "intro": "Short answers for the setup and capability questions that come up most often around SDAI.",
   "categories": [
@@ -11,14 +11,10 @@
           "id": "what-is-sdai",
           "question": "What is SDAI?",
           "answer": [
-            "SDAI is an open-source AI image generation client for Android and iOS. It gives you one mobile workflow for self-hosted Stable Diffusion servers, hosted image APIs, community workers, and supported on-device generation engines.",
+            "SDAI is an open-source AI image generation client for Android and iOS. It gives you one mobile workflow for self-hosted image generation servers, hosted image APIs, community workers, and supported on-device generation engines.",
             "The app is built around provider choice: you can connect the backend that fits your setup instead of being locked into one cloud service."
           ],
-          "tags": [
-            "overview",
-            "providers",
-            "open-source"
-          ]
+          "tags": ["overview", "providers", "open-source"]
         },
         {
           "id": "which-provider",
@@ -27,11 +23,7 @@
             "If you already run AUTOMATIC1111 or SwarmUI, start there. If you want a hosted API, use the provider where you already have an API key, such as OpenAI, Stability AI, Hugging Face, Fal.ai, ArliAI, or AI Horde.",
             "Use local providers when privacy, offline work, or device experiments matter and your phone has enough memory for the selected model. Demo mode is useful when you only want to explore the app UI."
           ],
-          "tags": [
-            "providers",
-            "setup",
-            "local"
-          ]
+          "tags": ["providers", "setup", "local"]
         },
         {
           "id": "features-differ",
@@ -40,11 +32,7 @@
             "Feature availability depends on the active provider, platform, and Android flavor. Some backends support Img2Img, LoRA, embeddings, samplers, restore faces, or batch generation; others expose only a smaller API.",
             "SDAI tries to show controls that the selected provider can actually use. That is why switching providers can change the generation form."
           ],
-          "tags": [
-            "features",
-            "providers",
-            "samplers"
-          ]
+          "tags": ["features", "providers", "samplers"]
         },
         {
           "id": "release-channel",
@@ -53,11 +41,7 @@
             "Use the Google Play, F-Droid, or App Store stable release for daily use. Use Nightly on Android or TestFlight on iOS when you want to try upcoming changes early and are comfortable helping test beta behavior.",
             "Nightly and TestFlight builds can include fresh fixes and features, but they can also change faster than stable releases."
           ],
-          "tags": [
-            "release",
-            "nightly",
-            "testflight"
-          ]
+          "tags": ["release", "nightly", "testflight"]
         }
       ]
     },
@@ -72,11 +56,7 @@
             "Start AUTOMATIC1111 with API access enabled, commonly with flags such as --api and --listen, then enter a URL that your phone can reach.",
             "If the server runs on your computer, do not use the computer's own localhost address from the phone. Use the LAN IP, a reachable VPN or tunnel address, or a properly exposed HTTPS URL."
           ],
-          "tags": [
-            "automatic1111",
-            "setup",
-            "server-url"
-          ]
+          "tags": ["automatic1111", "setup", "server-url"]
         },
         {
           "id": "a1111-forks",
@@ -85,11 +65,7 @@
             "A1111-compatible APIs may work when they keep the endpoints SDAI expects, but forks are not all identical. SDAI has dedicated support for SwarmUI; other forks can require separate compatibility work.",
             "If a fork removes or changes an endpoint, connection or discovery can fail even when the browser UI works."
           ],
-          "tags": [
-            "automatic1111",
-            "sdnext",
-            "compatibility"
-          ]
+          "tags": ["automatic1111", "sdnext", "compatibility"]
         },
         {
           "id": "api-key-auth",
@@ -98,11 +74,7 @@
             "Hosted providers do not all expose the same API shape. Some need only a key, while others also need endpoint, model, engine, checkpoint, or discovery settings.",
             "SDAI keeps setup provider-specific so generation requests can be mapped to the selected backend correctly."
           ],
-          "tags": [
-            "api-key",
-            "providers",
-            "setup"
-          ]
+          "tags": ["api-key", "providers", "setup"]
         }
       ]
     },
@@ -115,14 +87,9 @@
           "question": "Can I use my own local models, safetensors, or SDXL files?",
           "answer": [
             "It depends on the local engine. Android ONNX expects compatible ONNX or ORT model layouts. Android local SDXL uses stable-diffusion.cpp and supports compatible catalog GGUF, safetensors, and ckpt models. iOS Core ML and Bonsai use their own model archive formats.",
-            "A desktop Stable Diffusion checkpoint is not automatically compatible with every mobile local provider. The Google Play build can also be more restricted around custom local file paths than full or FOSS builds."
+            "A desktop model checkpoint is not automatically compatible with every mobile local provider. The Google Play build can also be more restricted around custom local file paths than full or FOSS builds."
           ],
-          "tags": [
-            "local",
-            "models",
-            "safetensors",
-            "sdxl"
-          ]
+          "tags": ["local", "models", "safetensors", "sdxl"]
         },
         {
           "id": "local-slow-or-crash",
@@ -131,12 +98,7 @@
             "Mobile diffusion is memory-heavy and device-specific. Resolution, steps, model size, quantization, runtime backend, RAM pressure, and thermal limits all matter.",
             "Use the in-app benchmark as a starting point, try smaller or quantized models, lower resolution and steps, and expect experimental acceleration such as NNAPI, Vulkan, OpenCL, or device NPUs to vary by chipset and driver."
           ],
-          "tags": [
-            "local",
-            "performance",
-            "nnapi",
-            "memory"
-          ]
+          "tags": ["local", "performance", "nnapi", "memory"]
         },
         {
           "id": "higher-resolution",
@@ -145,11 +107,7 @@
             "Some local paths support SDXL-compatible models, but higher resolutions need much more memory and can fail on devices that otherwise run smaller generations well.",
             "For local generation, treat high resolution as a device-and-model compatibility question rather than a simple UI switch."
           ],
-          "tags": [
-            "local",
-            "resolution",
-            "sdxl"
-          ]
+          "tags": ["local", "resolution", "sdxl"]
         },
         {
           "id": "model-storage",
@@ -158,11 +116,7 @@
             "Local generation needs large model files on the device. Storage behavior also depends on Android version, app flavor, and platform storage rules.",
             "The app includes storage usage tooling, but external SD-card workflows and arbitrary custom model paths are limited by OS and distribution constraints, especially in Play builds."
           ],
-          "tags": [
-            "storage",
-            "models",
-            "android"
-          ]
+          "tags": ["storage", "models", "android"]
         }
       ]
     },
@@ -177,11 +131,7 @@
             "Generated images are kept in the app gallery. From there you can open details, reuse prompts, share images, save to the device, or export the gallery when the platform and permissions allow it.",
             "Auto-save and manual save behavior can differ from the in-app gallery, so check the active save settings and storage permissions if you do not see a file in the system gallery."
           ],
-          "tags": [
-            "gallery",
-            "save",
-            "export"
-          ]
+          "tags": ["gallery", "save", "export"]
         },
         {
           "id": "metadata-and-seeds",
@@ -190,11 +140,7 @@
             "SDAI talks to providers through APIs, and each provider writes metadata differently. A1111 compatibility also depends on how the server handles API-generated files, PNG info, seed values, and image formats.",
             "For reproducibility with A1111, use explicit seed values that fit common web UI limits and keep the same model, sampler, scheduler, size, steps, CFG, and prompt settings."
           ],
-          "tags": [
-            "metadata",
-            "seeds",
-            "automatic1111"
-          ]
+          "tags": ["metadata", "seeds", "automatic1111"]
         },
         {
           "id": "background-generation",
@@ -203,11 +149,7 @@
             "Remote requests and background tasks are easier to keep alive than heavy on-device inference. Local generation can still be limited by Android or iOS resource management, thermal pressure, and the selected runtime.",
             "For the most reliable local run, keep SDAI in the foreground and avoid starting other memory-heavy apps during generation."
           ],
-          "tags": [
-            "background",
-            "local",
-            "battery"
-          ]
+          "tags": ["background", "local", "battery"]
         }
       ]
     },
@@ -222,11 +164,7 @@
             "SDAI itself does not include ads or telemetry. Local settings, generated images, provider configuration, and model files are stored on your device.",
             "When you use a remote provider, prompts, source images, settings, and API keys are sent to that provider or to your own server because that is how remote generation works. Local generation is designed to run on device after the model is available."
           ],
-          "tags": [
-            "privacy",
-            "telemetry",
-            "providers"
-          ]
+          "tags": ["privacy", "telemetry", "providers"]
         },
         {
           "id": "flavor-differences",
@@ -235,12 +173,7 @@
             "Android has playstore, full, and foss flavors. Most remote providers are available everywhere, but some local or file-access features differ. Google AI MediaPipe is not included in the FOSS flavor, and broad custom local model path selection is more limited in the Play build.",
             "iOS is a separate App Store/TestFlight app with the shared mobile UI, remote providers, and iOS-specific local providers such as Core ML and Bonsai."
           ],
-          "tags": [
-            "flavors",
-            "fdroid",
-            "ios",
-            "android"
-          ]
+          "tags": ["flavors", "fdroid", "ios", "android"]
         },
         {
           "id": "permissions",
@@ -249,11 +182,7 @@
             "Permissions are tied to optional features: camera input for Img2Img, storage and media access for saving or sharing images and model files, notifications for background progress, and network access for remote providers or downloads.",
             "Denying a permission can disable the related feature, but the rest of the app should continue to work where possible."
           ],
-          "tags": [
-            "permissions",
-            "privacy",
-            "storage"
-          ]
+          "tags": ["permissions", "privacy", "storage"]
         }
       ]
     }

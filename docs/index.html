@@ -1,321 +1,509 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SDAI - Stable Diffusion AI for Android, iOS, and API Documentation</title>
-  <meta name="description" content="SDAI is an open-source mobile AI image generation app for Android and iOS with self-hosted servers, hosted providers including Fal.ai and ArliAI, Android local SDXL/ONNX/MediaPipe, iOS Core ML/Bonsai, gallery, benchmark, usage tools, and API docs.">
-  <meta name="keywords" content="SDAI, Stable Diffusion AI, AI image generation, Android Stable Diffusion, iOS Stable Diffusion, Core ML Stable Diffusion, Silicon Diffusion Core ML, PrismML Bonsai, MLX, Local SDXL, stable-diffusion.cpp, Fal.ai, ArliAI, Dokka documentation, Kotlin API documentation, Automatic1111, SwarmUI, AI Horde, Hugging Face, Stability AI, OpenAI">
-  <meta name="application-name" content="SDAI">
-  <meta name="author" content="Moroz Inc.">
-  <meta name="robots" content="index,follow,max-image-preview:large">
-  <meta name="theme-color" content="#514a91">
-  <link rel="canonical" href="https://sdai.moroz.cc/">
-  <link rel="alternate" href="https://sdai.moroz.cc/" hreflang="en">
-  <link rel="apple-touch-icon" href="https://sdai.moroz.cc/assets/sdai.png">
-  <link rel="manifest" href="site.webmanifest">
-  <meta property="og:title" content="SDAI - Stable Diffusion AI for Android, iOS, and API Documentation">
-  <meta property="og:description" content="Generate AI images from your phone with self-hosted servers, cloud providers such as Fal.ai and ArliAI, Android local SDXL, or iOS Core ML/Bonsai, and browse the SDAI Kotlin API documentation.">
-  <meta property="og:url" content="https://sdai.moroz.cc/">
-  <meta property="og:site_name" content="SDAI">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://sdai.moroz.cc/screenshots/site/ios/en-US/01-create.png">
-  <meta property="og:image:width" content="1600">
-  <meta property="og:image:height" content="900">
-  <meta property="og:image:alt" content="SDAI AI image generation result preview">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="SDAI - Stable Diffusion AI for Android, iOS, and API Documentation">
-  <meta name="twitter:description" content="An open-source mobile Stable Diffusion workflow with provider freedom, Android local SDXL/ONNX/MediaPipe, iOS Core ML/Bonsai, benchmark guidance, and Dokka API docs.">
-  <meta name="twitter:image" content="https://sdai.moroz.cc/screenshots/site/ios/en-US/01-create.png">
-  <link rel="icon" href="assets/sdai.png">
-  <link rel="stylesheet" href="css/site.css">
-  <script src="js/site.js" defer></script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Organization",
-          "@id": "https://sdai.moroz.cc/#organization",
-          "name": "Moroz Inc.",
-          "url": "https://moroz.cc/",
-          "email": "sdai@moroz.cc"
-        },
-        {
-          "@type": "WebSite",
-          "@id": "https://sdai.moroz.cc/#website",
-          "name": "SDAI",
-          "alternateName": "Stable Diffusion AI",
-          "url": "https://sdai.moroz.cc/",
-          "hasPart": {
-            "@id": "https://sdai.moroz.cc/docs/#documentation"
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SDAI - AI Image Generation for Android and iOS</title>
+    <meta
+      name="description"
+      content="SDAI is an open-source mobile AI image generation app for Android and iOS with self-hosted servers, hosted providers including Fal.ai and ArliAI, Android local SDXL/ONNX/MediaPipe, iOS Core ML/Bonsai, gallery, benchmark, usage tools, and API docs."
+    />
+    <meta
+      name="keywords"
+      content="SDAI, AI image generation, Android AI image generator, iOS AI image generator, Silicon Diffusion Core ML, PrismML Bonsai, MLX, Local SDXL, stable-diffusion.cpp, Fal.ai, ArliAI, Dokka documentation, Kotlin API documentation, AUTOMATIC1111, SwarmUI, AI Horde, Hugging Face, Stability AI, OpenAI"
+    />
+    <meta name="application-name" content="SDAI" />
+    <meta name="author" content="Moroz Inc." />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="theme-color" content="#514a91" />
+    <link rel="canonical" href="https://sdai.moroz.cc/" />
+    <link rel="alternate" href="https://sdai.moroz.cc/" hreflang="en" />
+    <link rel="apple-touch-icon" href="https://sdai.moroz.cc/assets/sdai.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta
+      property="og:title"
+      content="SDAI - AI Image Generation for Android and iOS"
+    />
+    <meta
+      property="og:description"
+      content="Generate AI images from your phone with self-hosted servers, cloud providers such as Fal.ai and ArliAI, Android local SDXL, or iOS Core ML/Bonsai, and browse the SDAI Kotlin API documentation."
+    />
+    <meta property="og:url" content="https://sdai.moroz.cc/" />
+    <meta property="og:site_name" content="SDAI" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:image"
+      content="https://sdai.moroz.cc/screenshots/site/ios/en-US/01-create.png"
+    />
+    <meta property="og:image:width" content="1600" />
+    <meta property="og:image:height" content="900" />
+    <meta
+      property="og:image:alt"
+      content="SDAI AI image generation result preview"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="SDAI - AI Image Generation for Android and iOS"
+    />
+    <meta
+      name="twitter:description"
+      content="An open-source mobile AI image generation app with provider choice, Android local SDXL/ONNX/MediaPipe, iOS Core ML/Bonsai, benchmark guidance, and Dokka API docs."
+    />
+    <meta
+      name="twitter:image"
+      content="https://sdai.moroz.cc/screenshots/site/ios/en-US/01-create.png"
+    />
+    <link rel="icon" href="assets/sdai.png" />
+    <link rel="stylesheet" href="css/site.css" />
+    <script src="js/site.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://sdai.moroz.cc/#organization",
+            "name": "Moroz Inc.",
+            "url": "https://moroz.cc/",
+            "email": "sdai@moroz.cc"
           },
-          "publisher": {
-            "@id": "https://sdai.moroz.cc/#organization"
-          }
-        },
-        {
-          "@type": "SoftwareApplication",
-          "@id": "https://sdai.moroz.cc/#app",
-          "name": "SDAI",
-          "alternateName": "Stable Diffusion AI",
-          "applicationCategory": "MultimediaApplication",
-          "operatingSystem": "Android, iOS",
-          "description": "Open-source mobile AI image generation app for Stable Diffusion workflows with self-hosted servers, hosted AI providers, Android local SDXL/ONNX/MediaPipe options, iOS Core ML/Bonsai generation, gallery, benchmark, and usage tools.",
-          "image": "https://sdai.moroz.cc/assets/sdai.png",
-          "screenshot": [
-            "https://sdai.moroz.cc/screenshots/site/ios/en-US/01-create.png",
-            "https://sdai.moroz.cc/screenshots/site/ios/en-US/02-controls.png",
-            "https://sdai.moroz.cc/screenshots/site/ios/en-US/03-providers.png"
-          ],
-          "url": "https://sdai.moroz.cc/",
-          "downloadUrl": [
-            "https://play.google.com/store/apps/details?id=com.shifthackz.aisdv1.app",
-            "https://f-droid.org/packages/com.shifthackz.aisdv1.app.foss",
-            "https://apps.apple.com/us/app/sdai-ai-image-generator/id6778314183"
-          ],
-          "sameAs": [
-            "https://github.com/ShiftHackZ/Stable-Diffusion-Android",
-            "https://t.me/sdai_app",
-            "https://discord.gg/jzdR9m8Ves"
-          ],
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
+          {
+            "@type": "WebSite",
+            "@id": "https://sdai.moroz.cc/#website",
+            "name": "SDAI",
+            "url": "https://sdai.moroz.cc/",
+            "hasPart": {
+              "@id": "https://sdai.moroz.cc/docs/#documentation"
+            },
+            "publisher": {
+              "@id": "https://sdai.moroz.cc/#organization"
+            }
           },
-          "publisher": {
-            "@id": "https://sdai.moroz.cc/#organization"
-          }
-        },
-        {
-          "@type": "WebPage",
-          "@id": "https://sdai.moroz.cc/docs/#documentation",
-          "name": "SDAI Documentation",
-          "url": "https://sdai.moroz.cc/docs/",
-          "description": "Dokka API documentation for SDAI Kotlin Multiplatform, Android, iOS, and shared modules.",
-          "isPartOf": {
-            "@id": "https://sdai.moroz.cc/#website"
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://sdai.moroz.cc/#app",
+            "name": "SDAI",
+            "applicationCategory": "MultimediaApplication",
+            "operatingSystem": "Android, iOS",
+            "description": "Open-source mobile AI image generation app with self-hosted servers, hosted AI providers, Android local SDXL/ONNX/MediaPipe options, iOS Core ML/Bonsai generation, gallery, benchmark, and usage tools.",
+            "image": "https://sdai.moroz.cc/assets/sdai.png",
+            "screenshot": [
+              "https://sdai.moroz.cc/screenshots/site/ios/en-US/01-create.png",
+              "https://sdai.moroz.cc/screenshots/site/ios/en-US/02-controls.png",
+              "https://sdai.moroz.cc/screenshots/site/ios/en-US/03-providers.png"
+            ],
+            "url": "https://sdai.moroz.cc/",
+            "downloadUrl": [
+              "https://play.google.com/store/apps/details?id=com.shifthackz.aisdv1.app",
+              "https://f-droid.org/packages/com.shifthackz.aisdv1.app.foss",
+              "https://apps.apple.com/us/app/sdai-ai-image-generator/id6778314183"
+            ],
+            "sameAs": [
+              "https://github.com/ShiftHackZ/Stable-Diffusion-Android",
+              "https://t.me/sdai_app",
+              "https://discord.gg/jzdR9m8Ves"
+            ],
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "publisher": {
+              "@id": "https://sdai.moroz.cc/#organization"
+            }
           },
-          "about": {
-            "@id": "https://sdai.moroz.cc/#app"
+          {
+            "@type": "WebPage",
+            "@id": "https://sdai.moroz.cc/docs/#documentation",
+            "name": "SDAI Documentation",
+            "url": "https://sdai.moroz.cc/docs/",
+            "description": "Dokka API documentation for SDAI Kotlin Multiplatform, Android, iOS, and shared modules.",
+            "isPartOf": {
+              "@id": "https://sdai.moroz.cc/#website"
+            },
+            "about": {
+              "@id": "https://sdai.moroz.cc/#app"
+            }
           }
-        }
-      ]
-    }
-  </script>
-</head>
-<body data-page="home">
-  <div id="site-header"></div>
+        ]
+      }
+    </script>
+  </head>
+  <body data-page="home">
+    <div id="site-header"></div>
 
-  <main>
-    <section class="hero">
-      <div class="shell hero-content">
-        <img class="hero-logo" src="assets/sdai.png" width="512" height="512" alt="SDAI app icon">
-        <p class="eyebrow">Stable Diffusion AI for Android and iOS</p>
-        <h1 class="hero-title">SDAI</h1>
-        <p class="hero-tagline">
-          Generate images with your own server, OpenAI, Stability AI, Fal.ai, ArliAI, community workers, Android local engines, or iOS Core ML/Bonsai from one clean mobile workflow.
-        </p>
-        <div class="store-actions" data-store-buttons aria-label="Download SDAI"></div>
-      </div>
-    </section>
-
-    <section class="section screenshots-section section-gradient">
-      <div class="shell">
-        <div class="section-heading">
-          <p class="section-label">Screenshots</p>
-          <h2>A compact app for serious Stable Diffusion work.</h2>
+    <main>
+      <section class="hero">
+        <div class="shell hero-content">
+          <img
+            class="hero-logo"
+            src="assets/sdai.png"
+            width="512"
+            height="512"
+            alt="SDAI app icon"
+          />
+          <p class="eyebrow">AI image generation for Android and iOS</p>
+          <h1 class="hero-title">SDAI</h1>
+          <p class="hero-tagline">
+            Generate images with your own server, OpenAI, Stability AI, Fal.ai,
+            ArliAI, community workers, Android local engines, or iOS Core
+            ML/Bonsai from one clean mobile workflow.
+          </p>
+          <div
+            class="store-actions"
+            data-store-buttons
+            aria-label="Download SDAI"
+          ></div>
+          <p>
+            SDAI is an independent project and is not affiliated with, endorsed
+            by, or sponsored by Stability AI or the Stable Diffusion project.
+            References to third-party models, software and services describe
+            compatibility only.
+          </p>
         </div>
-        <div class="screenshot-slider" data-screenshot-slider aria-label="SDAI app screenshots">
-          <div class="screenshot-track" data-slider-track>
-            <figure class="screenshot-slide">
-              <img src="screenshots/site/ios/en-US/01-create.png" width="1600" height="900" loading="lazy" alt="SDAI generation result preview with a generated AI image on an iPhone">
-              <figcaption class="screenshot-copy">
-                <span>Results</span>
-                <h3>Preview results right away</h3>
-                <p>Generate in demo or production mode, inspect the image, and keep it in your local gallery.</p>
-              </figcaption>
-            </figure>
-            <figure class="screenshot-slide">
-              <img src="screenshots/site/ios/en-US/02-controls.png" width="1600" height="900" loading="lazy" alt="SDAI tagged prompt controls with positive and negative prompt chips on an iPhone">
-              <figcaption class="screenshot-copy">
-                <span>Controls</span>
-                <h3>Prompt with clean tags</h3>
-                <p>Use tagged positive and negative prompts, size, seed, sampler, CFG, LoRA, and advanced options.</p>
-              </figcaption>
-            </figure>
-            <figure class="screenshot-slide">
-              <img src="screenshots/site/ios/en-US/03-providers.png" width="1600" height="900" loading="lazy" alt="SDAI provider selection with remote and local generation providers on an iPhone">
-              <figcaption class="screenshot-copy">
-                <span>Providers</span>
-                <h3>Choose your AI provider</h3>
-                <p>Connect Automatic1111, SwarmUI, AI Horde, Hugging Face, OpenAI, Stability AI, Fal.ai, ArliAI, or local engines.</p>
-              </figcaption>
-            </figure>
-            <figure class="screenshot-slide">
-              <img src="screenshots/site/ios/en-US/04-gallery.png" width="1600" height="900" loading="lazy" alt="SDAI gallery for generated AI images on an iPhone">
-              <figcaption class="screenshot-copy">
-                <span>Gallery</span>
-                <h3>Build your image library</h3>
-                <p>Review generated images, open details, share, save, and export your local collection.</p>
-              </figcaption>
-            </figure>
-            <figure class="screenshot-slide">
-              <img src="screenshots/site/ios/en-US/05-settings.png" width="1600" height="900" loading="lazy" alt="SDAI look and feel settings with light and dark theme options on an iPhone">
-              <figcaption class="screenshot-copy">
-                <span>Settings</span>
-                <h3>Tune the look and feel</h3>
-                <p>Set language, gallery density, system theme behavior, dark theme palette, and accent color.</p>
-              </figcaption>
-            </figure>
-            <figure class="screenshot-slide">
-              <img src="screenshots/site/ios/en-US/06-open.png" width="1600" height="900" loading="lazy" alt="SDAI generation detail screen with generated image parameters on an iPhone">
-              <figcaption class="screenshot-copy">
-                <span>Details</span>
-                <h3>Inspect every generation</h3>
-                <p>Open result details, copy prompts, send images back to Txt2Img or Img2Img, and reuse context.</p>
-              </figcaption>
-            </figure>
+      </section>
+
+      <section class="section screenshots-section section-gradient">
+        <div class="shell">
+          <div class="section-heading">
+            <p class="section-label">Screenshots</p>
+            <h2>A compact app for AI image generation.</h2>
           </div>
-          <div class="screenshot-controls" aria-label="Screenshot slider controls">
-            <button class="slider-button" type="button" data-slider-prev aria-label="Previous screenshot">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="slider-progress" aria-hidden="true"><span data-slider-progress></span></div>
-            <button class="slider-button" type="button" data-slider-next aria-label="Next screenshot">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
+          <div
+            class="screenshot-slider"
+            data-screenshot-slider
+            aria-label="SDAI app screenshots"
+          >
+            <div class="screenshot-track" data-slider-track>
+              <figure class="screenshot-slide">
+                <img
+                  src="screenshots/site/ios/en-US/01-create.png"
+                  width="1600"
+                  height="900"
+                  loading="lazy"
+                  alt="SDAI generation result preview with a generated AI image on an iPhone"
+                />
+                <figcaption class="screenshot-copy">
+                  <span>Results</span>
+                  <h3>Preview results right away</h3>
+                  <p>
+                    Generate in demo or production mode, inspect the image, and
+                    keep it in your local gallery.
+                  </p>
+                </figcaption>
+              </figure>
+              <figure class="screenshot-slide">
+                <img
+                  src="screenshots/site/ios/en-US/02-controls.png"
+                  width="1600"
+                  height="900"
+                  loading="lazy"
+                  alt="SDAI tagged prompt controls with positive and negative prompt chips on an iPhone"
+                />
+                <figcaption class="screenshot-copy">
+                  <span>Controls</span>
+                  <h3>Prompt with clean tags</h3>
+                  <p>
+                    Use tagged positive and negative prompts, size, seed,
+                    sampler, CFG, LoRA, and advanced options.
+                  </p>
+                </figcaption>
+              </figure>
+              <figure class="screenshot-slide">
+                <img
+                  src="screenshots/site/ios/en-US/03-providers.png"
+                  width="1600"
+                  height="900"
+                  loading="lazy"
+                  alt="SDAI provider selection with remote and local generation providers on an iPhone"
+                />
+                <figcaption class="screenshot-copy">
+                  <span>Providers</span>
+                  <h3>Choose your AI provider</h3>
+                  <p>
+                    Connect AUTOMATIC1111, SwarmUI, AI Horde, Hugging Face,
+                    OpenAI, Stability AI, Fal.ai, ArliAI, or local engines.
+                  </p>
+                </figcaption>
+              </figure>
+              <figure class="screenshot-slide">
+                <img
+                  src="screenshots/site/ios/en-US/04-gallery.png"
+                  width="1600"
+                  height="900"
+                  loading="lazy"
+                  alt="SDAI gallery for generated AI images on an iPhone"
+                />
+                <figcaption class="screenshot-copy">
+                  <span>Gallery</span>
+                  <h3>Build your image library</h3>
+                  <p>
+                    Review generated images, open details, share, save, and
+                    export your local collection.
+                  </p>
+                </figcaption>
+              </figure>
+              <figure class="screenshot-slide">
+                <img
+                  src="screenshots/site/ios/en-US/05-settings.png"
+                  width="1600"
+                  height="900"
+                  loading="lazy"
+                  alt="SDAI look and feel settings with light and dark theme options on an iPhone"
+                />
+                <figcaption class="screenshot-copy">
+                  <span>Settings</span>
+                  <h3>Tune the look and feel</h3>
+                  <p>
+                    Set language, gallery density, system theme behavior, dark
+                    theme palette, and accent color.
+                  </p>
+                </figcaption>
+              </figure>
+              <figure class="screenshot-slide">
+                <img
+                  src="screenshots/site/ios/en-US/06-open.png"
+                  width="1600"
+                  height="900"
+                  loading="lazy"
+                  alt="SDAI generation detail screen with generated image parameters on an iPhone"
+                />
+                <figcaption class="screenshot-copy">
+                  <span>Details</span>
+                  <h3>Inspect every generation</h3>
+                  <p>
+                    Open result details, copy prompts, send images back to
+                    Txt2Img or Img2Img, and reuse context.
+                  </p>
+                </figcaption>
+              </figure>
+            </div>
+            <div
+              class="screenshot-controls"
+              aria-label="Screenshot slider controls"
+            >
+              <button
+                class="slider-button"
+                type="button"
+                data-slider-prev
+                aria-label="Previous screenshot"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="m15 18-6-6 6-6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+              <div class="slider-progress" aria-hidden="true">
+                <span data-slider-progress></span>
+              </div>
+              <button
+                class="slider-button"
+                type="button"
+                data-slider-next
+                aria-label="Next screenshot"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="m9 6 6 6-6 6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section feature-create-section">
-      <div class="shell feature-strip" aria-label="SDAI highlights">
-        <article>
-          <span>Open source</span>
-          <p>Inspect the code, report issues, and help shape the app on GitHub.</p>
-        </article>
-        <article>
-          <span>Provider freedom</span>
-          <p>Use your own server, hosted APIs such as Fal.ai and ArliAI, community workers, Android local engines, or iOS Core ML/Bonsai.</p>
-        </article>
-        <article>
-          <span>Made for mobile</span>
-          <p>Prompt, tune settings, and manage generated art from your mobile device.</p>
-        </article>
-      </div>
-      <div class="shell split create-anywhere">
-        <div>
-          <p class="section-label">Create anywhere</p>
-          <h2>Bring your image generation setup with you.</h2>
-        </div>
-        <div class="copy-stack">
-          <p>
-            SDAI connects to popular AI providers including Automatic1111,
-            SwarmUI, AI Horde, Hugging Face Inference, OpenAI, Stability AI,
-            Fal.ai, ArliAI, and Local Diffusion engines.
-          </p>
-          <p>
-            Local generation spans Android ONNX, Google AI MediaPipe,
-            stable-diffusion.cpp SDXL, iOS Silicon Diffusion Core ML, and
-            PrismML Bonsai Image 4B on supported devices.
-          </p>
-          <p>
-            Keep the controls artists expect: positive and negative prompts,
-            size, seed, CFG scale, sampling steps, restore faces, Img2Img, Inpaint,
-            LoRA, embeddings, hypernetworks, and model selection where supported.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section provider-section surface-section">
-      <div class="shell">
-        <div class="section-heading">
-          <p class="section-label">Provider coverage</p>
-          <h2>One app for self-hosted, hosted, and on-device generation.</h2>
-        </div>
-        <div class="cards-grid">
-          <article class="info-card">
-            <h3>Cloud and self-hosted</h3>
-            <p>Use A1111, SwarmUI, AI Horde, Hugging Face, OpenAI, Stability AI, Fal.ai, or ArliAI from the shared generation flow.</p>
+      <section class="section feature-create-section">
+        <div class="shell feature-strip" aria-label="SDAI highlights">
+          <article>
+            <span>Open source</span>
+            <p>
+              Inspect the code, report issues, and help shape the app on GitHub.
+            </p>
           </article>
-          <article class="info-card">
-            <h3>Local engines</h3>
-            <p>Run Android ONNX, MediaPipe, stable-diffusion.cpp SDXL, iOS Core ML, or PrismML Bonsai after choosing a compatible model.</p>
+          <article>
+            <span>Provider freedom</span>
+            <p>
+              Use your own server, hosted APIs such as Fal.ai and ArliAI,
+              community workers, Android local engines, or iOS Core ML/Bonsai.
+            </p>
           </article>
-          <article class="info-card">
-            <h3>Device fit and usage</h3>
-            <p>Use benchmark recommendations for local providers, then review storage and network counters from Settings.</p>
+          <article>
+            <span>Made for mobile</span>
+            <p>
+              Prompt, tune settings, and manage generated art from your mobile
+              device.
+            </p>
           </article>
         </div>
-      </div>
-    </section>
-
-    <section class="section community-section section-gradient" id="community">
-      <div class="shell community-grid">
-        <div>
-          <p class="section-label">Community</p>
-          <h2>Join the people building and using SDAI.</h2>
-        </div>
-        <div class="community-copy">
-          <p>
-            Follow updates, ask setup questions, share generated art, and help shape
-            the next mobile-first Stable Diffusion workflows.
-          </p>
-          <div class="community-actions" aria-label="SDAI community links">
-            <a class="community-button telegram-button" href="https://t.me/sdai_app" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path fill="currentColor" d="M21.86 4.58 18.62 19.84c-.24 1.08-.88 1.34-1.78.83l-4.92-3.63-2.37 2.28c-.26.26-.48.48-.98.48l.35-5.02 9.14-8.26c.4-.35-.09-.55-.61-.2L6.15 13.43l-4.87-1.52c-1.06-.33-1.08-1.06.22-1.57L20.55 3c.88-.33 1.65.2 1.31 1.58Z"/>
-              </svg>
-              <span>Telegram</span>
-            </a>
-            <a class="community-button discord-button" href="https://discord.gg/jzdR9m8Ves" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path fill="currentColor" d="M19.54 5.26A18.1 18.1 0 0 0 15.04 3.86c-.19.34-.42.8-.57 1.16a16.7 16.7 0 0 0-4.99 0 12.3 12.3 0 0 0-.58-1.16 18 18 0 0 0-4.5 1.4C1.55 9.49.78 13.61 1.16 17.68a18.3 18.3 0 0 0 5.51 2.79c.44-.6.84-1.24 1.17-1.91-.64-.24-1.25-.54-1.82-.89.15-.11.3-.23.44-.35a12.96 12.96 0 0 0 11.08 0l.44.35c-.58.35-1.19.65-1.83.89.34.67.73 1.31 1.17 1.91a18.2 18.2 0 0 0 5.52-2.79c.46-4.72-.78-8.81-3.3-12.42ZM8.68 15.18c-1.07 0-1.95-.99-1.95-2.2 0-1.2.86-2.19 1.95-2.19 1.08 0 1.96.99 1.95 2.19 0 1.21-.87 2.2-1.95 2.2Zm6.64 0c-1.07 0-1.95-.99-1.95-2.2 0-1.2.86-2.19 1.95-2.19 1.09 0 1.96.99 1.95 2.19 0 1.21-.86 2.2-1.95 2.2Z"/>
-              </svg>
-              <span>Discord</span>
-            </a>
-            <a class="community-button github-button" href="https://github.com/ShiftHackZ/Stable-Diffusion-Android" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.25c0 4.52 2.87 8.36 6.84 9.72.5.09.68-.22.68-.49 0-.24-.01-1.05-.01-1.91-2.78.62-3.37-1.22-3.37-1.22-.45-1.19-1.11-1.51-1.11-1.51-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.85.09-.66.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.37 9.37 0 0 1 5.01 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.64 1.03 2.76 0 3.95-2.34 4.82-4.57 5.08.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.59.69.49A10.11 10.11 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/>
-              </svg>
-              <span>GitHub</span>
-            </a>
+        <div class="shell split create-anywhere">
+          <div>
+            <p class="section-label">Create anywhere</p>
+            <h2>Bring your image generation setup with you.</h2>
+          </div>
+          <div class="copy-stack">
+            <p>
+              SDAI connects to popular AI providers including AUTOMATIC1111,
+              SwarmUI, AI Horde, Hugging Face Inference, OpenAI, Stability AI,
+              Fal.ai, ArliAI, and Local Diffusion engines.
+            </p>
+            <p>
+              Local generation spans Android ONNX, Google AI MediaPipe,
+              stable-diffusion.cpp SDXL, iOS Silicon Diffusion Core ML, and
+              PrismML Bonsai Image 4B on supported devices.
+            </p>
+            <p>
+              Keep the controls artists expect: positive and negative prompts,
+              size, seed, CFG scale, sampling steps, restore faces, Img2Img,
+              Inpaint, LoRA, embeddings, hypernetworks, and model selection
+              where supported.
+            </p>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section workflow-section">
-      <div class="shell">
-        <div class="section-heading">
-          <p class="section-label">Workflow</p>
-          <h2>From prompt to gallery without leaving your phone.</h2>
+      <section class="section provider-section surface-section">
+        <div class="shell">
+          <div class="section-heading">
+            <p class="section-label">Provider coverage</p>
+            <h2>One app for self-hosted, hosted, and on-device generation.</h2>
+          </div>
+          <div class="cards-grid">
+            <article class="info-card">
+              <h3>Cloud and self-hosted</h3>
+              <p>
+                Use AUTOMATIC1111, SwarmUI, AI Horde, Hugging Face, OpenAI,
+                Stability AI, Fal.ai, or ArliAI from the shared generation flow.
+              </p>
+            </article>
+            <article class="info-card">
+              <h3>Local engines</h3>
+              <p>
+                Run Android ONNX, MediaPipe, stable-diffusion.cpp SDXL, iOS Core
+                ML, or PrismML Bonsai after choosing a compatible model.
+              </p>
+            </article>
+            <article class="info-card">
+              <h3>Device fit and usage</h3>
+              <p>
+                Use benchmark recommendations for local providers, then review
+                storage and network counters from Settings.
+              </p>
+            </article>
+          </div>
         </div>
-        <div class="cards-grid">
-          <article class="info-card">
-            <h3>Choose your provider</h3>
-            <p>Search, filter, and sort self-hosted, cloud, and local providers by type, readiness, and feature tags.</p>
-          </article>
-          <article class="info-card">
-            <h3>Tune generations</h3>
-            <p>Adjust dimensions, samplers, seed, CFG, batch size, local backend choices, and provider-specific options.</p>
-          </article>
-          <article class="info-card">
-            <h3>Keep your results</h3>
-            <p>Review images in the built-in gallery, export your collection, and monitor app storage and network traffic.</p>
-          </article>
+      </section>
+
+      <section
+        class="section community-section section-gradient"
+        id="community"
+      >
+        <div class="shell community-grid">
+          <div>
+            <p class="section-label">Community</p>
+            <h2>Join the people building and using SDAI.</h2>
+          </div>
+          <div class="community-copy">
+            <p>
+              Follow updates, ask setup questions, share generated art, and help
+              shape the next SDAI features.
+            </p>
+            <div class="community-actions" aria-label="SDAI community links">
+              <a
+                class="community-button telegram-button"
+                href="https://t.me/sdai_app"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M21.86 4.58 18.62 19.84c-.24 1.08-.88 1.34-1.78.83l-4.92-3.63-2.37 2.28c-.26.26-.48.48-.98.48l.35-5.02 9.14-8.26c.4-.35-.09-.55-.61-.2L6.15 13.43l-4.87-1.52c-1.06-.33-1.08-1.06.22-1.57L20.55 3c.88-.33 1.65.2 1.31 1.58Z"
+                  />
+                </svg>
+                <span>Telegram</span>
+              </a>
+              <a
+                class="community-button discord-button"
+                href="https://discord.gg/jzdR9m8Ves"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M19.54 5.26A18.1 18.1 0 0 0 15.04 3.86c-.19.34-.42.8-.57 1.16a16.7 16.7 0 0 0-4.99 0 12.3 12.3 0 0 0-.58-1.16 18 18 0 0 0-4.5 1.4C1.55 9.49.78 13.61 1.16 17.68a18.3 18.3 0 0 0 5.51 2.79c.44-.6.84-1.24 1.17-1.91-.64-.24-1.25-.54-1.82-.89.15-.11.3-.23.44-.35a12.96 12.96 0 0 0 11.08 0l.44.35c-.58.35-1.19.65-1.83.89.34.67.73 1.31 1.17 1.91a18.2 18.2 0 0 0 5.52-2.79c.46-4.72-.78-8.81-3.3-12.42ZM8.68 15.18c-1.07 0-1.95-.99-1.95-2.2 0-1.2.86-2.19 1.95-2.19 1.08 0 1.96.99 1.95 2.19 0 1.21-.87 2.2-1.95 2.2Zm6.64 0c-1.07 0-1.95-.99-1.95-2.2 0-1.2.86-2.19 1.95-2.19 1.09 0 1.96.99 1.95 2.19 0 1.21-.86 2.2-1.95 2.2Z"
+                  />
+                </svg>
+                <span>Discord</span>
+              </a>
+              <a
+                class="community-button github-button"
+                href="https://github.com/ShiftHackZ/Stable-Diffusion-Android"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M12 2C6.48 2 2 6.58 2 12.25c0 4.52 2.87 8.36 6.84 9.72.5.09.68-.22.68-.49 0-.24-.01-1.05-.01-1.91-2.78.62-3.37-1.22-3.37-1.22-.45-1.19-1.11-1.51-1.11-1.51-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.85.09-.66.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.37 9.37 0 0 1 5.01 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.64 1.03 2.76 0 3.95-2.34 4.82-4.57 5.08.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.59.69.49A10.11 10.11 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"
+                  />
+                </svg>
+                <span>GitHub</span>
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <div data-stable-release-cta="home"></div>
-  </main>
+      <section class="section workflow-section">
+        <div class="shell">
+          <div class="section-heading">
+            <p class="section-label">Workflow</p>
+            <h2>From prompt to gallery without leaving your phone.</h2>
+          </div>
+          <div class="cards-grid">
+            <article class="info-card">
+              <h3>Choose your provider</h3>
+              <p>
+                Search, filter, and sort self-hosted, cloud, and local providers
+                by type, readiness, and feature tags.
+              </p>
+            </article>
+            <article class="info-card">
+              <h3>Tune generations</h3>
+              <p>
+                Adjust dimensions, samplers, seed, CFG, batch size, local
+                backend choices, and provider-specific options.
+              </p>
+            </article>
+            <article class="info-card">
+              <h3>Keep your results</h3>
+              <p>
+                Review images in the built-in gallery, export your collection,
+                and monitor app storage and network traffic.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
 
-  <div id="site-footer"></div>
-</body>
+      <div data-stable-release-cta="home"></div>
+    </main>
+
+    <div id="site-footer"></div>
+  </body>
 </html>

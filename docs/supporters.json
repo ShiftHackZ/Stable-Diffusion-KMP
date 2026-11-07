@@ -6,7 +6,7 @@
     "amount": "10.00",
     "currency": "USD",
     "type": "bmc",
-    "message": "I like your Stable-Diffusion-Android-App! 👍"
+    "message": ""
   },
   {
     "id": 1,
@@ -34,7 +34,7 @@
     "currency": "USD",
     "type": "bmc",
     "message": ""
-  }, 
+  },
   {
     "id": 4,
     "name": "Someone",

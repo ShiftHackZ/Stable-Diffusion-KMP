@@ -23,3 +23,5 @@ Why creators use SDAI:
 SDAI is made for artists, hobbyists, prompt engineers, and builders who want image generation on the go without giving up control. Start with demo mode, connect the provider you already trust, and turn ideas into images from your phone.
 
 Note: feature availability depends on the selected AI provider and app flavor. Some local generation features are Android-only and may not be available in every distribution channel.
+
+SDAI is an independent project, not affiliated with, endorsed by, or sponsored by Stability AI or Stable Diffusion.
