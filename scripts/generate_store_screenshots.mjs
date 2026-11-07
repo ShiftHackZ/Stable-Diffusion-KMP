@@ -8,8 +8,10 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
 const deckFile = path.join(root, "docs", "screenshots", "deck.json");
-const svgFontFamily = '"Helvetica Neue", "Avenir Next", Helvetica, Arial, sans-serif';
-const storeHeadlineFontFamily = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+const svgFontFamily =
+  '"Helvetica Neue", "Avenir Next", Helvetica, Arial, sans-serif';
+const storeHeadlineFontFamily =
+  '"Helvetica Neue", Helvetica, Arial, sans-serif';
 const galleryTargetImageCount = 6;
 
 const platformDefaults = {
@@ -58,7 +60,16 @@ const outputSpecs = {
     height: 1440,
     type: "store",
     platform: "android",
-    dir: (locale) => path.join(root, "fastlane", "metadata", "android", localeFolders[locale], "images", "phoneScreenshots"),
+    dir: (locale) =>
+      path.join(
+        root,
+        "fastlane",
+        "metadata",
+        "android",
+        localeFolders[locale],
+        "images",
+        "phoneScreenshots"
+      ),
     file: (_slide, index) => `${index + 1}.png`,
   },
   googleplay: {
@@ -67,8 +78,17 @@ const outputSpecs = {
     height: 1920,
     type: "store",
     platform: "android",
-    dir: (locale) => path.join(root, "docs", "screenshots", "googleplay", localeFolders[locale], "phoneScreenshots"),
-    file: (slide, index) => `${String(index + 1).padStart(2, "0")}-${slide.id}.png`,
+    dir: (locale) =>
+      path.join(
+        root,
+        "docs",
+        "screenshots",
+        "googleplay",
+        localeFolders[locale],
+        "phoneScreenshots"
+      ),
+    file: (slide, index) =>
+      `${String(index + 1).padStart(2, "0")}-${slide.id}.png`,
   },
   appstore: {
     label: "App Store iPhone 6.9 screenshots",
@@ -76,8 +96,17 @@ const outputSpecs = {
     height: 2868,
     type: "store",
     platform: "ios",
-    dir: (locale) => path.join(root, "docs", "screenshots", "appstore", localeFolders[locale], "iphone-6.9"),
-    file: (slide, index) => `${String(index + 1).padStart(2, "0")}-${slide.id}.png`,
+    dir: (locale) =>
+      path.join(
+        root,
+        "docs",
+        "screenshots",
+        "appstore",
+        localeFolders[locale],
+        "iphone-6.9"
+      ),
+    file: (slide, index) =>
+      `${String(index + 1).padStart(2, "0")}-${slide.id}.png`,
   },
   site: {
     label: "Website banners",
@@ -86,7 +115,8 @@ const outputSpecs = {
     type: "site",
     platform: "ios",
     dir: () => path.join(root, "docs", "screenshots", "site", "ios", "en-US"),
-    file: (slide, index) => `${String(index + 1).padStart(2, "0")}-${slide.id}.png`,
+    file: (slide, index) =>
+      `${String(index + 1).padStart(2, "0")}-${slide.id}.png`,
   },
 };
 
@@ -230,7 +260,12 @@ function slideCopy(deck, locale, slideId) {
   const localeDeck = deck.locales[locale];
   const copy = localeDeck?.slides?.[slideId];
   if (!copy) {
-    throw new Error(`Missing localized copy for ${locale}/${slideId} in ${path.relative(root, deckFile)}`);
+    throw new Error(
+      `Missing localized copy for ${locale}/${slideId} in ${path.relative(
+        root,
+        deckFile
+      )}`
+    );
   }
   return copy;
 }
@@ -242,11 +277,18 @@ function labels(deck, locale) {
 }
 
 function rawDirFor(platform, locale, args) {
-  return path.resolve(root, args["raw-dir"] || path.join("docs", "screenshots", "raw", platform, localeFolders[locale]));
+  return path.resolve(
+    root,
+    args["raw-dir"] ||
+      path.join("docs", "screenshots", "raw", platform, localeFolders[locale])
+  );
 }
 
 function rawFileFor(rawDir, slide, index) {
-  return path.join(rawDir, `${String(index + 1).padStart(2, "0")}-${slide.id}.png`);
+  return path.join(
+    rawDir,
+    `${String(index + 1).padStart(2, "0")}-${slide.id}.png`
+  );
 }
 
 function screenshotStemFor(rawDir, slide, index) {
@@ -267,7 +309,10 @@ function sourceForSlide(rawDir, slide, index) {
 }
 
 function prepareAndroid({ args, packageName, locale }) {
-  requireCommand("adb", "Install Android platform tools or make sure adb is in PATH.");
+  requireCommand(
+    "adb",
+    "Install Android platform tools or make sure adb is in PATH."
+  );
   const device = args.device || platformDefaults.android.defaultDevice;
   const deviceArgs = device ? ["-s", device] : [];
   const shouldReset = args.reset !== false && args["keep-state"] !== true;
@@ -275,8 +320,20 @@ function prepareAndroid({ args, packageName, locale }) {
 
   tryRun("adb", [...deviceArgs, "shell", "input", "keyevent", "KEYCODE_BACK"]);
   tryRun("adb", [...deviceArgs, "shell", "input", "keyevent", "KEYCODE_BACK"]);
-  tryRun("adb", [...deviceArgs, "shell", "am", "force-stop", "com.google.android.googlequicksearchbox"]);
-  tryRun("adb", [...deviceArgs, "shell", "am", "force-stop", "com.google.android.apps.nexuslauncher"]);
+  tryRun("adb", [
+    ...deviceArgs,
+    "shell",
+    "am",
+    "force-stop",
+    "com.google.android.googlequicksearchbox",
+  ]);
+  tryRun("adb", [
+    ...deviceArgs,
+    "shell",
+    "am",
+    "force-stop",
+    "com.google.android.apps.nexuslauncher",
+  ]);
 
   if (shouldReset) {
     run("adb", [...deviceArgs, "shell", "pm", "clear", packageName]);
@@ -284,24 +341,128 @@ function prepareAndroid({ args, packageName, locale }) {
 
   if (args["light-theme"] !== false) {
     tryRun("adb", [...deviceArgs, "shell", "cmd", "uimode", "night", "no"]);
-    tryRun("adb", [...deviceArgs, "shell", "settings", "put", "secure", "ui_night_mode", "1"]);
+    tryRun("adb", [
+      ...deviceArgs,
+      "shell",
+      "settings",
+      "put",
+      "secure",
+      "ui_night_mode",
+      "1",
+    ]);
   }
 
-  if (!tryRun("adb", [...deviceArgs, "shell", "cmd", "locale", "set-app-locales", packageName, "--user", "0", "--locales", tag])) {
-    tryRun("adb", [...deviceArgs, "shell", "cmd", "locale", "set-app-locales", packageName, tag]);
+  if (
+    !tryRun("adb", [
+      ...deviceArgs,
+      "shell",
+      "cmd",
+      "locale",
+      "set-app-locales",
+      packageName,
+      "--user",
+      "0",
+      "--locales",
+      tag,
+    ])
+  ) {
+    tryRun("adb", [
+      ...deviceArgs,
+      "shell",
+      "cmd",
+      "locale",
+      "set-app-locales",
+      packageName,
+      tag,
+    ]);
   }
 
   if (args["demo-status-bar"] !== false) {
-    tryRun("adb", [...deviceArgs, "shell", "settings", "put", "global", "sysui_demo_allowed", "1"]);
-    tryRun("adb", [...deviceArgs, "shell", "am", "broadcast", "-a", "com.android.systemui.demo", "-e", "command", "enter"]);
-    tryRun("adb", [...deviceArgs, "shell", "am", "broadcast", "-a", "com.android.systemui.demo", "-e", "command", "clock", "-e", "hhmm", "0941"]);
-    tryRun("adb", [...deviceArgs, "shell", "am", "broadcast", "-a", "com.android.systemui.demo", "-e", "command", "battery", "-e", "level", "100", "-e", "plugged", "false"]);
-    tryRun("adb", [...deviceArgs, "shell", "am", "broadcast", "-a", "com.android.systemui.demo", "-e", "command", "network", "-e", "wifi", "show", "-e", "level", "4", "-e", "mobile", "show", "-e", "datatype", "5g", "-e", "sims", "1"]);
+    tryRun("adb", [
+      ...deviceArgs,
+      "shell",
+      "settings",
+      "put",
+      "global",
+      "sysui_demo_allowed",
+      "1",
+    ]);
+    tryRun("adb", [
+      ...deviceArgs,
+      "shell",
+      "am",
+      "broadcast",
+      "-a",
+      "com.android.systemui.demo",
+      "-e",
+      "command",
+      "enter",
+    ]);
+    tryRun("adb", [
+      ...deviceArgs,
+      "shell",
+      "am",
+      "broadcast",
+      "-a",
+      "com.android.systemui.demo",
+      "-e",
+      "command",
+      "clock",
+      "-e",
+      "hhmm",
+      "0941",
+    ]);
+    tryRun("adb", [
+      ...deviceArgs,
+      "shell",
+      "am",
+      "broadcast",
+      "-a",
+      "com.android.systemui.demo",
+      "-e",
+      "command",
+      "battery",
+      "-e",
+      "level",
+      "100",
+      "-e",
+      "plugged",
+      "false",
+    ]);
+    tryRun("adb", [
+      ...deviceArgs,
+      "shell",
+      "am",
+      "broadcast",
+      "-a",
+      "com.android.systemui.demo",
+      "-e",
+      "command",
+      "network",
+      "-e",
+      "wifi",
+      "show",
+      "-e",
+      "level",
+      "4",
+      "-e",
+      "mobile",
+      "show",
+      "-e",
+      "datatype",
+      "5g",
+      "-e",
+      "sims",
+      "1",
+    ]);
   }
 }
 
 function prepareIos({ args, bundleId, locale }) {
-  requireCommand("xcrun", "Install Xcode command line tools or make sure xcrun is in PATH.");
+  requireCommand(
+    "xcrun",
+    "Install Xcode command line tools or make sure xcrun is in PATH."
+  );
   const device = args.device || platformDefaults.ios.defaultDevice;
   const tag = localeTags[locale];
 
@@ -309,9 +470,43 @@ function prepareIos({ args, bundleId, locale }) {
   if (args["light-theme"] !== false) {
     tryRun("xcrun", ["simctl", "ui", device, "appearance", "light"]);
   }
-  tryRun("xcrun", ["simctl", "status_bar", device, "override", "--time", "9:41", "--wifiBars", "3", "--cellularBars", "4", "--batteryState", "charged", "--batteryLevel", "100"]);
-  tryRun("xcrun", ["simctl", "spawn", device, "defaults", "write", "NSGlobalDomain", "AppleLanguages", "-array", tag.iosLanguage]);
-  tryRun("xcrun", ["simctl", "spawn", device, "defaults", "write", "NSGlobalDomain", "AppleLocale", tag.iosLocale]);
+  tryRun("xcrun", [
+    "simctl",
+    "status_bar",
+    device,
+    "override",
+    "--time",
+    "9:41",
+    "--wifiBars",
+    "3",
+    "--cellularBars",
+    "4",
+    "--batteryState",
+    "charged",
+    "--batteryLevel",
+    "100",
+  ]);
+  tryRun("xcrun", [
+    "simctl",
+    "spawn",
+    device,
+    "defaults",
+    "write",
+    "NSGlobalDomain",
+    "AppleLanguages",
+    "-array",
+    tag.iosLanguage,
+  ]);
+  tryRun("xcrun", [
+    "simctl",
+    "spawn",
+    device,
+    "defaults",
+    "write",
+    "NSGlobalDomain",
+    "AppleLocale",
+    tag.iosLocale,
+  ]);
 }
 
 function setupDemoFlow(deck, locale, prepareMode, platform) {
@@ -353,10 +548,7 @@ function tap(text) {
 }
 
 function tapPoint(point) {
-  return [
-    "- tapOn:",
-    `    point: ${yamlString(point)}`,
-  ];
+  return ["- tapOn:", `    point: ${yamlString(point)}`];
 }
 
 function doubleTapPoint(point) {
@@ -377,10 +569,7 @@ function waitVisible(text, timeout = 20000) {
 }
 
 function waitDone(timeout = 5000) {
-  return [
-    "- waitForAnimationToEnd:",
-    `    timeout: ${timeout}`,
-  ];
+  return ["- waitForAnimationToEnd:", `    timeout: ${timeout}`];
 }
 
 function take(rawDir, slide, index) {
@@ -392,16 +581,14 @@ function take(rawDir, slide, index) {
 function takeNamed(rawDir, name) {
   const file = path.join(rawDir, `${name}.png`);
   return [
-    `- takeScreenshot: ${yamlString(path.relative(root, file).replace(/\.png$/i, ""))}`,
+    `- takeScreenshot: ${yamlString(
+      path.relative(root, file).replace(/\.png$/i, "")
+    )}`,
   ];
 }
 
 function maybeTap(text) {
-  return [
-    "- tapOn:",
-    `    text: ${yamlString(text)}`,
-    "    optional: true",
-  ];
+  return ["- tapOn:", `    text: ${yamlString(text)}`, "    optional: true"];
 }
 
 function hideKeyboard() {
@@ -409,10 +596,7 @@ function hideKeyboard() {
 }
 
 function dismissKeyboard() {
-  return [
-    ...tapPoint("50%,17%"),
-    ...waitDone(1000),
-  ];
+  return [...tapPoint("50%,17%"), ...waitDone(1000)];
 }
 
 function swipeUp() {
@@ -491,7 +675,7 @@ function extraGenerationsFlow(l, count = 2) {
       ...waitVisible(l.close, 90000),
       ...waitDone(9000),
       ...tap(l.close),
-      ...waitDone(3000),
+      ...waitDone(3000)
     );
   }
   return commands;
@@ -527,7 +711,9 @@ function buildMaestroFlow({ deck, platform, locale, appId, rawDir, args }) {
   const prepareMode = args.prepare || "demo";
   const reset = args.reset !== false && args["keep-state"] !== true;
   const launchClearState = platform === "android" ? false : reset;
-  const slidesById = new Map(deck.slides.map((slide, index) => [slide.id, { slide, index }]));
+  const slidesById = new Map(
+    deck.slides.map((slide, index) => [slide.id, { slide, index }])
+  );
   const output = [
     `appId: ${yamlString(appId)}`,
     "---",
@@ -537,18 +723,30 @@ function buildMaestroFlow({ deck, platform, locale, appId, rawDir, args }) {
     ...setupDemoFlow(deck, locale, prepareMode, platform),
     ...settingsPreferencesFlow(l),
     ...fillPromptFlow(localeDeck, l),
-    ...take(rawDir, slidesById.get("controls").slide, slidesById.get("controls").index),
+    ...take(
+      rawDir,
+      slidesById.get("controls").slide,
+      slidesById.get("controls").index
+    ),
     ...tap(l.generate),
     ...waitVisible(l.close, 90000),
     ...waitDone(9000),
-    ...take(rawDir, slidesById.get("create").slide, slidesById.get("create").index),
+    ...take(
+      rawDir,
+      slidesById.get("create").slide,
+      slidesById.get("create").index
+    ),
     ...tap(l.close),
     ...waitDone(3000),
     ...extraGenerationsFlow(l, galleryTargetImageCount - 1),
     ...tap(l.gallery),
     ...waitVisible(l.gallery, 20000),
     ...waitDone(12000),
-    ...take(rawDir, slidesById.get("gallery").slide, slidesById.get("gallery").index),
+    ...take(
+      rawDir,
+      slidesById.get("gallery").slide,
+      slidesById.get("gallery").index
+    ),
     ...tapPoint("72%,30%"),
     ...waitVisible(l.galleryDetails, 30000),
     ...waitDone(9000),
@@ -564,7 +762,11 @@ function buildMaestroFlow({ deck, platform, locale, appId, rawDir, args }) {
     ...waitVisible(l.configuration, 20000),
     ...waitVisible(l.automatic1111, 45000),
     ...waitDone(2000),
-    ...take(rawDir, slidesById.get("providers").slide, slidesById.get("providers").index),
+    ...take(
+      rawDir,
+      slidesById.get("providers").slide,
+      slidesById.get("providers").index
+    ),
     ...lookAndFeelFlow(l, rawDir, platform),
   ];
 
@@ -581,10 +783,20 @@ function composeSettingsSplit(rawDir, slide, index) {
   const darkAccentFile = path.join(rawDir, "settings-dark-accent.png");
   const outFile = rawFileFor(rawDir, slide, index);
 
-  if (!fs.existsSync(lightFile) || !fs.existsSync(darkFile) || !fs.existsSync(darkAccentFile)) {
+  if (
+    !fs.existsSync(lightFile) ||
+    !fs.existsSync(darkFile) ||
+    !fs.existsSync(darkAccentFile)
+  ) {
     throw new Error(
-      `Missing Look & Feel source screenshots for ${path.relative(root, outFile)}.\n` +
-        `Expected ${path.relative(root, lightFile)}, ${path.relative(root, darkFile)}, and ${path.relative(root, darkAccentFile)}.`
+      `Missing Look & Feel source screenshots for ${path.relative(
+        root,
+        outFile
+      )}.\n` +
+        `Expected ${path.relative(root, lightFile)}, ${path.relative(
+          root,
+          darkFile
+        )}, and ${path.relative(root, darkAccentFile)}.`
     );
   }
 
@@ -614,7 +826,8 @@ function composeSettingsSplit(rawDir, slide, index) {
   const accentSourceY = Math.round(height * (isIosSource ? 0.444 : 0.574));
   const accentYOffset = isIosSource ? -13 : 10;
   const bottomBarYOffset = isIosSource ? -11 : -38;
-  const bottomBarY = Math.round(height * (isIosSource ? 0.874 : 0.904)) + bottomBarYOffset;
+  const bottomBarY =
+    Math.round(height * (isIosSource ? 0.874 : 0.904)) + bottomBarYOffset;
   const darkAccentY = accentTargetY - accentSourceY + accentYOffset;
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
@@ -623,17 +836,28 @@ function composeSettingsSplit(rawDir, slide, index) {
           <polygon points="${splitTopX},0 ${width},0 ${width},${height} ${splitBottomX},${height}"/>
         </clipPath>
         <clipPath id="${id}-accent-patch">
-          <rect x="0" y="${accentTargetY}" width="${width}" height="${bottomBarY - accentTargetY}"/>
+          <rect x="0" y="${accentTargetY}" width="${width}" height="${
+    bottomBarY - accentTargetY
+  }"/>
         </clipPath>
       </defs>
-      <image href="${imageHref(lightFile)}" x="0" y="0" width="${width}" height="${height}"/>
+      <image href="${imageHref(
+        lightFile
+      )}" x="0" y="0" width="${width}" height="${height}"/>
       <g clip-path="url(#${id}-dark-side)">
-        <image href="${imageHref(darkFile)}" x="0" y="0" width="${width}" height="${height}"/>
+        <image href="${imageHref(
+          darkFile
+        )}" x="0" y="0" width="${width}" height="${height}"/>
         <g clip-path="url(#${id}-accent-patch)">
-          <image href="${imageHref(darkAccentFile)}" x="0" y="${darkAccentY}" width="${width}" height="${height}"/>
+          <image href="${imageHref(
+            darkAccentFile
+          )}" x="0" y="${darkAccentY}" width="${width}" height="${height}"/>
         </g>
       </g>
-      <path d="M ${splitTopX} 0 L ${splitBottomX} ${height}" stroke="#ffffff" stroke-opacity="0.78" stroke-width="${Math.max(3, Math.round(width * 0.006))}"/>
+      <path d="M ${splitTopX} 0 L ${splitBottomX} ${height}" stroke="#ffffff" stroke-opacity="0.78" stroke-width="${Math.max(
+    3,
+    Math.round(width * 0.006)
+  )}"/>
     </svg>
   `;
 
@@ -641,7 +865,10 @@ function composeSettingsSplit(rawDir, slide, index) {
 }
 
 function prepareDerivedRawScreenshots({ deck, rawDir }) {
-  requireCommand("rsvg-convert", "Install librsvg or set rsvg-convert in PATH.");
+  requireCommand(
+    "rsvg-convert",
+    "Install librsvg or set rsvg-convert in PATH."
+  );
   const settingsEntry = deck.slides
     .map((slide, index) => ({ slide, index }))
     .find((entry) => entry.slide.id === "settings");
@@ -660,7 +887,10 @@ function capture(args) {
   let appId;
   if (platform === "android") {
     const flavor = args.flavor || "full";
-    appId = args.package || platformDefaults.android.packageByFlavor[flavor] || platformDefaults.android.packageByFlavor.full;
+    appId =
+      args.package ||
+      platformDefaults.android.packageByFlavor[flavor] ||
+      platformDefaults.android.packageByFlavor.full;
   } else if (platform === "ios") {
     appId = args.bundle || platformDefaults.ios.bundleId;
   } else {
@@ -670,7 +900,10 @@ function capture(args) {
   const flowDir = path.join(root, "docs", "screenshots", "raw", ".maestro");
   mkdirp(flowDir);
   const flowFile = path.join(flowDir, `${platform}-${locale}.yaml`);
-  fs.writeFileSync(flowFile, buildMaestroFlow({ deck, platform, locale, appId, rawDir, args }));
+  fs.writeFileSync(
+    flowFile,
+    buildMaestroFlow({ deck, platform, locale, appId, rawDir, args })
+  );
 
   if (args["dry-run"]) {
     console.log(`Wrote ${path.relative(root, flowFile)}`);
@@ -701,7 +934,11 @@ function capture(args) {
     pngSize(rawFileFor(rawDir, slide, index));
   });
 
-  console.log(`Captured ${deck.slides.length} raw ${platform} screenshots into ${path.relative(root, rawDir)}`);
+  console.log(
+    `Captured ${
+      deck.slides.length
+    } raw ${platform} screenshots into ${path.relative(root, rawDir)}`
+  );
 }
 
 function defs(id, theme) {
@@ -728,8 +965,12 @@ function defs(id, theme) {
 }
 
 function background(id, width, height, theme) {
-  const band = `M ${width * 0.52} 0 L ${width} 0 L ${width} ${height * 0.55} L ${width * 0.18} ${height} L 0 ${height} L 0 ${height * 0.78} Z`;
-  const thin = `M ${width * 0.72} 0 L ${width} 0 L ${width} ${height} L ${width * 0.5} ${height} Z`;
+  const band = `M ${width * 0.52} 0 L ${width} 0 L ${width} ${
+    height * 0.55
+  } L ${width * 0.18} ${height} L 0 ${height} L 0 ${height * 0.78} Z`;
+  const thin = `M ${width * 0.72} 0 L ${width} 0 L ${width} ${height} L ${
+    width * 0.5
+  } ${height} Z`;
   return `
     <rect width="${width}" height="${height}" fill="url(#bg-${id})"/>
     <path d="${band}" fill="url(#shine-${id})"/>
@@ -738,26 +979,59 @@ function background(id, width, height, theme) {
   `;
 }
 
-function renderTextBlock({ x, y, width, copy, theme, scale = 1, align = "start", eyebrow = false }) {
+function renderTextBlock({
+  x,
+  y,
+  width,
+  copy,
+  theme,
+  scale = 1,
+  align = "start",
+  eyebrow = false,
+}) {
   const anchor = align === "middle" ? "middle" : "start";
   const headlineSize = Math.round(84 * scale);
   const sublineSize = Math.round(30 * scale);
   const headlineStart = eyebrow ? Math.round(52 * scale) : 0;
   const lineHeight = Math.round(headlineSize * 1.13);
-  const subY = y + headlineStart + copy.headline.length * lineHeight + Math.round(46 * scale);
+  const subY =
+    y +
+    headlineStart +
+    copy.headline.length * lineHeight +
+    Math.round(46 * scale);
   const lines = [];
 
   if (eyebrow) {
-    lines.push(`<text x="${x}" y="${y}" text-anchor="${anchor}" fill="${theme.accent}" font-size="${Math.round(22 * scale)}" font-weight="800">SDAI</text>`);
+    lines.push(
+      `<text x="${x}" y="${y}" text-anchor="${anchor}" fill="${
+        theme.accent
+      }" font-size="${Math.round(22 * scale)}" font-weight="800">SDAI</text>`
+    );
   }
   copy.headline.forEach((line, index) => {
-    lines.push(`<text x="${x}" y="${y + headlineStart + index * lineHeight}" text-anchor="${anchor}" fill="${theme.ink}" font-size="${headlineSize}" font-weight="800">${escapeXml(line)}</text>`);
+    lines.push(
+      `<text x="${x}" y="${
+        y + headlineStart + index * lineHeight
+      }" text-anchor="${anchor}" fill="${
+        theme.ink
+      }" font-size="${headlineSize}" font-weight="800">${escapeXml(
+        line
+      )}</text>`
+    );
   });
 
   wrapWords(copy.subline, Math.max(24, Math.round(width / (sublineSize * 0.5))))
     .slice(0, 3)
     .forEach((line, index) => {
-      lines.push(`<text x="${x}" y="${subY + index * Math.round(sublineSize * 1.48)}" text-anchor="${anchor}" fill="${theme.muted}" font-size="${sublineSize}" font-weight="600">${escapeXml(line)}</text>`);
+      lines.push(
+        `<text x="${x}" y="${
+          subY + index * Math.round(sublineSize * 1.48)
+        }" text-anchor="${anchor}" fill="${
+          theme.muted
+        }" font-size="${sublineSize}" font-weight="600">${escapeXml(
+          line
+        )}</text>`
+      );
     });
 
   return lines.join("\n");
@@ -766,9 +1040,16 @@ function renderTextBlock({ x, y, width, copy, theme, scale = 1, align = "start",
 function renderStoreHeadline({ x, y, width, copy, theme, scale = 1 }) {
   const headlineSize = Math.round(122 * scale);
   const lineHeight = Math.round(headlineSize * 1.08);
-  const lines = copy.headline.map((line, index) => (
-    `<text x="${x}" y="${y + index * lineHeight}" text-anchor="middle" fill="${theme.ink}" font-family="${escapeXml(storeHeadlineFontFamily)}" font-size="${headlineSize}" font-weight="900">${escapeXml(line)}</text>`
-  ));
+  const lines = copy.headline.map(
+    (line, index) =>
+      `<text x="${x}" y="${
+        y + index * lineHeight
+      }" text-anchor="middle" fill="${theme.ink}" font-family="${escapeXml(
+        storeHeadlineFontFamily
+      )}" font-size="${headlineSize}" font-weight="900">${escapeXml(
+        line
+      )}</text>`
+  );
   return lines.join("\n");
 }
 
@@ -805,18 +1086,36 @@ function phoneFrame({ id, platform, source, x, y, width, height }) {
 
   const buttons = isIos
     ? `
-      <rect x="${x - width * 0.012}" y="${y + height * 0.18}" width="${width * 0.012}" height="${height * 0.075}" rx="${width * 0.006}" fill="#7f7b76"/>
-      <rect x="${x - width * 0.014}" y="${y + height * 0.31}" width="${width * 0.014}" height="${height * 0.115}" rx="${width * 0.007}" fill="#7f7b76"/>
-      <rect x="${x + width}" y="${y + height * 0.265}" width="${width * 0.013}" height="${height * 0.135}" rx="${width * 0.006}" fill="#d8d0c4"/>
+      <rect x="${x - width * 0.012}" y="${y + height * 0.18}" width="${
+        width * 0.012
+      }" height="${height * 0.075}" rx="${width * 0.006}" fill="#7f7b76"/>
+      <rect x="${x - width * 0.014}" y="${y + height * 0.31}" width="${
+        width * 0.014
+      }" height="${height * 0.115}" rx="${width * 0.007}" fill="#7f7b76"/>
+      <rect x="${x + width}" y="${y + height * 0.265}" width="${
+        width * 0.013
+      }" height="${height * 0.135}" rx="${width * 0.006}" fill="#d8d0c4"/>
     `
     : `
-      <rect x="${x + width}" y="${y + height * 0.19}" width="${width * 0.011}" height="${height * 0.095}" rx="${width * 0.0055}" fill="#7f838d"/>
-      <rect x="${x + width}" y="${y + height * 0.33}" width="${width * 0.011}" height="${height * 0.13}" rx="${width * 0.0055}" fill="#7f838d"/>
+      <rect x="${x + width}" y="${y + height * 0.19}" width="${
+        width * 0.011
+      }" height="${height * 0.095}" rx="${width * 0.0055}" fill="#7f838d"/>
+      <rect x="${x + width}" y="${y + height * 0.33}" width="${
+        width * 0.011
+      }" height="${height * 0.13}" rx="${width * 0.0055}" fill="#7f838d"/>
     `;
 
   const sensor = isIos
-    ? `<rect x="${screen.x + screen.width * 0.335}" y="${screen.y + width * 0.024}" width="${screen.width * 0.33}" height="${width * 0.066}" rx="${width * 0.033}" fill="#050508"/>`
-    : `<circle cx="${x + width / 2}" cy="${screen.y + width * 0.04}" r="${width * 0.023}" fill="#050508"/><circle cx="${x + width / 2}" cy="${screen.y + width * 0.04}" r="${width * 0.01}" fill="#202334"/>`;
+    ? `<rect x="${screen.x + screen.width * 0.335}" y="${
+        screen.y + width * 0.024
+      }" width="${screen.width * 0.33}" height="${width * 0.066}" rx="${
+        width * 0.033
+      }" fill="#050508"/>`
+    : `<circle cx="${x + width / 2}" cy="${screen.y + width * 0.04}" r="${
+        width * 0.023
+      }" fill="#050508"/><circle cx="${x + width / 2}" cy="${
+        screen.y + width * 0.04
+      }" r="${width * 0.01}" fill="#202334"/>`;
 
   return `
     <defs>
@@ -834,22 +1133,54 @@ function phoneFrame({ id, platform, source, x, y, width, height }) {
     <g filter="url(#shadow-${id})">
       ${buttons}
       <rect x="${x}" y="${y}" width="${width}" height="${height}" rx="${outerRadius}" fill="url(#phone-edge-${id})"/>
-      <rect x="${x + width * 0.01}" y="${y + width * 0.01}" width="${width * 0.98}" height="${height - width * 0.02}" rx="${outerRadius * 0.93}" fill="url(#phone-glass-${id})"/>
-      <rect x="${x + width * 0.02}" y="${y + width * 0.02}" width="${width * 0.96}" height="${height - width * 0.04}" rx="${outerRadius * 0.84}" fill="#050508"/>
+      <rect x="${x + width * 0.01}" y="${y + width * 0.01}" width="${
+    width * 0.98
+  }" height="${height - width * 0.02}" rx="${
+    outerRadius * 0.93
+  }" fill="url(#phone-glass-${id})"/>
+      <rect x="${x + width * 0.02}" y="${y + width * 0.02}" width="${
+    width * 0.96
+  }" height="${height - width * 0.04}" rx="${
+    outerRadius * 0.84
+  }" fill="#050508"/>
       <clipPath id="screen-${id}">
-        <rect x="${screen.x}" y="${screen.y}" width="${screen.width}" height="${screen.height}" rx="${screen.radius}"/>
+        <rect x="${screen.x}" y="${screen.y}" width="${screen.width}" height="${
+    screen.height
+  }" rx="${screen.radius}"/>
       </clipPath>
       <g clip-path="url(#screen-${id})">
-        <image href="${imageHref(source.file)}" x="${screen.x}" y="${screen.y}" width="${screen.width}" height="${screen.height}" preserveAspectRatio="xMidYMid slice"/>
+        <image href="${imageHref(source.file)}" x="${screen.x}" y="${
+    screen.y
+  }" width="${screen.width}" height="${
+    screen.height
+  }" preserveAspectRatio="xMidYMid slice"/>
       </g>
       ${sensor}
-      <rect x="${x + width * 0.012}" y="${y + width * 0.012}" width="${width * 0.976}" height="${height - width * 0.024}" rx="${outerRadius * 0.91}" fill="none" stroke="#ffffff" stroke-opacity="${isIos ? "0.28" : "0.1"}" stroke-width="${Math.max(1.5, width * 0.004)}"/>
-      <rect x="${screen.x}" y="${screen.y}" width="${screen.width}" height="${screen.height}" rx="${screen.radius}" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="2"/>
+      <rect x="${x + width * 0.012}" y="${y + width * 0.012}" width="${
+    width * 0.976
+  }" height="${height - width * 0.024}" rx="${
+    outerRadius * 0.91
+  }" fill="none" stroke="#ffffff" stroke-opacity="${
+    isIos ? "0.28" : "0.1"
+  }" stroke-width="${Math.max(1.5, width * 0.004)}"/>
+      <rect x="${screen.x}" y="${screen.y}" width="${screen.width}" height="${
+    screen.height
+  }" rx="${
+    screen.radius
+  }" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="2"/>
     </g>
   `;
 }
 
-function renderStoreSvg({ deck, platform, locale, slide, index, source, spec }) {
+function renderStoreSvg({
+  deck,
+  platform,
+  locale,
+  slide,
+  index,
+  source,
+  spec,
+}) {
   const id = `${platform}-${locale}-${slide.id}-${spec.width}`;
   const copy = slideCopy(deck, locale, slide.id);
   const theme = slide.theme;
@@ -857,7 +1188,9 @@ function renderStoreSvg({ deck, platform, locale, slide, index, source, spec }) 
   const phoneTop = Math.round(height * (platform === "ios" ? 0.205 : 0.225));
   const phoneBottom = Math.round(height * (platform === "ios" ? 0.035 : 0.028));
   const phoneHeight = height - phoneTop - phoneBottom;
-  const phoneWidth = Math.round(phoneHeight / (platform === "ios" ? 2.12 : 2.08));
+  const phoneWidth = Math.round(
+    phoneHeight / (platform === "ios" ? 2.12 : 2.08)
+  );
   const phoneX = Math.round((width - phoneWidth) / 2);
   const phoneY = phoneTop;
   const textX = width / 2;
@@ -865,11 +1198,28 @@ function renderStoreSvg({ deck, platform, locale, slide, index, source, spec }) 
   const textScale = width / 1240;
 
   return `
-    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" font-family="${escapeXml(svgFontFamily)}">
+    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" font-family="${escapeXml(
+    svgFontFamily
+  )}">
       ${defs(id, theme)}
       ${background(id, width, height, theme)}
-      ${renderStoreHeadline({ x: textX, y: textY, width: width * 0.86, copy, theme, scale: textScale })}
-      ${phoneFrame({ id, platform, source, x: phoneX, y: phoneY, width: phoneWidth, height: phoneHeight })}
+      ${renderStoreHeadline({
+        x: textX,
+        y: textY,
+        width: width * 0.86,
+        copy,
+        theme,
+        scale: textScale,
+      })}
+      ${phoneFrame({
+        id,
+        platform,
+        source,
+        x: phoneX,
+        y: phoneY,
+        width: phoneWidth,
+        height: phoneHeight,
+      })}
     </svg>
   `;
 }
@@ -879,15 +1229,27 @@ function renderSiteSvg({ deck, platform, locale, slide, index, source, spec }) {
   const theme = slide.theme;
   const { width, height } = spec;
   const phoneHeight = height - 88;
-  const phoneWidth = Math.round(phoneHeight / (platform === "ios" ? 2.12 : 2.08));
+  const phoneWidth = Math.round(
+    phoneHeight / (platform === "ios" ? 2.12 : 2.08)
+  );
   const phoneY = Math.round((height - phoneHeight) / 2);
   const phoneX = width - phoneWidth - 136;
 
   return `
-    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" font-family="${escapeXml(svgFontFamily)}">
+    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" font-family="${escapeXml(
+    svgFontFamily
+  )}">
       ${defs(id, theme)}
       ${background(id, width, height, theme)}
-      ${phoneFrame({ id, platform, source, x: phoneX, y: phoneY, width: phoneWidth, height: phoneHeight })}
+      ${phoneFrame({
+        id,
+        platform,
+        source,
+        x: phoneX,
+        y: phoneY,
+        width: phoneWidth,
+        height: phoneHeight,
+      })}
     </svg>
   `;
 }
@@ -912,31 +1274,60 @@ function renderFeatureGraphic({ deck, locale, target }) {
   const titleSize = Math.round(height * 0.24);
   const lineSize = Math.round(height * 0.084);
   const smallSize = Math.round(height * 0.058);
-  const dir = target === "fastlane"
-    ? path.join(root, "fastlane", "metadata", "android", localeFolders[locale], "images")
-    : path.join(root, "docs", "screenshots", "googleplay", localeFolders[locale]);
+  const dir =
+    target === "fastlane"
+      ? path.join(
+          root,
+          "fastlane",
+          "metadata",
+          "android",
+          localeFolders[locale],
+          "images"
+        )
+      : path.join(
+          root,
+          "docs",
+          "screenshots",
+          "googleplay",
+          localeFolders[locale]
+        );
   mkdirp(dir);
 
   const headline = "Stable Diffusion AI";
-  const subline = {
-    "en-US": "Mobile image generation",
-    ru: "Мобильная AI-генерация",
-    uk: "Мобільна AI-генерація",
-  }[locale] || "Mobile image generation";
+  const subline =
+    {
+      "en-US": "Mobile image generation",
+      ru: "Мобильная AI-генерация",
+      uk: "Мобільна AI-генерація",
+    }[locale] || "Mobile image generation";
   const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" font-family="${escapeXml(svgFontFamily)}">
+    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" font-family="${escapeXml(
+    svgFontFamily
+  )}">
       ${defs(id, theme)}
       ${background(id, width, height, theme)}
       <defs>
         <clipPath id="feature-icon-${id}">
-          <rect x="${iconX}" y="${iconY}" width="${iconSize}" height="${iconSize}" rx="${Math.round(iconSize * 0.22)}"/>
+          <rect x="${iconX}" y="${iconY}" width="${iconSize}" height="${iconSize}" rx="${Math.round(
+    iconSize * 0.22
+  )}"/>
         </clipPath>
       </defs>
-      <rect x="${iconX}" y="${iconY}" width="${iconSize}" height="${iconSize}" rx="${Math.round(iconSize * 0.22)}" fill="#ffffff" opacity="0.94" filter="url(#shadow-${id})"/>
-      <image href="${imageHref(iconFile)}" x="${iconX}" y="${iconY}" width="${iconSize}" height="${iconSize}" preserveAspectRatio="xMidYMid meet" clip-path="url(#feature-icon-${id})"/>
-      <text x="${textX}" y="${Math.round(height * 0.41)}" fill="${theme.ink}" font-size="${titleSize}" font-weight="800">SDAI</text>
-      <text x="${textX}" y="${Math.round(height * 0.61)}" fill="${theme.accent}" font-size="${lineSize}" font-weight="800">${escapeXml(headline)}</text>
-      <text x="${textX}" y="${Math.round(height * 0.78)}" fill="${theme.muted}" font-size="${smallSize}" font-weight="600">${escapeXml(subline)}</text>
+      <rect x="${iconX}" y="${iconY}" width="${iconSize}" height="${iconSize}" rx="${Math.round(
+    iconSize * 0.22
+  )}" fill="#ffffff" opacity="0.94" filter="url(#shadow-${id})"/>
+      <image href="${imageHref(
+        iconFile
+      )}" x="${iconX}" y="${iconY}" width="${iconSize}" height="${iconSize}" preserveAspectRatio="xMidYMid meet" clip-path="url(#feature-icon-${id})"/>
+      <text x="${textX}" y="${Math.round(height * 0.41)}" fill="${
+    theme.ink
+  }" font-size="${titleSize}" font-weight="800">SDAI</text>
+      <text x="${textX}" y="${Math.round(height * 0.61)}" fill="${
+    theme.accent
+  }" font-size="${lineSize}" font-weight="800">${escapeXml(headline)}</text>
+      <text x="${textX}" y="${Math.round(height * 0.78)}" fill="${
+    theme.muted
+  }" font-size="${smallSize}" font-weight="600">${escapeXml(subline)}</text>
     </svg>
   `;
 
@@ -950,7 +1341,10 @@ function renderFeatureGraphic({ deck, locale, target }) {
 function renderSvg(svg, outFile) {
   mkdirp(path.dirname(outFile));
   mkdirp(path.join("/tmp", "sdai-fontconfig-cache"));
-  const tempFile = path.join(path.dirname(outFile), `.${path.basename(outFile)}.svg`);
+  const tempFile = path.join(
+    path.dirname(outFile),
+    `.${path.basename(outFile)}.svg`
+  );
   fs.writeFileSync(tempFile, svg);
   try {
     run("rsvg-convert", ["--format", "png", "--output", outFile, tempFile], {
@@ -977,20 +1371,32 @@ function renderReadmeRows(deck) {
   }
 
   if (missing.length) {
-    console.warn(`Skipped README screenshot rows. Missing iOS App Store screenshots:\n- ${missing.join("\n- ")}`);
+    console.warn(
+      `Skipped README screenshot rows. Missing iOS App Store screenshots:\n- ${missing.join(
+        "\n- "
+      )}`
+    );
     return;
   }
 
   readmeRows.forEach((row) => {
-    const images = row.slides.map((slideIndex, column) => {
-      const slide = deck.slides[slideIndex];
-      const file = path.join(sourceDir, spec.file(slide, slideIndex));
-      const size = pngSize(file);
-      if (size.width !== spec.width || size.height !== spec.height) {
-        throw new Error(`${path.relative(root, file)} is ${size.width}x${size.height}, expected ${spec.width}x${spec.height}`);
-      }
-      return `<image href="${imageHref(file)}" x="${column * spec.width}" y="0" width="${spec.width}" height="${spec.height}"/>`;
-    }).join("\n");
+    const images = row.slides
+      .map((slideIndex, column) => {
+        const slide = deck.slides[slideIndex];
+        const file = path.join(sourceDir, spec.file(slide, slideIndex));
+        const size = pngSize(file);
+        if (size.width !== spec.width || size.height !== spec.height) {
+          throw new Error(
+            `${path.relative(root, file)} is ${size.width}x${
+              size.height
+            }, expected ${spec.width}x${spec.height}`
+          );
+        }
+        return `<image href="${imageHref(file)}" x="${
+          column * spec.width
+        }" y="0" width="${spec.width}" height="${spec.height}"/>`;
+      })
+      .join("\n");
 
     const svg = `
       <svg xmlns="http://www.w3.org/2000/svg" width="${rowWidth}" height="${rowHeight}" viewBox="0 0 ${rowWidth} ${rowHeight}">
@@ -1000,18 +1406,32 @@ function renderReadmeRows(deck) {
     renderSvg(svg, row.file);
     const size = pngSize(row.file);
     if (size.width !== rowWidth || size.height !== rowHeight) {
-      throw new Error(`${path.relative(root, row.file)} rendered as ${size.width}x${size.height}, expected ${rowWidth}x${rowHeight}`);
+      throw new Error(
+        `${path.relative(root, row.file)} rendered as ${size.width}x${
+          size.height
+        }, expected ${rowWidth}x${rowHeight}`
+      );
     }
-    console.log(`Rendered README screenshot row: ${path.relative(root, row.file)}`);
+    console.log(
+      `Rendered README screenshot row: ${path.relative(root, row.file)}`
+    );
   });
 }
 
 function render(args) {
   const deck = readDeck();
   const platform = args.platform || deck.defaultPlatform || "android";
-  const localeList = list(args.locales || args.locale, [canonicalLocale(deck.defaultLocale)]);
-  const targets = list(args.targets, platform === "ios" ? ["appstore", "site"] : ["fastlane", "googleplay"]);
-  requireCommand("rsvg-convert", "Install librsvg or set rsvg-convert in PATH.");
+  const localeList = list(args.locales || args.locale, [
+    canonicalLocale(deck.defaultLocale),
+  ]);
+  const targets = list(
+    args.targets,
+    platform === "ios" ? ["appstore", "site"] : ["fastlane", "googleplay"]
+  );
+  requireCommand(
+    "rsvg-convert",
+    "Install librsvg or set rsvg-convert in PATH."
+  );
 
   for (const rawLocale of localeList) {
     const locale = canonicalLocale(rawLocale);
@@ -1022,10 +1442,14 @@ function render(args) {
       const spec = outputSpecs[target];
       if (!spec) throw new Error(`Unknown target: ${target}`);
       if (spec.platform && spec.platform !== platform) {
-        throw new Error(`${target} is for ${spec.platform}, but --platform ${platform} was selected.`);
+        throw new Error(
+          `${target} is for ${spec.platform}, but --platform ${platform} was selected.`
+        );
       }
       if (target === "site" && locale !== "en-US") {
-        console.log(`Skipped ${spec.label} for ${locale}; website screenshots use ios/en-US only.`);
+        console.log(
+          `Skipped ${spec.label} for ${locale}; website screenshots use ios/en-US only.`
+        );
         continue;
       }
 
@@ -1033,14 +1457,35 @@ function render(args) {
       mkdirp(outDir);
       deck.slides.forEach((slide, index) => {
         const source = sourceForSlide(rawDir, slide, index);
-        const svg = spec.type === "site"
-          ? renderSiteSvg({ deck, platform, locale, slide, index, source, spec })
-          : renderStoreSvg({ deck, platform, locale, slide, index, source, spec });
+        const svg =
+          spec.type === "site"
+            ? renderSiteSvg({
+                deck,
+                platform,
+                locale,
+                slide,
+                index,
+                source,
+                spec,
+              })
+            : renderStoreSvg({
+                deck,
+                platform,
+                locale,
+                slide,
+                index,
+                source,
+                spec,
+              });
         const outFile = path.join(outDir, spec.file(slide, index));
         renderSvg(svg, outFile);
         const size = pngSize(outFile);
         if (size.width !== spec.width || size.height !== spec.height) {
-          throw new Error(`${path.relative(root, outFile)} rendered as ${size.width}x${size.height}, expected ${spec.width}x${spec.height}`);
+          throw new Error(
+            `${path.relative(root, outFile)} rendered as ${size.width}x${
+              size.height
+            }, expected ${spec.width}x${spec.height}`
+          );
         }
       });
 
@@ -1050,6 +1495,45 @@ function render(args) {
   }
 
   renderReadmeRows(deck);
+}
+
+function featureGraphics(args) {
+  const deck = readDeck();
+  const locales = list(args.locales || args.locale, [
+    canonicalLocale(deck.defaultLocale),
+  ]).map(canonicalLocale);
+  const targets = list(args.targets, Object.keys(featureSpecs));
+  for (const target of targets) {
+    if (!featureSpecs[target])
+      throw new Error(
+        `Unknown feature graphics target: ${target}. Use fastlane or googleplay.`
+      );
+  }
+
+  const iconFile = path.join(root, "docs", "assets", "sdai.png");
+  const size = pngSize(iconFile);
+  if (size.width !== 512 || size.height !== 512) {
+    throw new Error(
+      `${path.relative(root, iconFile)} is ${size.width}x${
+        size.height
+      }, expected 512x512`
+    );
+  }
+  requireCommand(
+    "rsvg-convert",
+    "Install librsvg or set rsvg-convert in PATH."
+  );
+
+  for (const locale of locales) {
+    for (const target of targets) {
+      renderFeatureGraphic({ deck, locale, target });
+      console.log(
+        `Rendered ${target} feature graphic for ${locale}${
+          target === "fastlane" ? " and copied icon.png" : ""
+        }.`
+      );
+    }
+  }
 }
 
 function plan(args) {
@@ -1065,7 +1549,9 @@ function plan(args) {
   deck.slides.forEach((slide, index) => {
     const copy = slideCopy(deck, locale, slide.id);
     console.log(`${index + 1}. ${slide.id}`);
-    console.log(`   raw: ${path.relative(root, rawFileFor(rawDir, slide, index))}`);
+    console.log(
+      `   raw: ${path.relative(root, rawFileFor(rawDir, slide, index))}`
+    );
     console.log(`   headline: ${copy.headline.join(" / ")}`);
     console.log(`   subline: ${copy.subline}`);
   });
@@ -1082,14 +1568,16 @@ Usage:
   node scripts/generate_store_screenshots.mjs plan --platform android --locale en-US
   node scripts/generate_store_screenshots.mjs capture --platform android --locale en-US --package com.shifthackz.aisdv1.app.full
   node scripts/generate_store_screenshots.mjs render --platform android --locale en-US --targets fastlane,googleplay
+  node scripts/generate_store_screenshots.mjs feature-graphics --locales en-US,ru,uk --targets fastlane,googleplay
   node scripts/generate_store_screenshots.mjs capture --platform ios --locale uk --device booted
   node scripts/generate_store_screenshots.mjs render --platform ios --locale en-US --targets appstore,site
 
 Commands:
-  plan       Print the localized screenshot deck and required raw files.
-  capture    Generate and run a Maestro flow against a real simulator/emulator.
-  render     Render raw simulator captures into store/site marketing screenshots.
-  all        Run capture, then render.
+  plan              Print the localized screenshot deck and required raw files.
+  capture           Generate and run a Maestro flow against a real simulator/emulator.
+  render            Render raw simulator captures into store/site marketing screenshots.
+  feature-graphics  Render featureGraphic.png and copy the Fastlane icon for selected locales.
+  all               Run capture, then render.
 
 Capture options:
   --platform android|ios
@@ -1108,6 +1596,11 @@ Render options:
   --raw-dir <path>          Raw simulator screenshot directory.
   --locales en-US,ru,uk     Render multiple locales for the same platform.
 
+Feature graphics options:
+  --targets fastlane,googleplay  Defaults to both targets.
+  --locale en-US|ru|uk           Defaults to the deck locale.
+  --locales en-US,ru,uk          Render multiple locales.
+
 Notes:
   - Render never falls back to existing fastlane screenshots.
   - Raw screenshots must come from capture and live in docs/screenshots/raw/<platform>/<locale>/.
@@ -1125,10 +1618,12 @@ try {
   if (command === "plan") plan(args);
   else if (command === "capture") capture(args);
   else if (command === "render") render(args);
+  else if (command === "feature-graphics") featureGraphics(args);
   else if (command === "all") all(args);
   else {
     printHelp();
-    if (command !== "help" && command !== "--help" && command !== "-h") process.exitCode = 1;
+    if (command !== "help" && command !== "--help" && command !== "-h")
+      process.exitCode = 1;
   }
 } catch (error) {
   console.error(`\n${error.message}`);
