@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Install the release toolchain into a new directory without using runner SDK caches.
-# Usage: setup.sh <build|sign> <empty-toolchain-directory>
+# Usage: setup.sh <build|sign> <empty-toolchain-directory> [empty-android-sdk-directory]
 set -euo pipefail
 
 fail() { printf 'Toolchain setup: %s\n' "$*" >&2; exit 1; }
-[[ $# == 2 ]] || fail 'expected build or sign mode and an empty directory'
+[[ $# == 2 || $# == 3 ]] || fail 'expected mode, empty toolchain directory and optional empty SDK directory'
 [[ $(uname -s) == Linux && $(uname -m) == x86_64 ]] || fail 'Linux x86_64 is required'
 mode=$1
 [[ $mode == build || $mode == sign ]] || fail 'mode must be build or sign'
@@ -17,16 +17,24 @@ profile="$script_dir/toolchain.json"
 mkdir -p -- "$2"
 toolchain_root=$(cd -- "$2" && pwd)
 [[ -z $(ls -A -- "$toolchain_root") ]] || fail 'toolchain directory must be empty'
+mkdir -p -- "${3:-$toolchain_root/android-sdk}"
+android_sdk_root=$(cd -- "${3:-$toolchain_root/android-sdk}" && pwd)
+[[ -z $(ls -A -- "$android_sdk_root") ]] || fail 'Android SDK directory must be empty'
 work=$(mktemp -d "$toolchain_root/.download.XXXXXX")
 trap 'rm -rf -- "$work"' EXIT
 
 # Every download is checked before extraction. SHA-256 values for Android archives
 # were calculated after validating Google's repository XML SHA-1 checksums.
 install_artifact() {
-  local name=$1 url digest archive_root destination archive stage expected actual
+  local name=$1 url digest archive_root destination relative_destination archive stage expected actual
   url=$(jq -er --arg name "$name" '.artifacts[$name].url' "$profile")
   digest=$(jq -er --arg name "$name" '.artifacts[$name].sha256' "$profile")
-  destination="$toolchain_root/$(jq -er --arg name "$name" '.artifacts[$name].destination' "$profile")"
+  relative_destination=$(jq -er --arg name "$name" '.artifacts[$name].destination' "$profile")
+  if [[ $relative_destination == android-sdk/* ]]; then
+    destination="$android_sdk_root/${relative_destination#android-sdk/}"
+  else
+    destination="$toolchain_root/$relative_destination"
+  fi
   archive="$work/$name.archive"
   printf 'Installing %s\n' "$name"
   curl --fail --location --retry 3 --proto '=https' --tlsv1.2 --output "$archive" "$url"
@@ -67,7 +75,7 @@ if [[ $mode == build ]]; then
 fi
 
 export JAVA_HOME="$toolchain_root/jdk"
-export ANDROID_HOME="$toolchain_root/android-sdk"
+export ANDROID_HOME="$android_sdk_root"
 export ANDROID_SDK_ROOT="$ANDROID_HOME"
 export SDAI_TOOLCHAIN_DIR="$toolchain_root"
 export BUNDLETOOL_JAR="$toolchain_root/bundletool.jar"

@@ -127,7 +127,11 @@ jobs:
           persist-credentials: false
 
       - name: Install pinned native Linux toolchain
-        run: bash ci/scripts/release/setup.sh build "$RUNNER_TEMP/release-tools"
+        run: |
+          # Keep NDK header paths consistent with the F-Droid build environment.
+          test ! -e /opt/android-sdk
+          sudo install -d -o "$(id -u)" -g "$(id -g)" /opt/android-sdk
+          bash ci/scripts/release/setup.sh build "$RUNNER_TEMP/release-tools" /opt/android-sdk
 
       - name: Build unsigned artifact
         env:
