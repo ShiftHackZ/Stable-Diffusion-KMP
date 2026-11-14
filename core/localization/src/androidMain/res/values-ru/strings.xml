@@ -64,6 +64,7 @@
     <string name="action_back">Назад</string>
     <string name="action_menu">Меню</string>
     <string name="action_copy">Копировать</string>
+    <string name="message_text_copied">Скопировано</string>
     <string name="action_refresh">Обновить</string>
     <string name="action_install_instructions">Инструкция</string>
     <string name="action_swap_dimensions">Поменять ширину и высоту</string>
@@ -197,7 +198,7 @@
     <string name="hint_args_warning" tools:ignore="TypographyDashes">Перед подключением убедитесь, что:\n• вы используете AUTOMATIC1111 WebUI с аргументами --api --listen\n• ваш брандмауэр не блокирует порт 7860\n• телефон подключен к одной сети Wi-Fi с ПК</string>
     <string name="hint_args_swarm_ui_warning" tools:ignore="TypographyDashes">Перед подключением убедитесь, что:\n• ваш брандмауэр не блокирует порт 7801\n• телефон подключен к одной сети Wi-Fi с ПК</string>
 
-    <string name="hint_server_horde_title">Подключиться к Horde AI</string>
+    <string name="hint_server_horde_title">Horde AI Cloud</string>
     <string name="hint_server_horde_sub_title">Horde AI – это краудсорсинговый распределенный кластер нод генерации изображений и текста.</string>
     <string name="hint_server_horde_usage">Вы можете использовать ключ API по умолчанию для анонимного подключения. Однако анонимные учетные записи имеют самый низкий приоритет, когда поступает много одновременных запросов.</string>
     <string name="hint_server_horde_api_key">API Ключ</string>
@@ -205,25 +206,25 @@
     <string name="hint_server_horde_about">О Horde AI</string>
     <string name="hint_server_horde_get_api_key">Получить свой API Ключ</string>
 
-    <string name="hint_hugging_face_title">Подключиться к Hugging Face</string>
+    <string name="hint_hugging_face_title">Hugging Face</string>
     <string name="hint_hugging_face_sub_title">Облако вывода Hugging Face позволяет тестировать и оценивать общедоступные модели машинного обучения или ваши собственные частные модели.</string>
     <string name="hint_hugging_face_about">О Hugging Face</string>
     <string name="hint_hugging_face_model">Hugging Face модель</string>
 
-    <string name="hint_open_ai_title">Подключиться к OpenAI</string>
+    <string name="hint_open_ai_title">OpenAI API</string>
     <string name="hint_open_ai_sub_title">Сервис OpenAI позволяет генерировать изображения с помощью моделей GPT Image.</string>
     <string name="hint_open_ai_about">Об OpenAI</string>
 
-    <string name="hint_fal_ai_title">Подключиться к Fal.ai</string>
+    <string name="hint_fal_ai_title">Fal.ai</string>
     <string name="hint_fal_ai_sub_title">Fal.ai предоставляет hosted API моделей генерации изображений с очередью выполнения.</string>
     <string name="hint_fal_ai_about">API ключи Fal.ai</string>
 
-    <string name="hint_arli_ai_title">Подключиться к ArliAI</string>
+    <string name="hint_arli_ai_title">ArliAI</string>
     <string name="hint_arli_ai_sub_title">ArliAI предоставляет облачный API генерации изображений, совместимый с SDNext.</string>
     <string name="hint_arli_ai_about">Документация API ArliAI</string>
     <string name="hint_arli_ai_model">Checkpoint модели ArliAI</string>
 
-    <string name="hint_stability_ai_title">Подключиться к Stability AI</string>
+    <string name="hint_stability_ai_title">Stability AI</string>
     <string name="hint_stability_ai_sub_title">StabilityAI — это сервис генерации изображений от DreamStudio.</string>
     <string name="hint_stability_ai_about">О Stability AI</string>
     <string name="hint_stability_ai_engine">Stability AI движок</string>
@@ -612,4 +613,35 @@
     <string name="settings_connection_timeout">Тайм-аут подключения</string>
     <string name="settings_connection_timeout_description">Время на подключение к ИИ-провайдеру. Применяется к новым запросам.</string>
     <string name="settings_connection_timeout_ios_description">iOS автоматически управляет временем подключения. Значение сохраняется, но не может применяться в iOS.</string>
+    <string name="srv_type_open_ai_compatible">OpenAI-совместимый</string>
+    <string name="open_ai_compatible_help">Подключите сервер изображений или прокси через OpenAI Image API. Введите полный префикс API, например https://host/prefix/v1. Ключ API необязателен. Доступные модели и размеры определяет сервер.</string>
+    <string name="open_ai_compatible_url">Базовый URL API (включая /v1)</string>
+    <string name="open_ai_compatible_optional_key">Ключ API (необязательно)</string>
+    <string name="open_ai_compatible_unverified_title">Соединение не проверено</string>
+    <string name="open_ai_compatible_unverified_text">Сервер не поддерживает получение списка моделей. Настройки сохранены, но генерация изображений не проверена. Введите ID модели на экране генерации.</string>
+    <string name="open_ai_compatible_model">ID модели изображений</string>
+    <string name="open_ai_compatible_model_required">Введите ID модели изображений.</string>
+    <string name="open_ai_compatible_positive_size">Введите положительный размер в пикселях.</string>
+    <string name="open_ai_compatible_img2img_unsupported">Этот провайдер поддерживает только генерацию из текста.</string>
+    <string name="open_ai_compatible_http_auth">Ошибка авторизации. Проверьте ключ API и права доступа к серверу.</string>
+    <string name="open_ai_compatible_http_rate">Достигнут лимит запросов или аккаунта на сервере. Повторите позже.</string>
+    <string name="open_ai_compatible_http_request">Сервер отклонил запрос. Проверьте модель, размеры и промпт.</string>
+    <string name="open_ai_compatible_http_server">Ошибка сервера изображений. Повторите позже.</string>
+    <string name="open_ai_compatible_http_error">Ошибка запроса к серверу (HTTP %1$d).</string>
+    <string name="open_ai_compatible_image_failure">Не удалось получить или декодировать изображение. Проверьте сервер и повторите попытку.</string>
+    <string name="srv_type_open_ai_oauth">ChatGPT OAuth</string>
+    <string name="open_ai_oauth_help">Войдите через ChatGPT для генерации изображений напрямую. Вход по коду устройства должен быть включён в аккаунте или рабочем пространстве. Неофициальная интеграция может измениться.</string>
+    <string name="open_ai_oauth_login">Войти через ChatGPT</string>
+    <string name="open_ai_oauth_logout">Выйти</string>
+    <string name="open_ai_oauth_signed_in">Вход выполнен. Нажмите «Подключиться», чтобы использовать этот аккаунт.</string>
+    <string name="open_ai_oauth_open_browser">Открыть страницу входа</string>
+    <string name="open_ai_oauth_code_help">Вводите этот код только для входа, начатого вами в SDAI. Код действует 15 минут.</string>
+    <string name="open_ai_oauth_waiting">Ожидание авторизации…</string>
+    <string name="open_ai_oauth_login_required">Сначала войдите через ChatGPT в настройках провайдера.</string>
+    <string name="open_ai_oauth_unavailable">Вход по коду устройства недоступен. Включите его в настройках безопасности ChatGPT или обратитесь к администратору рабочего пространства.</string>
+    <string name="open_ai_oauth_expired">Срок действия кода истёк. Начните вход заново.</string>
+    <string name="open_ai_oauth_identity_changed">Аккаунт или провайдер изменён. Запустите генерацию заново.</string>
+    <string name="open_ai_oauth_storage_error">Защищённое хранилище аккаунта недоступно. Разблокируйте устройство и повторите попытку.</string>
+    <string name="open_ai_oauth_error">Запрос к ChatGPT завершился ошибкой. Проверьте подключение, доступ аккаунта и размер изображения, затем повторите попытку.</string>
+    <string name="open_ai_oauth_reset">Сбросить локальную сессию</string>
 </resources>

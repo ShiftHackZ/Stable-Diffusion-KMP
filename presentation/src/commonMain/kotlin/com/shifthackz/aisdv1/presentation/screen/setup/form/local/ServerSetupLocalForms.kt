@@ -36,7 +36,9 @@ import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.FormTitle
 import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.HintText
 import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.HordeForm
 import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.HuggingFaceForm
+import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.OpenAiCompatibleForm
 import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.OpenAiForm
+import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.OpenAiOAuthForm
 import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.SetupTextField
 import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.StabilityAiForm
 import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.SwarmUiForm
@@ -46,6 +48,15 @@ import com.shifthackz.aisdv1.presentation.screen.setup.platform.ServerSetupLocal
 import com.shifthackz.aisdv1.presentation.screen.setup.platform.isLocalGenerationSetupAvailable
 import com.shifthackz.aisdv1.presentation.widget.scrollbar.verticalScrollbar
 
+/**
+ * Scrolls the selected provider's configuration form above the wizard's pinned actions.
+ * @param state Current provider and editable configuration.
+ * @param strings Shared setup labels.
+ * @param listState Scroll position retained across recompositions.
+ * @param processIntent Dispatches form changes through MVI.
+ * @param modifier Scaffold-inset content bounds.
+ * @author Dmitriy Moroz
+ */
 @Composable
 internal fun ConfigurationStep(
     state: ServerSetupState,
@@ -85,6 +96,9 @@ internal fun ConfigurationStep(
                     strings = strings,
                     processIntent = processIntent,
                 )
+
+                ServerSource.OPEN_AI_COMPATIBLE -> OpenAiCompatibleForm(state, strings, processIntent)
+                ServerSource.OPEN_AI_OAUTH -> OpenAiOAuthForm(state)
 
                 ServerSource.OPEN_AI -> OpenAiForm(
                     state = state,

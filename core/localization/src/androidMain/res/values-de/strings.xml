@@ -68,6 +68,7 @@
     <string name="action_back">Zurück</string>
     <string name="action_menu">Menü</string>
     <string name="action_copy">Kopieren</string>
+    <string name="message_text_copied">Kopiert</string>
     <string name="action_refresh">Aktualisieren</string>
     <string name="action_install_instructions">Installieren</string>
     <string name="action_swap_dimensions">Breite und Höhe tauschen</string>
@@ -122,7 +123,7 @@
     <string name="srv_type_bonsai_short" translatable="false">Bonsai</string>
     <string name="srv_type_hugging_face" translatable="false">Hugging Face Inference</string>
     <string name="srv_type_hugging_face_short" translatable="false">HuggingFace</string>
-    <string name="srv_type_open_ai" translatable="false">OpenAI</string>
+    <string name="srv_type_open_ai" translatable="false">OpenAI API</string>
     <string name="srv_type_stability_ai" translatable="false">Stability AI</string>
     <string name="srv_type_fal_ai" translatable="false">Fal.ai</string>
     <string name="srv_type_arli_ai" translatable="false">ArliAI</string>
@@ -223,7 +224,7 @@
     <string name="hint_args_warning" tools:ignore="TypographyDashes,Typos">Stelle vor dem Verbinden sicher, dass:\n• die AUTOMATIC1111 WebUI mit den Optionen --api --listen läuft\n• deine Firewall den Port 7860 nicht blockiert\n• dein Smartphone mit demselben WLAN wie dein PC verbunden ist</string>
     <string name="hint_args_swarm_ui_warning" tools:ignore="TypographyDashes,Typos">Stelle vor dem Verbinden sicher, dass:\n• deine Firewall den Port 7801 nicht blockiert\n• dein Smartphone mit demselben WLAN wie dein PC verbunden ist</string>
 
-    <string name="hint_server_horde_title">Mit der Horde-AI-Cloud verbinden</string>
+    <string name="hint_server_horde_title">Horde AI Cloud</string>
     <string name="hint_server_horde_sub_title">Horde AI ist ein gemeinschaftlich betriebener, verteilter Verbund von Rechenknoten zur Bild- und Textgenerierung.</string>
     <string name="hint_server_horde_usage">Du kannst den standardmäßigen API-Schlüssel verwenden, um dich anonym zu verbinden. Bei vielen gleichzeitigen Anfragen haben anonyme Konten jedoch die niedrigste Priorität.</string>
     <string name="hint_server_horde_api_key">API-Schlüssel</string>
@@ -231,25 +232,25 @@
     <string name="hint_server_horde_about">Über Horde AI</string>
     <string name="hint_server_horde_get_api_key">API-Schlüssel anfordern</string>
 
-    <string name="hint_hugging_face_title">Mit Hugging Face verbinden</string>
+    <string name="hint_hugging_face_title">Hugging Face</string>
     <string name="hint_hugging_face_sub_title">Die Hugging-Face-Inferenz-Cloud ermöglicht es, öffentlich zugängliche oder eigene private Machine-Learning-Modelle kostenlos zu testen und auszuwerten.</string>
     <string name="hint_hugging_face_about">Über Hugging Face</string>
     <string name="hint_hugging_face_model">Hugging-Face-Modell</string>
 
-    <string name="hint_open_ai_title">Mit OpenAI verbinden</string>
+    <string name="hint_open_ai_title">OpenAI API</string>
     <string name="hint_open_ai_sub_title">Der OpenAI-Dienst ermöglicht die Bilderzeugung mit GPT-Image-Modellen.</string>
     <string name="hint_open_ai_about">Über OpenAI</string>
 
-    <string name="hint_fal_ai_title">Mit Fal.ai verbinden</string>
+    <string name="hint_fal_ai_title">Fal.ai</string>
     <string name="hint_fal_ai_sub_title">Fal.ai bietet gehostete APIs für Bilderzeugungsmodelle mit warteschlangenbasierter Inferenz.</string>
     <string name="hint_fal_ai_about">Fal.ai-API-Schlüssel</string>
 
-    <string name="hint_arli_ai_title">Mit ArliAI verbinden</string>
+    <string name="hint_arli_ai_title">ArliAI</string>
     <string name="hint_arli_ai_sub_title">ArliAI bietet SDNext-kompatible Cloud-APIs zur Bilderzeugung.</string>
     <string name="hint_arli_ai_about">ArliAI-API-Dokumentation</string>
     <string name="hint_arli_ai_model">ArliAI-Modell-Checkpoint</string>
 
-    <string name="hint_stability_ai_title">Mit Stability AI verbinden</string>
+    <string name="hint_stability_ai_title">Stability AI</string>
     <string name="hint_stability_ai_sub_title">Stability AI ist der von DreamStudio angebotene Dienst zur Bilderzeugung.</string>
     <string name="hint_stability_ai_about">Über Stability AI</string>
     <string name="hint_stability_ai_engine">Stability-AI-Engine</string>
@@ -649,4 +650,35 @@
     <string name="settings_connection_timeout">Verbindungszeitlimit</string>
     <string name="settings_connection_timeout_description">Zeit zum Verbindungsaufbau mit einem KI-Anbieter. Gilt für neue Anfragen.</string>
     <string name="settings_connection_timeout_ios_description">iOS verwaltet die Verbindungsdauer automatisch. Dieser Wert wird gespeichert, kann unter iOS aber nicht erzwungen werden.</string>
+    <string name="srv_type_open_ai_compatible">OpenAI-kompatibel</string>
+    <string name="open_ai_compatible_help">Verbinde einen Bildserver oder Proxy über die OpenAI-Bild-API. Gib das vollständige API-Präfix ein, z. B. https://host/prefix/v1. Der API-Schlüssel ist optional. Der Server bestimmt die unterstützten Modelle und Größen.</string>
+    <string name="open_ai_compatible_url">API-Basis-URL (einschließlich /v1)</string>
+    <string name="open_ai_compatible_optional_key">API-Schlüssel (optional)</string>
+    <string name="open_ai_compatible_unverified_title">Verbindung nicht verifiziert</string>
+    <string name="open_ai_compatible_unverified_text">Der Server unterstützt keine Modellabfrage. Die Konfiguration wurde gespeichert, aber die Bilderzeugung wurde nicht geprüft. Gib die Bildmodell-ID auf dem Generierungsbildschirm ein.</string>
+    <string name="open_ai_compatible_model">Bildmodell-ID</string>
+    <string name="open_ai_compatible_model_required">Gib eine Bildmodell-ID ein.</string>
+    <string name="open_ai_compatible_positive_size">Gib eine positive Pixelgröße ein.</string>
+    <string name="open_ai_compatible_img2img_unsupported">Dieser Anbieter unterstützt nur Text-zu-Bild.</string>
+    <string name="open_ai_compatible_http_auth">Authentifizierung fehlgeschlagen. Prüfe den API-Schlüssel und die Serverberechtigungen.</string>
+    <string name="open_ai_compatible_http_rate">Das Raten- oder Kontolimit des Servers wurde erreicht. Versuche es später erneut.</string>
+    <string name="open_ai_compatible_http_request">Der Server hat die Anfrage abgelehnt. Prüfe Modell, Abmessungen und Prompt.</string>
+    <string name="open_ai_compatible_http_server">Der Bildserver ist fehlgeschlagen. Versuche es später erneut.</string>
+    <string name="open_ai_compatible_http_error">Die Serveranfrage ist fehlgeschlagen (HTTP %1$d).</string>
+    <string name="open_ai_compatible_image_failure">Das Bild konnte nicht empfangen oder dekodiert werden. Prüfe den Server und versuche es erneut.</string>
+    <string name="srv_type_open_ai_oauth">ChatGPT OAuth</string>
+    <string name="open_ai_oauth_help">Melde dich mit ChatGPT an, um Bilder direkt zu erzeugen. Geräteanmeldung muss im Konto oder Arbeitsbereich aktiviert sein. Diese inoffizielle Integration kann sich ändern.</string>
+    <string name="open_ai_oauth_login">Mit ChatGPT anmelden</string>
+    <string name="open_ai_oauth_logout">Abmelden</string>
+    <string name="open_ai_oauth_signed_in">Angemeldet. Verbinde dich, um dieses Konto zu verwenden.</string>
+    <string name="open_ai_oauth_open_browser">Anmeldeseite öffnen</string>
+    <string name="open_ai_oauth_code_help">Gib diesen Code nur für die in SDAI gestartete Anmeldung ein. Der Code läuft nach 15 Minuten ab.</string>
+    <string name="open_ai_oauth_waiting">Warte auf Autorisierung…</string>
+    <string name="open_ai_oauth_login_required">Melde dich zuerst in der Anbieterkonfiguration mit ChatGPT an.</string>
+    <string name="open_ai_oauth_unavailable">Geräteanmeldung ist nicht verfügbar. Aktiviere sie in den ChatGPT-Sicherheitseinstellungen oder wende dich an die Administration deines Arbeitsbereichs.</string>
+    <string name="open_ai_oauth_expired">Der Anmeldecode ist abgelaufen. Starte die Anmeldung erneut.</string>
+    <string name="open_ai_oauth_identity_changed">Konto oder Anbieter wurde geändert. Starte die Erzeugung erneut.</string>
+    <string name="open_ai_oauth_storage_error">Geschützter Kontospeicher ist nicht verfügbar. Entsperre das Gerät und versuche es erneut.</string>
+    <string name="open_ai_oauth_error">Die ChatGPT-Anfrage ist fehlgeschlagen. Prüfe Verbindung, Kontozugriff und Bildgröße und versuche es erneut.</string>
+    <string name="open_ai_oauth_reset">Lokale Sitzung zurücksetzen</string>
 </resources>

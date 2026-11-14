@@ -106,6 +106,8 @@ internal class ImageToImageUseCaseImpl(
      * @author Dmitriy Moroz
      */
     private suspend fun generateSingle(payload: ImageToImagePayload) = when (preferenceManager.source) {
+        ServerSource.OPEN_AI_COMPATIBLE -> error("This image server supports text-to-image only")
+        ServerSource.OPEN_AI_OAUTH -> error("ChatGPT supports text-to-image only")
         ServerSource.SWARM_UI -> swarmUiGenerationRepository.generateFromImage(payload)
         ServerSource.HORDE -> hordeGenerationRepository.generateFromImage(payload)
         ServerSource.HUGGING_FACE -> huggingFaceGenerationRepository.generateFromImage(payload)

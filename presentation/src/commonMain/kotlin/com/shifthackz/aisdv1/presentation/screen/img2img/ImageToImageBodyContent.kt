@@ -2,6 +2,7 @@
 
 package com.shifthackz.aisdv1.presentation.screen.img2img
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -77,16 +78,16 @@ internal fun UnsupportedImageToImageBody(
         )
         Text(
             modifier = Modifier.padding(top = 14.dp),
-            text = if (mode == ServerSource.OPEN_AI) {
-                strings.openAiUnsupportedSubtitle
-            } else {
-                strings.localUnsupportedSubtitle
+            text = when (mode) {
+                ServerSource.OPEN_AI -> strings.openAiUnsupportedSubtitle
+                ServerSource.OPEN_AI_COMPATIBLE, ServerSource.OPEN_AI_OAUTH -> strings.compatibleUnsupportedSubtitle
+                else -> strings.localUnsupportedSubtitle
             },
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-        Text(
+        if (mode != ServerSource.OPEN_AI_COMPATIBLE && mode != ServerSource.OPEN_AI_OAUTH) Text(
             modifier = Modifier.padding(top = 14.dp),
             text = if (mode == ServerSource.OPEN_AI) {
                 strings.openAiUnsupportedSubtitle2
@@ -117,8 +118,8 @@ internal fun ImageToImageBody(
     state: ImageToImageState,
     strings: ImageToImageStrings,
     inputImageBitmap: ImageBitmap?,
-    promptChipTextFieldState: androidx.compose.runtime.MutableState<TextFieldValue>,
-    negativePromptChipTextFieldState: androidx.compose.runtime.MutableState<TextFieldValue>,
+    promptChipTextFieldState: MutableState<TextFieldValue>,
+    negativePromptChipTextFieldState: MutableState<TextFieldValue>,
     processIntent: (ImageToImageIntent) -> Unit,
     onInPaintClick: () -> Unit,
 ) {

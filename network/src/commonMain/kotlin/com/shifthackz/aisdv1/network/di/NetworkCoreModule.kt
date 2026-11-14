@@ -1,5 +1,7 @@
 package com.shifthackz.aisdv1.network.di
 
+import com.shifthackz.aisdv1.network.api.openaicompatible.OpenAiCompatibleApi
+import com.shifthackz.aisdv1.network.api.openaicompatible.KtorOpenAiCompatibleApi
 import com.shifthackz.aisdv1.network.api.automatic1111.Automatic1111GenerationApi
 import com.shifthackz.aisdv1.network.api.automatic1111.Automatic1111MetadataApi
 import com.shifthackz.aisdv1.network.api.automatic1111.KtorAutomatic1111GenerationApi
@@ -30,6 +32,8 @@ import com.shifthackz.aisdv1.network.api.swarmui.SwarmUiGenerationApi
 import com.shifthackz.aisdv1.network.api.swarmui.SwarmUiModelsApi
 import com.shifthackz.aisdv1.network.client.createConfiguredHttpClient
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logging
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
@@ -55,6 +59,18 @@ val coreNetworkModule = module {
         KtorStabilityAiGenerationApi(
             httpClient = providerHttpClient(false),
             baseUrl = STABILITY_AI_API_URL,
+            generationTimeoutProvider = get(),
+        )
+    }
+    single<OpenAiCompatibleApi> {
+        KtorOpenAiCompatibleApi(
+            httpClient = providerHttpClient(),
+            imageClient = createConfiguredHttpClient(
+                installContentNegotiation = false,
+                connectionTimeoutProvider = get(),
+            ) {
+                install(Logging) { level = LogLevel.NONE }
+            },
             generationTimeoutProvider = get(),
         )
     }

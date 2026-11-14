@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -35,6 +36,8 @@ import com.shifthackz.aisdv1.presentation.screen.report.ReportScreen
 import com.shifthackz.aisdv1.presentation.screen.settings.SettingsScreen
 import com.shifthackz.aisdv1.presentation.screen.setup.content.ServerSetupContent
 import com.shifthackz.aisdv1.presentation.screen.setup.ServerSetupViewModel
+import com.shifthackz.aisdv1.presentation.screen.setup.model.ServerSetupIntent
+import com.shifthackz.aisdv1.presentation.screen.setup.model.ServerSetupState
 import com.shifthackz.aisdv1.presentation.screen.setup.platform.rememberServerSetupEffectHandler
 import com.shifthackz.aisdv1.presentation.screen.splash.SplashScreenContent
 import com.shifthackz.aisdv1.presentation.screen.storageusage.StorageUsageScreen
@@ -247,10 +250,17 @@ internal fun OverlayRouteContent(
                 }
             }
             val effectHandler = rememberServerSetupEffectHandler(urlLauncher)
+            DisposableEffect(setupViewModel) {
+                onDispose { setupViewModel.onRouteDisposed() }
+            }
             MviComponent(
                 viewModel = setupViewModel,
                 processEffect = effectHandler,
             ) { state, processIntent ->
+                RootBackHandler(
+                    enabled = state.showBackNavArrow || state.step == ServerSetupState.Step.CONFIGURE,
+                    onBack = { processIntent(ServerSetupIntent.NavigateBack) },
+                )
                 ServerSetupContent(
                     state = state,
                     processIntent = processIntent,

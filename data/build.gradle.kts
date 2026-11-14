@@ -17,6 +17,7 @@ kotlin {
         commonMain.dependencies {
             implementation(project(":core:common"))
             implementation(project(":domain"))
+            implementation(project(":feature:openai-oauth"))
             implementation(project(":network"))
             implementation(project(":storage"))
             implementation(libs.koin.core)

@@ -68,6 +68,7 @@
     <string name="action_back">Back</string>
     <string name="action_menu">Menu</string>
     <string name="action_copy">Copy</string>
+    <string name="message_text_copied">Copied</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_install_instructions">Install</string>
     <string name="action_swap_dimensions">Swap width and height</string>
@@ -122,7 +123,7 @@
     <string name="srv_type_bonsai_short" translatable="false">Bonsai</string>
     <string name="srv_type_hugging_face" translatable="false">Hugging Face Inference</string>
     <string name="srv_type_hugging_face_short" translatable="false">HuggingFace</string>
-    <string name="srv_type_open_ai" translatable="false">OpenAI</string>
+    <string name="srv_type_open_ai" translatable="false">OpenAI API</string>
     <string name="srv_type_stability_ai" translatable="false">Stability AI</string>
     <string name="srv_type_fal_ai" translatable="false">Fal.ai</string>
     <string name="srv_type_arli_ai" translatable="false">ArliAI</string>
@@ -223,7 +224,7 @@
     <string name="hint_args_warning" tools:ignore="TypographyDashes,Typos">Before connecting ensure that:\n• you are running AUTOMATIC1111 WebUI with flags --api --listen\n• your firewall is not blocking 7860 port\n• phone is on the same WiFi with your PC</string>
     <string name="hint_args_swarm_ui_warning" tools:ignore="TypographyDashes,Typos">Before connecting ensure that:\n• your firewall is not blocking 7801 port\n• phone is on the same WiFi with your PC</string>
 
-    <string name="hint_server_horde_title">Connect to Horde AI cloud</string>
+    <string name="hint_server_horde_title">Horde AI Cloud</string>
     <string name="hint_server_horde_sub_title">Horde AI is a crowdsourced distributed cluster of Image generation workers and text generation workers.</string>
     <string name="hint_server_horde_usage">You can use default API Key to connect anonymously. However anonymous accounts have the lowest priority when there\'s too many concurrent requests.</string>
     <string name="hint_server_horde_api_key">API Key</string>
@@ -231,25 +232,25 @@
     <string name="hint_server_horde_about">About Horde AI</string>
     <string name="hint_server_horde_get_api_key">Get your API Key</string>
 
-    <string name="hint_hugging_face_title">Connect to Hugging Face</string>
+    <string name="hint_hugging_face_title">Hugging Face</string>
     <string name="hint_hugging_face_sub_title">Hugging Face inference cloud provides a service that allows to test and evaluate publicly accessible machine learning models, or your own private models, for free.</string>
     <string name="hint_hugging_face_about">About Hugging Face</string>
     <string name="hint_hugging_face_model">Hugging Face model</string>
 
-    <string name="hint_open_ai_title">Connect to OpenAI</string>
+    <string name="hint_open_ai_title">OpenAI API</string>
     <string name="hint_open_ai_sub_title">OpenAI service allows image generation with GPT Image models.</string>
     <string name="hint_open_ai_about">About OpenAI</string>
 
-    <string name="hint_fal_ai_title">Connect to Fal.ai</string>
+    <string name="hint_fal_ai_title">Fal.ai</string>
     <string name="hint_fal_ai_sub_title">Fal.ai provides hosted image generation model APIs with queue-based inference.</string>
     <string name="hint_fal_ai_about">Fal.ai API keys</string>
 
-    <string name="hint_arli_ai_title">Connect to ArliAI</string>
+    <string name="hint_arli_ai_title">ArliAI</string>
     <string name="hint_arli_ai_sub_title">ArliAI provides SDNext-compatible cloud image generation APIs.</string>
     <string name="hint_arli_ai_about">ArliAI API docs</string>
     <string name="hint_arli_ai_model">ArliAI model checkpoint</string>
 
-    <string name="hint_stability_ai_title">Connect to Stability AI</string>
+    <string name="hint_stability_ai_title">Stability AI</string>
     <string name="hint_stability_ai_sub_title">StabilityAI is the image generation service provided by DreamStudio.</string>
     <string name="hint_stability_ai_about">About Stability AI</string>
     <string name="hint_stability_ai_engine">Stability AI Engine</string>
@@ -649,4 +650,35 @@
     <string name="settings_connection_timeout">Connection timeout</string>
     <string name="settings_connection_timeout_description">Time allowed to connect to an AI provider. Applies to new requests.</string>
     <string name="settings_connection_timeout_ios_description">iOS manages connection timing automatically. This value is saved but cannot be enforced on iOS.</string>
+    <string name="srv_type_open_ai_compatible">OpenAI-compatible</string>
+    <string name="open_ai_compatible_help">Connect to an image server or proxy using the OpenAI image API. Enter the complete API prefix, for example https://host/prefix/v1. The API key is optional. The server determines which models and sizes are supported.</string>
+    <string name="open_ai_compatible_url">API base URL (including /v1)</string>
+    <string name="open_ai_compatible_optional_key">API key (optional)</string>
+    <string name="open_ai_compatible_unverified_title">Connection unverified</string>
+    <string name="open_ai_compatible_unverified_text">The server does not support model discovery. Configuration is saved, but image generation has not been verified. Enter the image model ID on the generation screen.</string>
+    <string name="open_ai_compatible_model">Image model ID</string>
+    <string name="open_ai_compatible_model_required">Enter an image model ID.</string>
+    <string name="open_ai_compatible_positive_size">Enter a positive pixel dimension.</string>
+    <string name="open_ai_compatible_img2img_unsupported">This provider supports text-to-image only.</string>
+    <string name="open_ai_compatible_http_auth">Authentication failed. Check the API key and server permissions.</string>
+    <string name="open_ai_compatible_http_rate">The server rate or account limit was reached. Try again later.</string>
+    <string name="open_ai_compatible_http_request">The server rejected the request. Check the model, dimensions and prompt.</string>
+    <string name="open_ai_compatible_http_server">The image server failed. Try again later.</string>
+    <string name="open_ai_compatible_http_error">The server request failed (HTTP %1$d).</string>
+    <string name="open_ai_compatible_image_failure">The image could not be received or decoded. Check the server and try again.</string>
+    <string name="srv_type_open_ai_oauth">ChatGPT OAuth</string>
+    <string name="open_ai_oauth_help">Sign in with ChatGPT to generate images directly. Device login must be enabled in your account or workspace. This unofficial integration may change.</string>
+    <string name="open_ai_oauth_login">Sign in with ChatGPT</string>
+    <string name="open_ai_oauth_logout">Sign out</string>
+    <string name="open_ai_oauth_signed_in">Signed in. Connect to use this account.</string>
+    <string name="open_ai_oauth_open_browser">Open the sign-in page</string>
+    <string name="open_ai_oauth_code_help">Enter this code only for the login you started in SDAI. The code expires in 15 minutes.</string>
+    <string name="open_ai_oauth_waiting">Waiting for authorization…</string>
+    <string name="open_ai_oauth_login_required">Sign in with ChatGPT in provider configuration first.</string>
+    <string name="open_ai_oauth_unavailable">Device login is unavailable. Enable device-code login in ChatGPT security settings or contact your workspace administrator.</string>
+    <string name="open_ai_oauth_expired">The sign-in code expired. Start sign-in again.</string>
+    <string name="open_ai_oauth_identity_changed">The account or provider changed. Submit the generation again.</string>
+    <string name="open_ai_oauth_storage_error">Protected account storage is unavailable. Unlock the device and try again.</string>
+    <string name="open_ai_oauth_error">The ChatGPT request failed. Check your connection, account access and selected dimensions, then try again.</string>
+    <string name="open_ai_oauth_reset">Reset local session</string>
 </resources>

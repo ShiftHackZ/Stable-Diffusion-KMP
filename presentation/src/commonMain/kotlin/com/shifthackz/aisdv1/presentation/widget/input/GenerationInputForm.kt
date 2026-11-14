@@ -130,6 +130,7 @@ fun GenerationInputForm(
                 )
             }
         }
+        if (state.mode == ServerSource.OPEN_AI_COMPATIBLE || state.mode == ServerSource.OPEN_AI_OAUTH) OpenAiCompatibleInputs(state, onEvent)
         if (state.formPromptTaggedInput) {
             ChipTextFieldWithItem(
                 modifier = Modifier
@@ -219,7 +220,8 @@ fun GenerationInputForm(
             else -> Unit
         }
 
-        val sizeInputVisible = state.mode != ServerSource.FAL_AI || state.falAiModel.supportsImageSize
+        val sizeInputVisible = state.mode != ServerSource.OPEN_AI_COMPATIBLE && state.mode != ServerSource.OPEN_AI_OAUTH &&
+            (state.mode != ServerSource.FAL_AI || state.falAiModel.supportsImageSize)
         // Size input fields
         if (sizeInputVisible) Row(
             modifier = Modifier
@@ -301,7 +303,7 @@ fun GenerationInputForm(
             GenerationBatchComponent(state = state, onEvent = onEvent)
         }
 
-        if (state.advancedToggleButtonVisible && state.mode != ServerSource.OPEN_AI) {
+        if (state.advancedToggleButtonVisible && state.mode != ServerSource.OPEN_AI && state.mode != ServerSource.OPEN_AI_COMPATIBLE && state.mode != ServerSource.OPEN_AI_OAUTH) {
             TextButton(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 onClick = {

@@ -1,0 +1,460 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "SDAI OpenAI-compatible image client",
+    "version": "1.0.0",
+    "description": "Subset used by the generic image server source. The configured server URL is the complete API prefix, including its version and reverse-proxy path. SDAI appends endpoint segments without adding v1. Unknown server response properties are ignored."
+  },
+  "servers": [
+    {
+      "url": "https://image-server.example/prefix/v1",
+      "description": "Example full API prefix; users supply their own HTTP(S) endpoint."
+    }
+  ],
+  "security": [{}, { "bearerAuth": [] }],
+  "paths": {
+    "/models": {
+      "get": {
+        "operationId": "probeModels",
+        "summary": "Probe model discovery",
+        "description": "Any 2xx response accepts the candidate connection, without requiring a specific body. 404/405 allows saving with an explicit connection-unverified notice. Other statuses fail without publishing candidate settings. This call does not prove image-generation capability.",
+        "responses": {
+          "200": {
+            "description": "Model discovery is reachable; the body is counted and not parsed.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ModelList" }
+              }
+            }
+          },
+          "204": {
+            "description": "Successful model probe with no response body."
+          },
+          "400": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/images/generations": {
+      "post": {
+        "operationId": "generateImage",
+        "summary": "Generate one image",
+        "description": "SDAI requests n=1 for each sequential batch item. quality and response_format are omitted. Only the first data item is consumed, preferring nonblank b64_json over url. Bytes must decode to an image before gallery persistence. The actual decoded pixel dimensions are recorded. Cancellation or timeout stops the remaining batch.",
+        "requestBody": {
+          "description": "Minimal interoperable image request. The server determines supported models and dimensions.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Image response. An empty data list or undecodable image fails without a gallery row for that image.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request failed. SDAI displays a safe localized status message; server error bodies are counted but not displayed or logged.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Optional user-entered API token. A blank key omits Authorization. Credentials apply only to the configured API, never image downloads."
+      }
+    },
+    "schemas": {
+      "GenerationRequest": {
+        "type": "object",
+        "description": "One image request.",
+        "properties": {
+          "model": {
+            "type": "string",
+            "description": "Arbitrary server image model ID.",
+            "minLength": 1
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Image description entered by the user."
+          },
+          "size": {
+            "type": "string",
+            "description": "Positive pixel width and height as WIDTHxHEIGHT; server decides supported sizes.",
+            "pattern": "^[1-9][0-9]*x[1-9][0-9]*$"
+          },
+          "n": {
+            "type": "integer",
+            "description": "Exactly one image per call; batches are sequential.",
+            "const": 1
+          }
+        },
+        "required": ["model", "prompt", "size", "n"],
+        "additionalProperties": false
+      },
+      "GenerationResponse": {
+        "type": "object",
+        "description": "Generated image alternatives.",
+        "properties": {
+          "data": {
+            "type": "array",
+            "description": "Returned images; SDAI consumes the first item.",
+            "items": { "$ref": "#/components/schemas/Image" }
+          }
+        },
+        "required": ["data"],
+        "additionalProperties": false
+      },
+      "Image": {
+        "type": "object",
+        "description": "An encoded image or credential-free image location.",
+        "properties": {
+          "b64_json": {
+            "type": ["string", "null"],
+            "description": "Base64-encoded image bytes, preferred when nonblank.",
+            "contentEncoding": "base64"
+          },
+          "url": {
+            "type": ["string", "null"],
+            "description": "Absolute HTTP(S) URL used only if b64_json is absent or blank. URL user information is rejected. The download and all redirects omit provider Authorization.",
+            "format": "uri"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "ModelList": {
+        "type": "object",
+        "description": "Conventional model list; SDAI accepts any successful body and does not use this list to restrict manual model IDs.",
+        "properties": {
+          "object": {
+            "type": "string",
+            "description": "Common list discriminator."
+          },
+          "data": {
+            "type": "array",
+            "description": "Model descriptions returned by discovery.",
+            "items": { "$ref": "#/components/schemas/Model" }
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "Model": {
+        "type": "object",
+        "description": "Conventional model description; it need not be an image model.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Server model identifier."
+          },
+          "object": { "type": "string", "description": "Model discriminator." },
+          "created": {
+            "type": "integer",
+            "description": "Creation timestamp in Unix seconds."
+          },
+          "owned_by": { "type": "string", "description": "Owner identifier." }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "description": "Conventional structured server error. Client reads bytes for accounting and uses only HTTP status for safe display.",
+        "properties": { "error": { "$ref": "#/components/schemas/Error" } },
+        "required": [],
+        "additionalProperties": false
+      },
+      "Error": {
+        "type": "object",
+        "description": "Server error details, never inserted into gallery metadata.",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Server explanation; not displayed or logged by SDAI."
+          },
+          "type": {
+            "type": ["string", "null"],
+            "description": "Server error category."
+          },
+          "param": {
+            "type": ["string", "null"],
+            "description": "Rejected parameter name, when provided."
+          },
+          "code": {
+            "type": ["string", "integer", "null"],
+            "description": "Server error code, when provided."
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "ImageDownload": {
+        "type": "string",
+        "description": "Encoded image bytes downloaded from response data[0].url without provider credentials. Full platform decoding is required; empty, malformed or non-image content is rejected.",
+        "format": "binary"
+      }
+    }
+  },
+  "x-image-download": {
+    "description": "A GET to the absolute response URL, independently from the configured API origin. Query parameters embedded by the server (such as signed expiry) are preserved. No provider Authorization or cookie state is installed; client logging is disabled for these URLs. Live connection and generation request/socket timeouts apply. Received bytes count as inference traffic. Existing platform HTTP/LAN policy applies.",
+    "method": "GET",
+    "requestUrl": {
+      "type": "string",
+      "description": "Absolute HTTP(S) image URL with optional server-provided query and no user information.",
+      "format": "uri"
+    },
+    "response": { "$ref": "#/components/schemas/ImageDownload" },
+    "errors": {
+      "description": "Any non-2xx status fails the image; redirects may change origin but never receive provider credentials. Undecodable success bodies also fail."
+    }
+  }
+}

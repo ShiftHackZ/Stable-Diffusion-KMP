@@ -1,5 +1,7 @@
 package com.shifthackz.aisdv1.domain.usecase.generation
 
+import kotlinx.coroutines.ensureActive
+import kotlin.coroutines.coroutineContext
 import com.shifthackz.aisdv1.domain.entity.AiGenerationResult
 import com.shifthackz.aisdv1.domain.entity.ServerSource
 import com.shifthackz.aisdv1.domain.entity.TextToImagePayload
@@ -12,7 +14,9 @@ import com.shifthackz.aisdv1.domain.repository.HordeGenerationRepository
 import com.shifthackz.aisdv1.domain.repository.HuggingFaceGenerationRepository
 import com.shifthackz.aisdv1.domain.repository.LocalDiffusionGenerationRepository
 import com.shifthackz.aisdv1.domain.repository.MediaPipeGenerationRepository
+import com.shifthackz.aisdv1.domain.repository.OpenAiCompatibleGenerationRepository
 import com.shifthackz.aisdv1.domain.repository.OpenAiGenerationRepository
+import com.shifthackz.aisdv1.domain.repository.OpenAiOAuthGenerationRepository
 import com.shifthackz.aisdv1.domain.repository.StableDiffusionCppGenerationRepository
 import com.shifthackz.aisdv1.domain.repository.StabilityAiGenerationRepository
 import com.shifthackz.aisdv1.domain.repository.StableDiffusionGenerationRepository
@@ -21,6 +25,8 @@ import com.shifthackz.aisdv1.domain.repository.SwarmUiGenerationRepository
 /**
  * Implements `TextToImageUseCase` behavior in the SDAI domain layer.
  *
+ * @param openAiCompatibleGenerationRepository Independent compatible image-server repository.
+ * @param openAiOAuthGenerationRepository Direct image provider guarded by the submitted account revision.
  * @throws IllegalStateException when the current state is invalid.
  * @author Dmitriy Moroz
  */
@@ -53,6 +59,8 @@ internal class TextToImageUseCaseImpl(
      * @author Dmitriy Moroz
      */
     private val openAiGenerationRepository: OpenAiGenerationRepository,
+    private val openAiCompatibleGenerationRepository: OpenAiCompatibleGenerationRepository,
+    private val openAiOAuthGenerationRepository: OpenAiOAuthGenerationRepository,
     /**
      * Exposes the `stabilityAiGenerationRepository` value used by the SDAI domain layer.
      *
@@ -126,20 +134,28 @@ internal class TextToImageUseCaseImpl(
 ) : TextToImageUseCase {
 
     /**
-     * Executes the `invoke` step in the SDAI domain layer.
-     *
-     * @param payload generation payload used by the operation.
+     * Routes work to its captured provider and executes sequential single-image batches when needed.
+     * Rejects a source mismatch before dispatch; OAuth repositories additionally enforce captured
+     * account/session and durable selection revisions before HTTP and result persistence.
+     * @param payload Immutable generation inputs and token-free submission identity.
+     * @return Successful images in batch order; a failure or cancellation stops remaining requests.
+     * @throws IllegalStateException When the submitted source no longer matches the selected provider.
      * @author Dmitriy Moroz
      */
     override suspend operator fun invoke(
         payload: TextToImagePayload,
-    ): List<AiGenerationResult> = when (preferenceManager.source) {
+    ): List<AiGenerationResult> {
+        val source = payload.sourceSnapshot ?: preferenceManager.source
+        check(source == preferenceManager.source) { "Generation source changed" }
+        return when (source) {
         ServerSource.AUTOMATIC1111 -> stableDiffusionGenerationRepository.generateFromText(payload)
         ServerSource.FAL_AI -> falAiGenerationRepository.generateFromText(payload)
         ServerSource.ARLI_AI -> arliAiGenerationRepository.generateFromText(payload)
         else -> List(payload.batchCount.coerceAtLeast(1)) {
+            coroutineContext.ensureActive()
             generateSingle(payload)
         }
+    }
     }
 
     /**
@@ -148,11 +164,13 @@ internal class TextToImageUseCaseImpl(
      * @param payload generation payload used by the operation.
      * @author Dmitriy Moroz
      */
-    private suspend fun generateSingle(payload: TextToImagePayload) = when (preferenceManager.source) {
+    private suspend fun generateSingle(payload: TextToImagePayload) = when (payload.sourceSnapshot ?: preferenceManager.source) {
         ServerSource.HORDE -> hordeGenerationRepository.generateFromText(payload)
         ServerSource.LOCAL_MICROSOFT_ONNX -> localDiffusionGenerationRepository.generateFromText(payload)
         ServerSource.HUGGING_FACE -> huggingFaceGenerationRepository.generateFromText(payload)
         ServerSource.OPEN_AI -> openAiGenerationRepository.generateFromText(payload)
+        ServerSource.OPEN_AI_COMPATIBLE -> openAiCompatibleGenerationRepository.generateFromText(payload)
+        ServerSource.OPEN_AI_OAUTH -> openAiOAuthGenerationRepository.generateFromText(payload)
         ServerSource.STABILITY_AI -> stabilityAiGenerationRepository.generateFromText(payload)
         ServerSource.SWARM_UI -> swarmUiGenerationRepository.generateFromText(payload)
         ServerSource.LOCAL_GOOGLE_MEDIA_PIPE -> mediaPipeGenerationRepository.generateFromText(payload)

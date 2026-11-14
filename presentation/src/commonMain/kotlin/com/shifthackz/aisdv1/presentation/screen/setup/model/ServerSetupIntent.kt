@@ -13,6 +13,14 @@ import com.shifthackz.aisdv1.domain.entity.ServerSourceType
  * active configuration form, and local-model intents drive download/delete confirmation flows.
  */
 sealed interface ServerSetupIntent : MviIntent {
+    /** Starts device authorization for the selected ChatGPT provider. @author Dmitriy Moroz */
+    data object OAuthLogin : ServerSetupIntent
+    /** Cancels pending polling without deleting the committed session. @author Dmitriy Moroz */
+    data object OAuthCancel : ServerSetupIntent
+    /** Deletes the local protected session, including an unreadable envelope. @author Dmitriy Moroz */
+    data object OAuthLogout : ServerSetupIntent
+    /** Opens the trusted verification page for the current transient device code. @author Dmitriy Moroz */
+    data object OAuthOpenBrowser : ServerSetupIntent
     data class UpdateServerMode(val mode: ServerSource) : ServerSetupIntent
     data class UpdateSourceSearchQuery(val query: String) : ServerSetupIntent
     data class UpdateSourceTypeFilter(val type: ServerSourceType?) : ServerSetupIntent
@@ -27,6 +35,9 @@ sealed interface ServerSetupIntent : MviIntent {
     data class UpdatePassword(val password: String) : ServerSetupIntent
     data class UpdatePasswordVisibility(val visible: Boolean) : ServerSetupIntent
     data class UpdateHordeApiKey(val key: String) : ServerSetupIntent
+    data class UpdateOpenAiCompatibleUrl(val url: String) : ServerSetupIntent
+    data class UpdateOpenAiCompatibleApiKey(val key: String) : ServerSetupIntent
+    data object AcknowledgeUnverifiedConnection : ServerSetupIntent
     data class UpdateOpenAiApiKey(val key: String) : ServerSetupIntent
     data class UpdateStabilityAiApiKey(val key: String) : ServerSetupIntent
     data class UpdateFalAiApiKey(val key: String) : ServerSetupIntent

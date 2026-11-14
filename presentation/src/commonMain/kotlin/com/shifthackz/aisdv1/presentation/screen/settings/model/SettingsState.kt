@@ -98,7 +98,7 @@ data class SettingsState(
         get() = serverSource.type != ServerSourceType.LOCAL
 
     val showFormAdvancedOption: Boolean
-        get() = serverSource != ServerSource.OPEN_AI
+        get() = serverSource != ServerSource.OPEN_AI && serverSource != ServerSource.OPEN_AI_COMPATIBLE && serverSource != ServerSource.OPEN_AI_OAUTH
 
     val showUseSystemColorPalette: Boolean = false
 }

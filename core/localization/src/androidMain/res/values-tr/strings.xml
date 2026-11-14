@@ -64,6 +64,7 @@
     <string name="action_back">Geri</string>
     <string name="action_menu">Menü</string>
     <string name="action_copy">Kopyala</string>
+    <string name="message_text_copied">Kopyalandı</string>
     <string name="action_refresh">Yenile</string>
     <string name="action_install_instructions">Yükle</string>
     <string name="action_swap_dimensions">Genişlik ve yüksekliği değiştir</string>
@@ -197,7 +198,7 @@
     <string name="hint_args_warning" tools:ignore="TypographyDashes,Typos">Bağlanmadan önce şunlardan emin olun:\n• AUTOMATIC1111 WebUI\'yi --api --listen bayraklarıyla çalıştırıyorsunuz\n• Güvenlik duvarınız 7860 portunu engellemiyor\n• Telefon, bilgisayarınızla aynı WiFi\'da.</string>
     <string name="hint_args_swarm_ui_warning" tools:ignore="TypographyDashes,Typos">Bağlanmadan önce şunlardan emin olun:\n• Güvenlik duvarınız 7801 portunu engellemiyor\n• Telefon, bilgisayarınızla aynı WiFi\'da.</string>
 
-    <string name="hint_server_horde_title">Horde AI bulutuna bağlanın</string>
+    <string name="hint_server_horde_title">Horde AI Cloud</string>
     <string name="hint_server_horde_sub_title">Horde AI, Görüntü oluşturma çalışanları ve metin oluşturma çalışanlarından oluşan kitle kaynaklı dağıtılmış bir kümedir.</string>
     <string name="hint_server_horde_usage">Anonim olarak bağlanmak için varsayılan API Anahtarını kullanabilirsiniz. Ancak çok fazla eşzamanlı istek olduğunda anonim hesaplar en düşük önceliğe sahiptir.</string>
     <string name="hint_server_horde_api_key">API Anahtar</string>
@@ -205,25 +206,25 @@
     <string name="hint_server_horde_about">Hakkında Horde AI</string>
     <string name="hint_server_horde_get_api_key">API Anahtarınızı alın</string>
 
-    <string name="hint_hugging_face_title">Hugging Face bulutuna bağlanın</string>
+    <string name="hint_hugging_face_title">Hugging Face</string>
     <string name="hint_hugging_face_sub_title">Hugging Face çıkarım bulutu, herkese açık makine öğrenimi modellerini veya kendi özel modellerinizi ücretsiz olarak test etmenize ve değerlendirmenize olanak tanıyan bir hizmet sağlar.</string>
     <string name="hint_hugging_face_about">Hakkında Hugging Face</string>
     <string name="hint_hugging_face_model">Hugging Face model</string>
 
-    <string name="hint_open_ai_title">OpenAI bulutuna bağlanın</string>
+    <string name="hint_open_ai_title">OpenAI API</string>
     <string name="hint_open_ai_sub_title">OpenAI hizmeti GPT Image modelleriyle görüntü oluşturmayı sağlar.</string>
     <string name="hint_open_ai_about">OpenAI hakkında</string>
 
-    <string name="hint_fal_ai_title">Fal.ai\'ye bağlanın</string>
+    <string name="hint_fal_ai_title">Fal.ai</string>
     <string name="hint_fal_ai_sub_title">Fal.ai, kuyruk tabanlı çıkarım kullanan barındırılan görüntü oluşturma modeli API\'leri sağlar.</string>
     <string name="hint_fal_ai_about">Fal.ai API anahtarları</string>
 
-    <string name="hint_arli_ai_title">ArliAI\'ye bağlanın</string>
+    <string name="hint_arli_ai_title">ArliAI</string>
     <string name="hint_arli_ai_sub_title">ArliAI, SDNext uyumlu bulut görüntü oluşturma API\'leri sağlar.</string>
     <string name="hint_arli_ai_about">ArliAI API belgeleri</string>
     <string name="hint_arli_ai_model">ArliAI model checkpoint</string>
 
-    <string name="hint_stability_ai_title">Stability AI\'ya bağlanın</string>
+    <string name="hint_stability_ai_title">Stability AI</string>
     <string name="hint_stability_ai_sub_title">StabilityAI - DreamStudio tarafından sağlanan görüntü oluşturma hizmetidir.</string>
     <string name="hint_stability_ai_about">Hakkında Stability AI</string>
     <string name="hint_stability_ai_engine">Stability AI motoru</string>
@@ -612,4 +613,35 @@
     <string name="settings_connection_timeout">Bağlantı zaman aşımı</string>
     <string name="settings_connection_timeout_description">Yapay zekâ sağlayıcısına bağlanmak için izin verilen süre. Yeni istekler için geçerlidir.</string>
     <string name="settings_connection_timeout_ios_description">iOS bağlantı süresini otomatik olarak yönetir. Bu değer kaydedilir ancak iOS üzerinde uygulanamaz.</string>
+    <string name="srv_type_open_ai_compatible">OpenAI uyumlu</string>
+    <string name="open_ai_compatible_help">OpenAI görüntü API’sini kullanan bir görüntü sunucusuna veya proxy’ye bağlanın. Tam API önekini girin, örneğin https://host/prefix/v1. API anahtarı isteğe bağlıdır. Desteklenen modelleri ve boyutları sunucu belirler.</string>
+    <string name="open_ai_compatible_url">API temel URL’si (/v1 dahil)</string>
+    <string name="open_ai_compatible_optional_key">API anahtarı (isteğe bağlı)</string>
+    <string name="open_ai_compatible_unverified_title">Bağlantı doğrulanmadı</string>
+    <string name="open_ai_compatible_unverified_text">Sunucu model listesini desteklemiyor. Yapılandırma kaydedildi ancak görüntü üretimi doğrulanmadı. Üretim ekranında görüntü modeli kimliğini girin.</string>
+    <string name="open_ai_compatible_model">Görüntü modeli kimliği</string>
+    <string name="open_ai_compatible_model_required">Bir görüntü modeli kimliği girin.</string>
+    <string name="open_ai_compatible_positive_size">Pozitif bir piksel boyutu girin.</string>
+    <string name="open_ai_compatible_img2img_unsupported">Bu sağlayıcı yalnızca metinden görüntü üretimini destekler.</string>
+    <string name="open_ai_compatible_http_auth">Kimlik doğrulama başarısız. API anahtarını ve sunucu izinlerini kontrol edin.</string>
+    <string name="open_ai_compatible_http_rate">Sunucunun istek veya hesap sınırına ulaşıldı. Daha sonra tekrar deneyin.</string>
+    <string name="open_ai_compatible_http_request">Sunucu isteği reddetti. Modeli, boyutları ve istemi kontrol edin.</string>
+    <string name="open_ai_compatible_http_server">Görüntü sunucusunda hata oluştu. Daha sonra tekrar deneyin.</string>
+    <string name="open_ai_compatible_http_error">Sunucu isteği başarısız oldu (HTTP %1$d).</string>
+    <string name="open_ai_compatible_image_failure">Görüntü alınamadı veya çözümlenemedi. Sunucuyu kontrol edip tekrar deneyin.</string>
+    <string name="srv_type_open_ai_oauth">ChatGPT OAuth</string>
+    <string name="open_ai_oauth_help">Doğrudan görsel oluşturmak için ChatGPT ile giriş yapın. Hesap veya çalışma alanında cihaz girişi etkin olmalıdır. Bu resmî olmayan entegrasyon değişebilir.</string>
+    <string name="open_ai_oauth_login">ChatGPT ile giriş yap</string>
+    <string name="open_ai_oauth_logout">Çıkış yap</string>
+    <string name="open_ai_oauth_signed_in">Giriş yapıldı. Bu hesabı kullanmak için bağlanın.</string>
+    <string name="open_ai_oauth_open_browser">Giriş sayfasını aç</string>
+    <string name="open_ai_oauth_code_help">Bu kodu yalnızca SDAI içinde başlattığınız giriş için kullanın. Kod 15 dakika geçerlidir.</string>
+    <string name="open_ai_oauth_waiting">Yetkilendirme bekleniyor…</string>
+    <string name="open_ai_oauth_login_required">Önce sağlayıcı ayarlarında ChatGPT ile giriş yapın.</string>
+    <string name="open_ai_oauth_unavailable">Cihaz girişi kullanılamıyor. ChatGPT güvenlik ayarlarında etkinleştirin veya çalışma alanı yöneticinize başvurun.</string>
+    <string name="open_ai_oauth_expired">Giriş kodunun süresi doldu. Yeniden giriş yapın.</string>
+    <string name="open_ai_oauth_identity_changed">Hesap veya sağlayıcı değişti. Oluşturmayı yeniden başlatın.</string>
+    <string name="open_ai_oauth_storage_error">Korumalı hesap depolaması kullanılamıyor. Cihazın kilidini açıp yeniden deneyin.</string>
+    <string name="open_ai_oauth_error">ChatGPT isteği başarısız oldu. Bağlantınızı, hesap erişimini ve görsel boyutlarını kontrol edip yeniden deneyin.</string>
+    <string name="open_ai_oauth_reset">Yerel oturumu sıfırla</string>
 </resources>

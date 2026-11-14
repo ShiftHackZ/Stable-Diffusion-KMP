@@ -260,8 +260,14 @@ internal class PreferenceManagerImpl(
      * @author Dmitriy Moroz
      */
     override var source: ServerSource
-        get() = ServerSource.parse(keyValueStore.getString(KEY_SERVER_SOURCE, ServerSource.AUTOMATIC1111.key))
-        set(value) = putString(KEY_SERVER_SOURCE, value.key)
+        get() = keyValueStore.readProviderSelection().first
+        set(value) {
+            keyValueStore.writeProviderSelection(value)
+            onPreferencesChanged()
+        }
+
+    override val providerSelectionRevision: Long
+        get() = keyValueStore.readProviderSelection().second
 
     /**
      * Exposes the `sdModel` value used by the SDAI data layer.
@@ -280,6 +286,30 @@ internal class PreferenceManagerImpl(
     override var hordeApiKey: String
         get() = keyValueStore.getString(KEY_HORDE_API_KEY)
         set(value) = putString(KEY_HORDE_API_KEY, value)
+
+    /**
+     * Complete HTTP(S) API prefix, including any version and reverse-proxy path.
+     * @author Dmitriy Moroz
+     */
+    override var openAiCompatibleUrl: String
+        get() = keyValueStore.getString(KEY_OPEN_AI_COMPATIBLE_URL, "")
+        set(value) = putString(KEY_OPEN_AI_COMPATIBLE_URL, value)
+
+    /**
+     * Optional bearer token for the independent compatible server.
+     * @author Dmitriy Moroz
+     */
+    override var openAiCompatibleApiKey: String
+        get() = keyValueStore.getString(KEY_OPEN_AI_COMPATIBLE_API_KEY, "")
+        set(value) = putString(KEY_OPEN_AI_COMPATIBLE_API_KEY, value)
+
+    /**
+     * Editable image model identifier supplied to the compatible server.
+     * @author Dmitriy Moroz
+     */
+    override var openAiCompatibleModel: String
+        get() = keyValueStore.getString(KEY_OPEN_AI_COMPATIBLE_MODEL, "gpt-image-2")
+        set(value) = keyValueStore.putString(KEY_OPEN_AI_COMPATIBLE_MODEL, value)
 
     /**
      * Exposes the `openAiApiKey` value used by the SDAI data layer.
@@ -551,6 +581,7 @@ internal class PreferenceManagerImpl(
                 formAdvancedOptionsAlwaysShow = formAdvancedOptionsAlwaysShow,
                 formPromptTaggedInput = formPromptTaggedInput,
                 source = source,
+                providerSelectionRevision = providerSelectionRevision,
                 hordeApiKey = hordeApiKey,
                 arliAiModel = arliAiModel,
                 localUseNNAPI = localOnnxUseNNAPI,
@@ -808,6 +839,9 @@ internal class PreferenceManagerImpl(
          * @author Dmitriy Moroz
          */
         const val KEY_HORDE_API_KEY = "key_horde_api_key"
+        const val KEY_OPEN_AI_COMPATIBLE_URL = "key_open_ai_compatible_url"
+        const val KEY_OPEN_AI_COMPATIBLE_API_KEY = "key_open_ai_compatible_api_key"
+        const val KEY_OPEN_AI_COMPATIBLE_MODEL = "key_open_ai_compatible_model"
         /**
          * Exposes the `KEY_OPEN_AI_API_KEY` value used by the SDAI data layer.
          *

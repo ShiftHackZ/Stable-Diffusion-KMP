@@ -3,11 +3,15 @@ package com.shifthackz.aisdv1.domain.entity
 import com.shifthackz.aisdv1.domain.feature.auth.AuthorizationCredentials
 
 /**
- * Carries `Configuration` data through the SDAI domain layer.
+ * Complete provider configuration read by setup and generation screens.
+ * @param providerSelectionRevision Durable revision of the selected source; changes on source replacement.
  *
  * @author Dmitriy Moroz
  */
 data class Configuration(
+    /** Revision read from provider-selection storage; configuration writes never restore an old revision.
+     * @author Dmitriy Moroz */
+    val providerSelectionRevision: Long = 0L,
     /**
      * Exposes the `serverUrl` value used by the SDAI domain layer.
      *
@@ -50,6 +54,21 @@ data class Configuration(
      * @author Dmitriy Moroz
      */
     val openAiApiKey: String = "",
+    /**
+     * Editable image model identifier supplied to the compatible server.
+     * @author Dmitriy Moroz
+     */
+    val openAiCompatibleModel: String = "gpt-image-2",
+    /**
+     * Optional bearer token for the independent compatible server.
+     * @author Dmitriy Moroz
+     */
+    val openAiCompatibleApiKey: String = "",
+    /**
+     * Complete HTTP(S) API prefix, including any version and reverse-proxy path.
+     * @author Dmitriy Moroz
+     */
+    val openAiCompatibleUrl: String = "",
     /**
      * Exposes the `huggingFaceApiKey` value used by the SDAI domain layer.
      *

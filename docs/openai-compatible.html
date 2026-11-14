@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OpenAI-compatible Image Servers - SDAI</title>
+    <meta
+      name="description"
+      content="Connect SDAI on Android or iOS to an OpenAI-compatible image server or proxy with a full API prefix, optional key and your own model ID."
+    />
+    <meta name="application-name" content="SDAI" />
+    <meta name="author" content="Moroz Inc." />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#514a91" />
+    <link rel="canonical" href="https://sdai.moroz.cc/openai-compatible.html" />
+    <link rel="apple-touch-icon" href="assets/sdai.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta
+      property="og:title"
+      content="OpenAI-compatible Image Servers - SDAI"
+    />
+    <meta
+      property="og:description"
+      content="Set up your image server or proxy in SDAI: API URL, optional bearer key, model ID, supported sizes and troubleshooting."
+    />
+    <meta
+      property="og:url"
+      content="https://sdai.moroz.cc/openai-compatible.html"
+    />
+    <meta property="og:site_name" content="SDAI" />
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content="https://sdai.moroz.cc/assets/sdai.png" />
+    <meta property="og:image:alt" content="SDAI app icon" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="OpenAI-compatible Image Servers - SDAI"
+    />
+    <meta
+      name="twitter:description"
+      content="Connect your image API to SDAI on Android and iOS."
+    />
+    <meta
+      name="twitter:image"
+      content="https://sdai.moroz.cc/assets/sdai.png"
+    />
+    <link rel="icon" href="assets/sdai.png" />
+    <link rel="stylesheet" href="css/site.css" />
+    <script src="js/site.js?v=20261107" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "@id": "https://sdai.moroz.cc/openai-compatible.html#guide",
+        "headline": "OpenAI-compatible Image Servers",
+        "description": "Set up an OpenAI-compatible image server or proxy in SDAI on Android and iOS.",
+        "url": "https://sdai.moroz.cc/openai-compatible.html",
+        "dateModified": "2026-11-14",
+        "inLanguage": "en",
+        "isPartOf": { "@id": "https://sdai.moroz.cc/#website" },
+        "about": { "@id": "https://sdai.moroz.cc/#app" },
+        "author": {
+          "@type": "Organization",
+          "name": "Moroz Inc.",
+          "url": "https://moroz.cc/"
+        }
+      }
+    </script>
+  </head>
+  <body data-page="openai-compatible">
+    <div id="site-header"></div>
+    <main>
+      <section class="page-hero">
+        <div class="shell">
+          <p class="eyebrow">Provider guide · Stable</p>
+          <h1>OpenAI-compatible image servers</h1>
+          <p>Bring your image server or proxy to SDAI on Android and iOS.</p>
+        </div>
+      </section>
+      <section class="section">
+        <article class="shell legal-copy">
+          <h2>What this source supports</h2>
+          <p>
+            OpenAI-compatible appears immediately after Swarm UI in the default
+            provider list. It is marked Stable on Android (Google Play, full and
+            FOSS builds) and iOS. The server must implement the OpenAI image
+            generation API; compatibility with chat endpoints alone is not
+            enough.
+          </p>
+          <ul>
+            <li>
+              Text-to-image with an editable model ID and positive width and
+              height.
+            </li>
+            <li>Sequential batches, with one image requested at a time.</li>
+            <li>Base64 image data or a downloadable HTTP(S) image URL.</li>
+            <li>
+              Shared gallery, image details and the app's save/export flows.
+            </li>
+          </ul>
+          <p>
+            Img2img, image editing, negative prompts, samplers, sampling steps,
+            CFG scale, seed and quality options are not sent by this source. The
+            server determines available models, supported sizes and account
+            limits. The official OpenAI source has separate configuration.
+          </p>
+
+          <h2>Connect your server</h2>
+          <ol>
+            <li>
+              Start the image server or proxy and enable access from your
+              phone's network.
+            </li>
+            <li>
+              Open SDAI Configuration and choose
+              <strong>OpenAI-compatible</strong>.
+            </li>
+            <li>
+              Enter the complete API prefix, such as
+              <code>http://192.168.1.10:10531/v1</code> or
+              <code>https://images.example.com/proxy/v1</code>. Include the
+              version and any reverse-proxy path your server requires.
+            </li>
+            <li>
+              Leave <strong>API key</strong> empty for a keyless server.
+              Otherwise enter its bearer token.
+            </li>
+            <li>Tap <strong>Connect</strong>.</li>
+            <li>
+              Enter an image model ID available on that server, choose supported
+              dimensions, write a prompt and tap <strong>Imagine</strong>.
+            </li>
+          </ol>
+          <p>
+            For a server on a computer in the same LAN, enter the computer's LAN
+            IP address. The server must listen on that network interface and its
+            port must be reachable through the firewall. The phone's
+            <code>localhost</code> or <code>127.0.0.1</code> refers to the
+            phone. Use HTTPS outside a trusted local network.
+          </p>
+          <p>
+            Do not paste a generation endpoint into the API base field. SDAI
+            appends <code>models</code> for the connection check and
+            <code>images/generations</code> for generation. It does not add
+            <code>/v1</code> automatically.
+          </p>
+
+          <h2>Using an external ChatGPT proxy</h2>
+          <p>
+            <a
+              href="https://github.com/EvanZhouDev/openai-oauth"
+              target="_blank"
+              rel="noopener noreferrer"
+              >openai-oauth</a
+            >
+            is one example of a separately running image proxy. Follow its own
+            setup instructions, complete ChatGPT sign-in there, then enter its
+            reachable API prefix in SDAI. This OpenAI-compatible source does not
+            perform ChatGPT OAuth or run the proxy on your phone. For direct
+            mobile sign-in, use the separate
+            <a href="openai-oauth.html">ChatGPT OAuth (Beta)</a> provider.
+          </p>
+          <p>
+            Use a model your account can access, such as
+            <code>gpt-image-2</code>
+            when the proxy exposes it. Model access and limits depend on the
+            upstream service. Protect access to a keyless proxy: anyone who can
+            reach its API can use the connected account.
+          </p>
+
+          <h2>Troubleshooting</h2>
+          <h3>Connection is unverified</h3>
+          <p>
+            Some image servers do not expose model discovery. If
+            <code>/models</code> returns 404 or 405, SDAI saves the connection
+            with an unverified notice. Enter the model ID manually. Even a
+            successful connection check does not prove image generation works.
+          </p>
+          <h3>Connection or generation fails</h3>
+          <p>
+            Check the API prefix, network access, authentication, model ID,
+            dimensions and account limits. A server that accepts text chat may
+            still lack image generation. A returned image URL must be reachable
+            from the phone; SDAI does not attach your provider bearer key to
+            image downloads.
+          </p>
+          <h3>The result has a different size</h3>
+          <p>
+            The server may return different dimensions from those requested.
+            SDAI records the decoded image's actual size in gallery details.
+            Unsupported diffusion metadata is not supplied by this source.
+          </p>
+          <p>
+            For the precise server integration contract, see
+            <code>network/openai-compatible.openapi.json</code> in the
+            <a
+              href="https://github.com/ShiftHackZ/SDAI-KMP"
+              target="_blank"
+              rel="noopener noreferrer"
+              >source repository</a
+            >. See also the <a href="faq.html">FAQ</a> and
+            <a href="privacy.html">Privacy Policy</a>.
+          </p>
+        </article>
+      </section>
+    </main>
+    <div id="site-footer"></div>
+  </body>
+</html>

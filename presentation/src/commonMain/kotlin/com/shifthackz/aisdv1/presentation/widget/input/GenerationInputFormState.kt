@@ -47,6 +47,8 @@ interface GenerationInputFormState {
     val availableSamplers: List<String>
     val selectedStylePreset: StabilityAiStylePreset
     val selectedClipGuidancePreset: StabilityAiClipGuidance
+    val openAiCompatibleModel: String
+        get() = "gpt-image-2"
     val openAiModel: OpenAiModel
     val openAiSize: OpenAiSize
     val openAiQuality: OpenAiQuality

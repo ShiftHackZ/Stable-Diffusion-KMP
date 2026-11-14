@@ -49,6 +49,7 @@ internal fun GenerationInputFormEvent.toImageToImageIntent(): ImageToImageIntent
     is GenerationInputFormEvent.UpdateSdxlBackend -> null
     is GenerationInputFormEvent.UpdateBonsaiBackend -> null
     is GenerationInputFormEvent.UpdateFalAiSyncMode -> ImageToImageIntent.UpdateFalAiSyncMode(value)
+    is GenerationInputFormEvent.UpdateOpenAiCompatibleModel -> null
     is GenerationInputFormEvent.UpdateArliAiModel -> ImageToImageIntent.UpdateArliAiModel(value)
     is GenerationInputFormEvent.UpdateStabilityAiStyle -> ImageToImageIntent.UpdateStabilityAiStyle(value)
     is GenerationInputFormEvent.UpdateStabilityAiClipGuidance ->

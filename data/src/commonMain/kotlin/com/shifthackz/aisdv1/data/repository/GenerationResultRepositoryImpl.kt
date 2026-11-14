@@ -6,16 +6,27 @@ import com.shifthackz.aisdv1.domain.entity.AiGenerationResult
 import com.shifthackz.aisdv1.domain.entity.AiGenerationResultPreview
 import com.shifthackz.aisdv1.domain.gateway.MediaStoreGateway
 import com.shifthackz.aisdv1.domain.preference.PreferenceManager
+import com.shifthackz.aisdv1.domain.gateway.ProviderSelectionGuard
+import com.shifthackz.aisdv1.domain.entity.OpenAiOAuthFailure
+import com.shifthackz.aisdv1.domain.entity.ServerSource
+import com.shifthackz.aisdv1.feature.openaioauth.auth.OAuthSessionManager
+import com.shifthackz.aisdv1.feature.openaioauth.model.OAuthIdentity
+import com.shifthackz.aisdv1.data.feature.openaioauth.oauthCall
 import com.shifthackz.aisdv1.domain.repository.GenerationResultRepository
 import kotlinx.coroutines.flow.Flow
 
 /**
- * Implements `GenerationResultRepository` behavior in the SDAI data layer.
+ * Persists and exports gallery results while rejecting stale OAuth account/source snapshots.
+ * @param preferenceManager Current source selection and export preferences.
+ * @param mediaStoreGateway Platform media export adapter.
+ * @param localDataSource Gallery database operations.
+ * @param oauthSessions Lazily resolves the protected session guard for OAuth results.
+ * @param selectionGuard Serializes final writes with provider replacement.
  *
  * @author Dmitriy Moroz
  */
 internal class GenerationResultRepositoryImpl(
-    preferenceManager: PreferenceManager,
+    private val preferenceManager: PreferenceManager,
     mediaStoreGateway: MediaStoreGateway,
     /**
      * Exposes the `localDataSource` value used by the SDAI data layer.
@@ -23,6 +34,8 @@ internal class GenerationResultRepositoryImpl(
      * @author Dmitriy Moroz
      */
     private val localDataSource: GenerationResultDataSource.Local,
+    private val oauthSessions: (() -> OAuthSessionManager)? = null,
+    private val selectionGuard: ProviderSelectionGuard = ProviderSelectionGuard(),
 ) : CoreMediaStoreRepository(
     preferenceManager,
     mediaStoreGateway,
@@ -112,16 +125,28 @@ internal class GenerationResultRepositoryImpl(
         localDataSource.queryByIdList(idList)
 
     /**
-     * Performs the SDAI side effect handled by `insert`.
-     *
-     * @param result result value consumed by the API.
-     * @return Result produced by `insert`.
+     * Inserts and optionally exports a result under its original OAuth account and selection revision.
+     * Rejects stale unsaved OAuth results before persistence; ordinary gallery results use normal storage.
+     * @param result Image and transient identity snapshot captured during generation.
+     * @return Database identifier of the persisted gallery result.
+     * @throws OpenAiOAuthFailure When the result's login or provider selection is no longer current.
      * @author Dmitriy Moroz
      */
     override suspend fun insert(result: AiGenerationResult): Long {
-        val id = localDataSource.insert(result)
-        exportToMediaStoreAsync(result)
-        return id
+        val identity = result.openAiOAuthIdentity
+        if (identity != null) return oauthCall {
+            selectionGuard.withSelection {
+                val sessions = oauthSessions?.invoke() ?: throw OpenAiOAuthFailure("LOGIN_REQUIRED")
+                sessions.currentIdentity()
+                sessions.withIdentity(OAuthIdentity(identity.accountId, identity.revision)) {
+                    if (preferenceManager.source != ServerSource.OPEN_AI_OAUTH || result.providerSelectionRevision == null ||
+                        preferenceManager.providerSelectionRevision != result.providerSelectionRevision)
+                        throw OpenAiOAuthFailure("IDENTITY_CHANGED")
+                    insertAndExport(result)
+                }
+            }
+        }
+        return insertAndExport(result)
     }
 
     /**
@@ -199,5 +224,16 @@ internal class GenerationResultRepositoryImpl(
         val updated = localDataSource.queryById(id).let { it.copy(liked = !it.liked) }
         localDataSource.insert(updated)
         return localDataSource.queryById(id).liked
+    }
+
+    /**
+     * Writes the gallery row and applies normal media export preferences.
+     * @param result Decoded image candidate whose identity has already been checked when applicable.
+     * @author Dmitriy Moroz
+     */
+    private suspend fun insertAndExport(result: AiGenerationResult): Long {
+        val id = localDataSource.insert(result)
+        exportToMediaStoreAsync(result)
+        return id
     }
 }

@@ -163,6 +163,9 @@ interface PreferenceManager {
      * @author Dmitriy Moroz
      */
     var source: ServerSource
+    /** Durable revision of the currently selected provider, shared with ConfigurationStore.
+     * @author Dmitriy Moroz */
+    val providerSelectionRevision: Long
     /**
      * Exposes the `sdModel` value used by the SDAI domain layer.
      *
@@ -181,6 +184,21 @@ interface PreferenceManager {
      * @author Dmitriy Moroz
      */
     var openAiApiKey: String
+    /**
+     * Editable image model identifier supplied to the compatible server.
+     * @author Dmitriy Moroz
+     */
+    var openAiCompatibleModel: String
+    /**
+     * Optional bearer token for the independent compatible server.
+     * @author Dmitriy Moroz
+     */
+    var openAiCompatibleApiKey: String
+    /**
+     * Complete HTTP(S) API prefix, including any version and reverse-proxy path.
+     * @author Dmitriy Moroz
+     */
+    var openAiCompatibleUrl: String
     /**
      * Exposes the `huggingFaceApiKey` value used by the SDAI domain layer.
      *

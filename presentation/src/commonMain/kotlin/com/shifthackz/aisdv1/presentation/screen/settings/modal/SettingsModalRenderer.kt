@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -26,6 +29,13 @@ import com.shifthackz.aisdv1.presentation.widget.dialog.ProgressDialog
 import com.shifthackz.aisdv1.presentation.widget.input.DropdownTextField
 import kotlinx.coroutines.launch
 
+/**
+ * Presents settings dialogs and sheets, opening timeout choices fully above system navigation.
+ * @param screenModal Active dialog or preference picker and its current selection.
+ * @param platformActions Handles platform settings and permission actions.
+ * @param processIntent Dispatches selections and dismissals through settings MVI.
+ * @author Dmitriy Moroz
+ */
 @Composable
 internal fun SettingsModalRenderer(
     screenModal: SettingsModal,
@@ -52,9 +62,9 @@ internal fun SettingsModalRenderer(
         )
 
         is SettingsModal.SelectSdModel -> {
-            androidx.compose.runtime.key(screenModal.models, screenModal.selected) {
+            key(screenModal.models, screenModal.selected) {
                 var selectedItem = remember(screenModal.selected) {
-                    androidx.compose.runtime.mutableStateOf(screenModal.selected)
+                    mutableStateOf(screenModal.selected)
                 }
                 DecisionInteractiveDialog(
                     title = text("title_select_sd_model"),
@@ -104,6 +114,7 @@ internal fun SettingsModalRenderer(
 
         is SettingsModal.GenerationTimeout -> ModalBottomSheet(
             onDismissRequest = dismiss,
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
             shape = RectangleShape,
             containerColor = MaterialTheme.colorScheme.background,
         ) {
@@ -117,6 +128,7 @@ internal fun SettingsModalRenderer(
 
         is SettingsModal.ConnectionTimeout -> ModalBottomSheet(
             onDismissRequest = dismiss,
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
             shape = RectangleShape,
             containerColor = MaterialTheme.colorScheme.background,
         ) {

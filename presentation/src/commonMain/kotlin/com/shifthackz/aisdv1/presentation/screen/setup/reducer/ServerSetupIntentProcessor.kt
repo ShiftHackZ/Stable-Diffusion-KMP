@@ -28,6 +28,7 @@ internal class ServerSetupIntentProcessor(
 
     fun process(intent: ServerSetupIntent) {
         when (intent) {
+            ServerSetupIntent.OAuthLogin, ServerSetupIntent.OAuthCancel, ServerSetupIntent.OAuthLogout, ServerSetupIntent.OAuthOpenBrowser -> Unit
             is ServerSetupIntent.AllowLocalCustomModel -> updateState { state ->
                 state.withAllowCustomModel(intent.allow)
             }
@@ -139,6 +140,16 @@ internal class ServerSetupIntentProcessor(
 
             ServerSetupIntent.ShowSourceSort -> updateState {
                 it.copy(modal = ServerSetupState.Modal.SourceSort)
+            }
+
+            ServerSetupIntent.AcknowledgeUnverifiedConnection -> Unit
+
+            is ServerSetupIntent.UpdateOpenAiCompatibleUrl -> updateState {
+                it.copy(openAiCompatibleUrl = intent.url, openAiCompatibleUrlValidationError = null)
+            }
+
+            is ServerSetupIntent.UpdateOpenAiCompatibleApiKey -> updateState {
+                it.copy(openAiCompatibleApiKey = intent.key)
             }
 
             is ServerSetupIntent.UpdateServerUrl -> updateState {

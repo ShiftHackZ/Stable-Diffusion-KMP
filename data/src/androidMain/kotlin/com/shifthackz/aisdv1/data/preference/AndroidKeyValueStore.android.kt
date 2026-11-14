@@ -41,6 +41,16 @@ private class AndroidPreferencesKeyValueStore(
     }
 
     /**
+     * Commits an atomic preference value synchronously; a failed disk write throws.
+     * @param key Stable preference key.
+     * @param value Complete source/revision envelope to commit.
+     * @author Dmitriy Moroz
+     */
+    override fun putStringDurably(key: String, value: String) {
+        check(preferences.edit().putString(key, value).commit()) { "Provider selection could not be persisted" }
+    }
+
+    /**
      * Loads SDAI data through `getBoolean`.
      *
      * @param key key value consumed by the API.

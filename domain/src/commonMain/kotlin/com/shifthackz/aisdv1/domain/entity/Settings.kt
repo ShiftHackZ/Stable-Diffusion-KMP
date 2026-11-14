@@ -3,11 +3,15 @@ package com.shifthackz.aisdv1.domain.entity
 import com.shifthackz.aisdv1.core.common.schedulers.SchedulersToken
 
 /**
- * Carries `Settings` data through the SDAI domain layer.
+ * Observable application preferences including the selected generation source.
+ * @param providerSelectionRevision Durable source revision used to invalidate earlier queued work.
  *
  * @author Dmitriy Moroz
  */
 data class Settings(
+    /** Durable source-selection identity used to invalidate work even after an away/back switch.
+     * @author Dmitriy Moroz */
+    val providerSelectionRevision: Long = 0L,
     /**
      * Time allowed to establish network provider connections; defaults to 120 seconds.
      *

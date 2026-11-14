@@ -33,7 +33,7 @@ fun interface GenerationTimeoutProvider {
  * @param provider Source of the latest persisted timeout, evaluated once for this request.
  * @author Dmitriy Moroz
  */
-internal fun HttpRequestBuilder.applyGenerationTimeout(provider: GenerationTimeoutProvider) {
+fun HttpRequestBuilder.applyGenerationTimeout(provider: GenerationTimeoutProvider) {
     val limit = provider.timeoutMillis().takeIf { it > 0L } ?: HttpTimeoutConfig.INFINITE_TIMEOUT_MS
     timeout {
         requestTimeoutMillis = limit

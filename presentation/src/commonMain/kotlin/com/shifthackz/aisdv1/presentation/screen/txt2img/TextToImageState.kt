@@ -31,6 +31,10 @@ import com.shifthackz.aisdv1.presentation.widget.input.GenerationInputFormState
  * The state combines screen lifecycle flags, generated results, validation
  * feedback, current platform metadata, and the shared generation form contract
  * used by provider-specific controls such as Android Bonsai backend selection.
+ * @param openAiOAuthAccountId Token-free account identity observed from protected session state.
+ * @param openAiOAuthRevision Login revision captured when generation is submitted.
+ * @param providerSelectionRevision Durable source-selection revision captured with submitted work.
+ * @author Dmitriy Moroz
  */
 @Immutable
 data class TextToImageState(
@@ -67,6 +71,10 @@ data class TextToImageState(
     override val availableSamplers: List<String> = emptyList(),
     override val selectedStylePreset: StabilityAiStylePreset = StabilityAiStylePreset.NONE,
     override val selectedClipGuidancePreset: StabilityAiClipGuidance = StabilityAiClipGuidance.NONE,
+    override val openAiCompatibleModel: String = "gpt-image-2",
+    val openAiOAuthAccountId: String? = null,
+    val openAiOAuthRevision: String? = null,
+    val providerSelectionRevision: Long = 0L,
     override val openAiModel: OpenAiModel = OpenAiModel.default,
     override val openAiSize: OpenAiSize = OpenAiSize.W1024_H1024,
     override val openAiQuality: OpenAiQuality = OpenAiQuality.AUTO,
@@ -175,6 +183,11 @@ internal fun TextToImageState.mapToPayload(): TextToImagePayload = TextToImagePa
     } ?: BonsaiBackend.AUTO,
     falAiSyncMode = falAiSyncMode,
     arliAiModel = arliAiModel.takeIf { mode == ServerSource.ARLI_AI }.orEmpty(),
+    openAiCompatibleModel = openAiCompatibleModel.trim(),
+    sourceSnapshot = mode,
+    providerSelectionRevision = providerSelectionRevision,
+    openAiOAuthAccountId = openAiOAuthAccountId.takeIf { mode == ServerSource.OPEN_AI_OAUTH },
+    openAiOAuthRevision = openAiOAuthRevision.takeIf { mode == ServerSource.OPEN_AI_OAUTH },
 )
 
 internal const val DEFAULT_SIZE = 512

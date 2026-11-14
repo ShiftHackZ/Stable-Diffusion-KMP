@@ -15,13 +15,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.shifthackz.aisdv1.domain.entity.ServerSource
 import com.shifthackz.aisdv1.presentation.screen.setup.model.ServerSetupIntent
 import com.shifthackz.aisdv1.presentation.screen.setup.model.ServerSetupState
 import com.shifthackz.aisdv1.presentation.screen.setup.content.ServerSetupStrings
@@ -29,7 +27,8 @@ import com.shifthackz.aisdv1.presentation.widget.scrollbar.verticalScrollbar
 import kotlinx.coroutines.launch
 
 /**
- * Renders the provider picker list with search/filter/sort applied.
+ * Renders a fixed discovery toolbar above the provider list with search/filter/sort applied.
+ * Measuring both in one column keeps the list viewport stable when returning from configuration.
  *
  * @param state current setup state, including active provider filters.
  * @param strings localized provider labels and messages.
@@ -47,59 +46,40 @@ internal fun SourceSelectionStep(
     modifier: Modifier = Modifier,
 ) {
     val filteredSources = state.visibleSources(strings)
-    val selectedIndex = filteredSources.indexOf(state.mode)
-    LaunchedEffect(
-        state.sourceSearchQuery,
-        state.sourceTypeFilter,
-        state.sourceReadinessFilters,
-        state.sourceTagFilters,
-        state.sourceSortOrder,
-    ) {
-        if (filteredSources.isNotEmpty()) {
-            listState.animateScrollToItem(0)
-        }
-    }
-    LaunchedEffect(filteredSources.map(ServerSource::key), state.mode) {
-        if (filteredSources.isNotEmpty() && state.mode !in filteredSources) {
-            processIntent(ServerSetupIntent.UpdateServerMode(filteredSources.first()))
-        }
-    }
-    LaunchedEffect(state.mode) {
-        if (selectedIndex >= 0 && !listState.isItemFullyVisible(selectedIndex)) {
-            listState.animateScrollToItem(selectedIndex)
-        }
-    }
     val coroutineScope = rememberCoroutineScope()
 
-    LazyColumn(
-        modifier = modifier.verticalScrollbar(listState),
-        state = listState,
-        contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 32.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        if (filteredSources.isEmpty()) {
-            item(key = "source_empty") {
-                SourceEmptyState(text = strings.sourceNoResults)
+    Column(modifier = modifier) {
+        SourceSelectionToolbar(state = state, strings = strings, processIntent = processIntent)
+        LazyColumn(
+            modifier = Modifier.weight(1f).verticalScrollbar(listState),
+            state = listState,
+            contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 32.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            if (filteredSources.isEmpty()) {
+                item(key = "source_empty") {
+                    SourceEmptyState(text = strings.sourceNoResults)
+                }
             }
-        }
-        itemsIndexed(
-            items = filteredSources,
-            key = { _, source -> source.key },
-        ) { index, source ->
-            SourceModeItem(
-                source = source,
-                selected = state.mode == source,
-                platform = state.platform,
-                strings = strings,
-                onClick = {
-                    coroutineScope.launch {
-                        if (!listState.isItemFullyVisible(index)) {
-                            listState.animateScrollToItem(index)
+            itemsIndexed(
+                items = filteredSources,
+                key = { _, source -> source.key },
+            ) { index, source ->
+                SourceModeItem(
+                    source = source,
+                    selected = state.mode == source,
+                    platform = state.platform,
+                    strings = strings,
+                    onClick = {
+                        coroutineScope.launch {
+                            if (!listState.isItemFullyVisible(index)) {
+                                listState.animateScrollToItem(index)
+                            }
                         }
-                    }
-                    processIntent(ServerSetupIntent.UpdateServerMode(source))
-                },
-            )
+                        processIntent(ServerSetupIntent.UpdateServerMode(source))
+                    },
+                )
+            }
         }
     }
 }
