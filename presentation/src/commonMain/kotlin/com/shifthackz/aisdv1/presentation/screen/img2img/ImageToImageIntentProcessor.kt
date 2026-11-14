@@ -328,6 +328,7 @@ internal class ImageToImageIntentProcessor(
                 it.copy(aDetailer = intent.value, message = null)
             }
             ImageToImageIntent.RefreshADetailerAvailability -> Unit
+            ImageToImageIntent.RetrySamplers -> Unit
             ImageToImageIntent.OpenADetailerInstallInstructions -> Unit
             is ImageToImageIntent.UpdateDenoisingStrength -> updateState {
                 it.copy(

@@ -13,14 +13,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import com.shifthackz.aisdv1.core.common.appbuild.BuildInfoProvider
 import com.shifthackz.aisdv1.core.extensions.clearFocusOnTap
 import com.shifthackz.aisdv1.core.localization.Localization
 import com.shifthackz.aisdv1.domain.preference.PreferenceManager
 import com.shifthackz.aisdv1.presentation.di.initKoin
 import com.shifthackz.aisdv1.presentation.platform.rememberExternalUrlLauncher
+import com.shifthackz.aisdv1.presentation.screen.img2img.ImageToImageIntent
 import com.shifthackz.aisdv1.presentation.screen.img2img.ImageToImageViewModel
 import com.shifthackz.aisdv1.presentation.screen.img2img.rememberImageToImagePlatformActions
+import com.shifthackz.aisdv1.presentation.screen.txt2img.TextToImageIntent
 import com.shifthackz.aisdv1.presentation.screen.txt2img.TextToImageViewModel
 import com.shifthackz.aisdv1.presentation.theme.global.AiSdAppTheme
 import org.koin.core.parameter.parametersOf
@@ -57,6 +61,10 @@ fun AiSdApp() {
         }
     }
     val visitedHomeRoutes = remember { mutableStateListOf<AppRoute>() }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        textToImageViewModel.processIntent(TextToImageIntent.RetrySamplers)
+        imageToImageViewModel.processIntent(ImageToImageIntent.RetrySamplers)
+    }
     var lastHomeRoute by remember { mutableStateOf<AppRoute?>(null) }
     val currentRoute = route
     val selectedHomeRoute = currentRoute.asHomeTabRoute()

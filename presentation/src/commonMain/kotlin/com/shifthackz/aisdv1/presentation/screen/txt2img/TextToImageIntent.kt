@@ -26,6 +26,13 @@ import com.shifthackz.aisdv1.presentation.widget.input.GenerationAspectRatio
  * form to benchmark-specific UI.
  */
 sealed interface TextToImageIntent : MviIntent {
+    /**
+     * Retries an empty AUTOMATIC1111 sampler list after foregrounding or a user retry.
+     *
+     * @author Dmitriy Moroz
+     */
+    data object RetrySamplers : TextToImageIntent
+
     data object OpenDrawer : TextToImageIntent
     data object NavigateBack : TextToImageIntent
     data object ConfigureProvider : TextToImageIntent

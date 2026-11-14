@@ -21,6 +21,13 @@ import com.shifthackz.aisdv1.presentation.widget.input.GenerationAspectRatio
  */
 sealed interface ImageToImageIntent : MviIntent {
     /**
+     * Retries an empty AUTOMATIC1111 sampler list after foregrounding or a user retry.
+     *
+     * @author Dmitriy Moroz
+     */
+    data object RetrySamplers : ImageToImageIntent
+
+    /**
      * Provides the `OpenDrawer` singleton used by the SDAI presentation layer.
      *
      * @author Dmitriy Moroz

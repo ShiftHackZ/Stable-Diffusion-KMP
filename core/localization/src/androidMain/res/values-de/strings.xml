@@ -681,4 +681,5 @@
     <string name="open_ai_oauth_storage_error">Geschützter Kontospeicher ist nicht verfügbar. Entsperre das Gerät und versuche es erneut.</string>
     <string name="open_ai_oauth_error">Die ChatGPT-Anfrage ist fehlgeschlagen. Prüfe Verbindung, Kontozugriff und Bildgröße und versuche es erneut.</string>
     <string name="open_ai_oauth_reset">Lokale Sitzung zurücksetzen</string>
+    <string name="error_samplers_unavailable">Die Sampling-Methoden konnten nicht geladen werden. Prüfe die Serververbindung und versuche es erneut.</string>
 </resources>

@@ -644,4 +644,5 @@
     <string name="open_ai_oauth_storage_error">Защищённое хранилище аккаунта недоступно. Разблокируйте устройство и повторите попытку.</string>
     <string name="open_ai_oauth_error">Запрос к ChatGPT завершился ошибкой. Проверьте подключение, доступ аккаунта и размер изображения, затем повторите попытку.</string>
     <string name="open_ai_oauth_reset">Сбросить локальную сессию</string>
+    <string name="error_samplers_unavailable">Не удалось загрузить методы сэмплирования. Проверьте соединение с сервером и повторите попытку.</string>
 </resources>

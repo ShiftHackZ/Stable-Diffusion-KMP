@@ -245,6 +245,7 @@ internal class TextToImageIntentProcessor(
                 it.copy(aDetailer = intent.value, message = null)
             }
             TextToImageIntent.RefreshADetailerAvailability -> Unit
+            TextToImageIntent.RetrySamplers -> Unit
             TextToImageIntent.OpenADetailerInstallInstructions -> Unit
         }
     }

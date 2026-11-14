@@ -36,6 +36,9 @@ import com.shifthackz.aisdv1.presentation.model.GenerationModal
 import com.shifthackz.aisdv1.presentation.navigation.router.ImageToImageRouter
 import com.shifthackz.aisdv1.presentation.screen.txt2img.ImageSaver
 import com.shifthackz.aisdv1.presentation.screen.txt2img.ImageSharer
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.withContext
 
@@ -84,14 +87,6 @@ class ImageToImageViewModel(
     effectDispatcher = dispatchersProvider.immediate,
 ) {
 
-    init {
-        loadConfiguration()
-        observeSettings()
-        consumePendingGenerationFormUpdate()
-        observeGenerationFormUpdate()
-        observeGenerationProgress()
-    }
-
     private var stableDiffusionSamplers: List<String>? = null
     private var stableDiffusionSamplersKey: StableDiffusionSamplersKey? = null
     private var forgeModules: List<ForgeModule>? = null
@@ -100,6 +95,15 @@ class ImageToImageViewModel(
     private var aDetailerAvailabilityKey: StableDiffusionSamplersKey? = null
     private var arliAiModels: List<String>? = null
     private var arliAiModelsKey: String? = null
+    private var samplersLoadJob: Job? = null
+
+    init {
+        loadConfiguration()
+        observeSettings()
+        consumePendingGenerationFormUpdate()
+        observeGenerationFormUpdate()
+        observeGenerationProgress()
+    }
 
     private val actionHandler = ImageToImageActionHandler(
         dispatchersProvider = dispatchersProvider,
@@ -142,8 +146,17 @@ class ImageToImageViewModel(
         applyGenerationResult = ::applyGenerationResult,
     )
 
+    /**
+     * Routes form actions and retries missing samplers without duplicating an active request.
+     *
+     * @param intent User action or foreground recovery action for this generation screen.
+     * @author Dmitriy Moroz
+     */
     override fun processIntent(intent: ImageToImageIntent) {
         when (intent) {
+            ImageToImageIntent.RetrySamplers -> {
+                if (stableDiffusionSamplers.isNullOrEmpty()) loadSamplers()
+            }
             ImageToImageIntent.RefreshADetailerAvailability -> loadADetailerAvailability(force = true)
             ImageToImageIntent.OpenADetailerInstallInstructions -> Unit
             ImageToImageIntent.RunBenchmarkFromPrompt -> actionHandler.runBenchmarkFromPrompt()
@@ -340,8 +353,16 @@ class ImageToImageViewModel(
         }
     }
 
+    /**
+     * Invalidates metadata on provider or server changes and cancels the previous sampler attempt.
+     *
+     * @param settings Current provider selection and server address used to identify metadata.
+     * @author Dmitriy Moroz
+     */
     private fun refreshStableDiffusionMetadataIfNeeded(settings: Settings) {
         if (settings.source != ServerSource.AUTOMATIC1111) {
+            samplersLoadJob?.cancel()
+            updateState { it.copy(isLoadingSamplers = false, hasSamplerLoadFailed = false) }
             stableDiffusionSamplersKey = null
             forgeModulesKey = null
             forgeModules = null
@@ -360,13 +381,14 @@ class ImageToImageViewModel(
         ) return
 
         stableDiffusionSamplersKey = key
+        samplersLoadJob?.cancel()
         forgeModulesKey = key
         aDetailerAvailabilityKey = key
         stableDiffusionSamplers = emptyList()
         forgeModules = emptyList()
         aDetailerAvailable = null
         updateState {
-            it.withSource(
+            it.copy(isLoadingSamplers = false, hasSamplerLoadFailed = false).withSource(
                 source = ServerSource.AUTOMATIC1111,
                 stableDiffusionSamplers = stableDiffusionSamplers,
                 forgeModules = forgeModules,
@@ -379,31 +401,44 @@ class ImageToImageViewModel(
         loadADetailerAvailability()
     }
 
+    /**
+     * Loads an empty sampler list once per attempt. Failed and empty results remain retryable.
+     * Server changes cancel the previous load; its result cannot update the new server form.
+     *
+     * @author Dmitriy Moroz
+     */
     private fun loadSamplers() {
-        launch(dispatchersProvider.io) {
-            runCatching {
-                getStableDiffusionSamplersUseCase().map(StableDiffusionSampler::name)
+        val key = stableDiffusionSamplersKey ?: return
+        if (currentState.isLoadingSamplers) return
+        updateState { it.copy(isLoadingSamplers = true, hasSamplerLoadFailed = false) }
+        samplersLoadJob = launch(dispatchersProvider.immediate) {
+            try {
+                val samplers = withContext(dispatchersProvider.io) {
+                    getStableDiffusionSamplersUseCase().map(StableDiffusionSampler::name)
+                        .filter(String::isNotBlank)
+                        .distinct()
+                }
+                ensureActive()
+                if (stableDiffusionSamplersKey != key) return@launch
+                stableDiffusionSamplers = samplers
+                updateState {
+                    it.copy(
+                        isLoadingSamplers = false,
+                        hasSamplerLoadFailed = samplers.isEmpty(),
+                    ).withSource(
+                        source = it.mode,
+                        stableDiffusionSamplers = samplers,
+                        forgeModules = forgeModules,
+                        aDetailerAvailable = aDetailerAvailable,
+                        arliAiModels = arliAiModels,
+                    )
+                }
+            } catch (error: Exception) {
+                if (error is CancellationException) throw error
+                if (stableDiffusionSamplersKey != key) return@launch
+                updateState { it.copy(isLoadingSamplers = false, hasSamplerLoadFailed = true) }
+                onError(error)
             }
-                .onSuccess { samplers ->
-                    stableDiffusionSamplers = samplers
-                    withContext(dispatchersProvider.immediate) {
-                        updateState {
-                            it.withSource(
-                                source = it.mode,
-                                stableDiffusionSamplers = stableDiffusionSamplers,
-                                forgeModules = forgeModules,
-                                aDetailerAvailable = aDetailerAvailable,
-                                arliAiModels = arliAiModels,
-                            )
-                        }
-                    }
-                }
-                .onFailure { t ->
-                    withContext(dispatchersProvider.immediate) {
-                        updateState { it.copy(error = t.localizedMessageString()) }
-                    }
-                    onError(t)
-                }
         }
     }
 
