@@ -38,6 +38,42 @@ internal class PreferenceManagerImpl(
     private val preferencesChangedState = MutableStateFlow(Any())
 
     /**
+     * Retains txt2img sampling steps across process restarts without broadcasting form edits.
+     *
+     * @author Dmitriy Moroz
+     */
+    override var textToImageSamplingSteps: Int
+        get() = keyValueStore.getInt(KEY_TEXT_TO_IMAGE_SAMPLING_STEPS, 20).takeIf { it > 0 } ?: 20
+        set(value) = keyValueStore.putInt(KEY_TEXT_TO_IMAGE_SAMPLING_STEPS, value)
+
+    /**
+     * Stores txt2img CFG as a decimal string supported by both platform preference stores.
+     *
+     * @author Dmitriy Moroz
+     */
+    override var textToImageCfgScale: Float
+        get() = readCfgScale(KEY_TEXT_TO_IMAGE_CFG_SCALE)
+        set(value) = keyValueStore.putString(KEY_TEXT_TO_IMAGE_CFG_SCALE, value.toString())
+
+    /**
+     * Retains img2img sampling steps separately from the txt2img form.
+     *
+     * @author Dmitriy Moroz
+     */
+    override var imageToImageSamplingSteps: Int
+        get() = keyValueStore.getInt(KEY_IMAGE_TO_IMAGE_SAMPLING_STEPS, 20).takeIf { it > 0 } ?: 20
+        set(value) = keyValueStore.putInt(KEY_IMAGE_TO_IMAGE_SAMPLING_STEPS, value)
+
+    /**
+     * Stores img2img CFG as a decimal string without losing fractional precision.
+     *
+     * @author Dmitriy Moroz
+     */
+    override var imageToImageCfgScale: Float
+        get() = readCfgScale(KEY_IMAGE_TO_IMAGE_CFG_SCALE)
+        set(value) = keyValueStore.putString(KEY_IMAGE_TO_IMAGE_CFG_SCALE, value.toString())
+
+    /**
      * Persists a separate connection limit and notifies settings observers.
      *
      * @author Dmitriy Moroz
@@ -538,6 +574,17 @@ internal class PreferenceManagerImpl(
     }
 
     /**
+     * Reads a stored CFG value, retaining the default for absent or invalid data.
+     *
+     * @param key Preference key for the generation form's decimal CFG value.
+     * @author Dmitriy Moroz
+     */
+    private fun readCfgScale(key: String): Float = keyValueStore.getString(key)
+        .toFloatOrNull()
+        ?.takeIf { it.isFinite() && it >= 0f }
+        ?: 7f
+
+    /**
      * Executes the `putString` step in the SDAI data layer.
      *
      * @param key key value consumed by the API.
@@ -599,6 +646,34 @@ internal class PreferenceManagerImpl(
      * @author Dmitriy Moroz
      */
     companion object {
+        /**
+         * Txt2img sampling step preference.
+         *
+         * @author Dmitriy Moroz
+         */
+        private const val KEY_TEXT_TO_IMAGE_SAMPLING_STEPS = "key_text_to_image_sampling_steps"
+
+        /**
+         * Txt2img CFG preference, encoded as a decimal string.
+         *
+         * @author Dmitriy Moroz
+         */
+        private const val KEY_TEXT_TO_IMAGE_CFG_SCALE = "key_text_to_image_cfg_scale"
+
+        /**
+         * Img2img sampling step preference.
+         *
+         * @author Dmitriy Moroz
+         */
+        private const val KEY_IMAGE_TO_IMAGE_SAMPLING_STEPS = "key_image_to_image_sampling_steps"
+
+        /**
+         * Img2img CFG preference, encoded as a decimal string.
+         *
+         * @author Dmitriy Moroz
+         */
+        private const val KEY_IMAGE_TO_IMAGE_CFG_SCALE = "key_image_to_image_cfg_scale"
+
         /**
          * Independent provider connection timeout in seconds, with zero meaning no limit.
          *
