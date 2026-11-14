@@ -28,8 +28,8 @@ import com.shifthackz.aisdv1.presentation.widget.input.GenerationInputFormState
 /**
  * Complete render state for txt2img.
  *
- * @param samplersLoading Whether an AUTOMATIC1111 sampler request is running.
- * @param samplersLoadFailed Whether the sampler field should offer an inline retry.
+ * @param isLoadingSamplers Whether an AUTOMATIC1111 sampler request is running.
+ * @param hasSamplerLoadFailed Whether the sampler field should offer an inline retry.
  *
  * The state combines screen lifecycle flags, generated results, validation
  * feedback, current platform metadata, and the shared generation form contract
@@ -72,8 +72,8 @@ data class TextToImageState(
     override val availableForgeModules: List<ForgeModule> = emptyList(),
     override val selectedForgeModules: List<ForgeModule> = emptyList(),
     override val availableSamplers: List<String> = emptyList(),
-    override val samplersLoading: Boolean = false,
-    override val samplersLoadFailed: Boolean = false,
+    override val isLoadingSamplers: Boolean = false,
+    override val hasSamplerLoadFailed: Boolean = false,
     override val selectedStylePreset: StabilityAiStylePreset = StabilityAiStylePreset.NONE,
     override val selectedClipGuidancePreset: StabilityAiClipGuidance = StabilityAiClipGuidance.NONE,
     override val openAiCompatibleModel: String = "gpt-image-2",

@@ -389,7 +389,7 @@ class TextToImageViewModel(
     private fun refreshStableDiffusionMetadataIfNeeded(settings: Settings) {
         if (settings.source != ServerSource.AUTOMATIC1111) {
             samplersLoadJob?.cancel()
-            updateState { it.copy(samplersLoading = false, samplersLoadFailed = false) }
+            updateState { it.copy(isLoadingSamplers = false, hasSamplerLoadFailed = false) }
             stableDiffusionSamplersKey = null
             forgeModulesKey = null
             forgeModules = null
@@ -415,7 +415,7 @@ class TextToImageViewModel(
         forgeModules = emptyList()
         aDetailerAvailable = null
         updateState {
-            it.copy(samplersLoading = false, samplersLoadFailed = false).withSource(
+            it.copy(isLoadingSamplers = false, hasSamplerLoadFailed = false).withSource(
                 source = ServerSource.AUTOMATIC1111,
                 stableDiffusionSamplers = stableDiffusionSamplers,
                 forgeModules = forgeModules,
@@ -436,8 +436,8 @@ class TextToImageViewModel(
      */
     private fun loadSamplers() {
         val key = stableDiffusionSamplersKey ?: return
-        if (currentState.samplersLoading) return
-        updateState { it.copy(samplersLoading = true, samplersLoadFailed = false) }
+        if (currentState.isLoadingSamplers) return
+        updateState { it.copy(isLoadingSamplers = true, hasSamplerLoadFailed = false) }
         samplersLoadJob = launch(dispatchersProvider.immediate) {
             try {
                 val samplers = withContext(dispatchersProvider.io) {
@@ -450,8 +450,8 @@ class TextToImageViewModel(
                 stableDiffusionSamplers = samplers
                 updateState {
                     it.copy(
-                        samplersLoading = false,
-                        samplersLoadFailed = samplers.isEmpty(),
+                        isLoadingSamplers = false,
+                        hasSamplerLoadFailed = samplers.isEmpty(),
                     ).withSource(
                         source = it.mode,
                         stableDiffusionSamplers = samplers,
@@ -463,7 +463,7 @@ class TextToImageViewModel(
             } catch (error: Exception) {
                 if (error is CancellationException) throw error
                 if (stableDiffusionSamplersKey != key) return@launch
-                updateState { it.copy(samplersLoading = false, samplersLoadFailed = true) }
+                updateState { it.copy(isLoadingSamplers = false, hasSamplerLoadFailed = true) }
                 onError(error)
             }
         }

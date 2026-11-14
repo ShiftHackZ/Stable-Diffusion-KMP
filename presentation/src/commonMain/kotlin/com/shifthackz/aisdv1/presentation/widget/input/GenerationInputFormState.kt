@@ -52,14 +52,14 @@ interface GenerationInputFormState {
      *
      * @author Dmitriy Moroz
      */
-    val samplersLoading: Boolean
+    val isLoadingSamplers: Boolean
         get() = false
     /**
      * Whether no usable sampler list could be loaded; the form offers a retry.
      *
      * @author Dmitriy Moroz
      */
-    val samplersLoadFailed: Boolean
+    val hasSamplerLoadFailed: Boolean
         get() = false
     val selectedStylePreset: StabilityAiStylePreset
     val selectedClipGuidancePreset: StabilityAiClipGuidance

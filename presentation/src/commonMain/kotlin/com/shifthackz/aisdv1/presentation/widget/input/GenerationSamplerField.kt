@@ -27,11 +27,11 @@ internal fun GenerationSamplerField(
     state: GenerationInputFormState,
     onEvent: (GenerationInputFormEvent) -> Unit,
 ) {
-    val automatic1111 = state.mode == ServerSource.AUTOMATIC1111
+    val isAutomatic1111 = state.mode == ServerSource.AUTOMATIC1111
     Column(modifier = Modifier.fillMaxWidth()) {
         DropdownTextField(
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-            loading = automatic1111 && state.samplersLoading,
+            loading = isAutomatic1111 && state.isLoadingSamplers,
             label = Localization.string("hint_sampler").asUiText(),
             value = state.selectedSampler,
             items = state.availableSamplers,
@@ -44,14 +44,14 @@ internal fun GenerationSamplerField(
                 }
             },
         )
-        if (automatic1111 && state.samplersLoadFailed) {
+        if (isAutomatic1111 && state.hasSamplerLoadFailed) {
             Text(
                 text = Localization.string("error_samplers_unavailable"),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.error,
             )
             TextButton(
-                enabled = !state.samplersLoading,
+                enabled = !state.isLoadingSamplers,
                 onClick = { onEvent(GenerationInputFormEvent.RetrySamplers) },
             ) {
                 Text(Localization.string("retry"))
