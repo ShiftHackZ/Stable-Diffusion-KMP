@@ -48,6 +48,7 @@ import com.shifthackz.aisdv1.presentation.widget.source.BetaBadge
  * @param itemModifier Modifier shared by Settings rows.
  * @param warningModifier Modifier used by the background-generation warning copy.
  * @param backgroundGenerationWarningKey Localization key for the current warning copy.
+ * @param showConnectionTimeout Whether this platform supports the connection timeout row.
  * @param processIntent Intent sink used to route row actions back to SettingsViewModel.
  *
  * @author Dmitriy Moroz
@@ -59,6 +60,7 @@ internal fun SettingsServerSection(
     itemModifier: Modifier,
     warningModifier: Modifier,
     backgroundGenerationWarningKey: String,
+    showConnectionTimeout: Boolean,
     processIntent: (SettingsIntent) -> Unit,
 ) {
         if (!state.onBoardingDemo) {
@@ -94,14 +96,16 @@ internal fun SettingsServerSection(
                 )
             }
             if (state.showNetworkTimeoutSettings) {
-                SettingsItem(
-                    modifier = itemModifier,
-                    loading = state.loading,
-                    startIcon = Icons.Default.Timer,
-                    text = text("settings_connection_timeout"),
-                    endValueText = state.connectionTimeout.label().asUiText(),
-                    onClick = { processIntent(SettingsIntent.PickConnectionTimeout) },
-                )
+                if (showConnectionTimeout) {
+                    SettingsItem(
+                        modifier = itemModifier,
+                        loading = state.loading,
+                        startIcon = Icons.Default.Timer,
+                        text = text("settings_connection_timeout"),
+                        endValueText = state.connectionTimeout.label().asUiText(),
+                        onClick = { processIntent(SettingsIntent.PickConnectionTimeout) },
+                    )
+                }
                 SettingsItem(
                     modifier = itemModifier,
                     loading = state.loading,

@@ -28,6 +28,7 @@ private class IosSettingsPlatformActions(
 ) : SettingsPlatformActions {
     override val requiresStoragePermissionForMediaStore: Boolean = false
     override val supportsBackgroundGeneration: Boolean = true
+    override val supportsConnectionTimeout: Boolean = false
     override val backgroundGenerationWarningKey = "settings_item_background_generation_warning_ios"
 
     override fun mapStorageBytesForUi(bytes: Long): Long =
