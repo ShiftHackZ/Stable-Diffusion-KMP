@@ -2,7 +2,9 @@
 
 package com.shifthackz.aisdv1.presentation.screen.settings.modal
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -18,6 +20,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import com.shifthackz.aisdv1.core.localization.Localization
 import com.shifthackz.aisdv1.core.model.UiText
 import com.shifthackz.aisdv1.core.model.asUiText
@@ -116,22 +119,29 @@ internal fun SettingsModalRenderer(
             val parsed = input.toIntOrNull()?.takeIf { it >= 0 }
             DecisionInteractiveDialog(
                 title = text("settings_item_request_timeout"),
-                text = text("settings_item_request_timeout_hint"),
+                text = UiText.empty,
                 confirmActionText = text("action_save"),
                 onConfirmAction = {
                     parsed?.let { processIntent(SettingsIntent.Action.RequestTimeout.Set(it)) }
                 },
                 onDismissRequest = dismiss,
                 content = {
-                    OutlinedTextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = input,
-                        onValueChange = { value -> input = value.filter(Char::isDigit).take(6) },
-                        label = { Text(Localization.string("settings_item_request_timeout_label")) },
-                        isError = parsed == null,
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    )
+                    Column {
+                        OutlinedTextField(
+                            modifier = Modifier.fillMaxWidth(),
+                            value = input,
+                            onValueChange = { value -> input = value.filter(Char::isDigit).take(6) },
+                            label = { Text(Localization.string("settings_item_request_timeout_label")) },
+                            isError = parsed == null,
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = Localization.string("settings_item_request_timeout_hint"),
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
                 },
             )
         }
