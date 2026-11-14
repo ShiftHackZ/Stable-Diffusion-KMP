@@ -4,7 +4,7 @@
     "name": "Bonsai Image 4B Ternary MLX 2-bit",
     "size": "3.89 GB",
     "sources": [
-      "https://sdai-models.moroz.cc/SDAI/Bonsai/bonsai-image-ternary-4b-mlx-2bit.zip"
+      "https://huggingface.co/moroz-ellmsha/sdai-bonsai-model-archives/resolve/main/bonsai-image-ternary-4b-mlx-2bit.zip?download=true"
     ],
     "metadata": {
       "src": "https://huggingface.co/prism-ml/bonsai-image-ternary-4B-mlx-2bit"
@@ -15,7 +15,7 @@
     "name": "Bonsai Image 4B Binary MLX 1-bit",
     "size": "3.42 GB",
     "sources": [
-      "https://sdai-models.moroz.cc/SDAI/Bonsai/bonsai-image-binary-4b-mlx-1bit.zip"
+      "https://huggingface.co/moroz-ellmsha/sdai-bonsai-model-archives/resolve/main/bonsai-image-binary-4b-mlx-1bit.zip?download=true"
     ],
     "metadata": {
       "src": "https://huggingface.co/prism-ml/bonsai-image-binary-4B-mlx-1bit"

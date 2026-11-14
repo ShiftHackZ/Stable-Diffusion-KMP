@@ -4,9 +4,7 @@
     "name": "stable-diffusion-v1-5",
     "size": "1.9 Gb",
     "sources": [
-      "https://github.com/ShiftHackZ/Local-Diffusion-Models-SDAI-MediaPipe/releases/download/patch-26082024/stable-diffusion-v1-5.zip",
-      "https://sdai-models.moroz.cc/SDAI/MediaPipe/stable-diffusion-v1-5.zip",
-      "https://gh-proxy.ygxz.in/https://github.com/ShiftHackZ/Local-Diffusion-Models-SDAI-MediaPipe/releases/download/patch-26082024/stable-diffusion-v1-5.zip"
+      "https://github.com/ShiftHackZ/Local-Diffusion-Models-SDAI-MediaPipe/releases/download/patch-26082024/stable-diffusion-v1-5.zip"
     ],
     "metadata": {
       "src": "https://huggingface.co/runwayml/stable-diffusion-v1-5/blob/main/v1-5-pruned-emaonly.ckpt"
@@ -17,9 +15,7 @@
     "name": "miniSD",
     "size": "1.82 Gb",
     "sources": [
-      "https://github.com/ShiftHackZ/Local-Diffusion-Models-SDAI-MediaPipe/releases/download/patch-28082024/minisd.zip",
-      "https://sdai-models.moroz.cc/SDAI/MediaPipe/minisd.zip",
-      "https://gh-proxy.ygxz.in/https://github.com/ShiftHackZ/Local-Diffusion-Models-SDAI-MediaPipe/releases/download/patch-28082024/minisd.zip"
+      "https://github.com/ShiftHackZ/Local-Diffusion-Models-SDAI-MediaPipe/releases/download/patch-28082024/minisd.zip"
     ],
     "metadata": {
       "src": "https://huggingface.co/justinpinkney/miniSD/blob/main/miniSD.ckpt"
@@ -30,9 +26,7 @@
     "name": "waifu-diffusion-v1-4",
     "size": "1.82 Gb",
     "sources": [
-      "https://github.com/ShiftHackZ/Local-Diffusion-Models-SDAI-MediaPipe/releases/download/patch-28082024/waifu-diffusion-v1-4.zip",
-      "https://sdai-models.moroz.cc/SDAI/MediaPipe/waifu-diffusion-v1-4.zip",
-      "https://gh-proxy.ygxz.in/https://github.com/ShiftHackZ/Local-Diffusion-Models-SDAI-MediaPipe/releases/download/patch-28082024/waifu-diffusion-v1-4.zip"
+      "https://github.com/ShiftHackZ/Local-Diffusion-Models-SDAI-MediaPipe/releases/download/patch-28082024/waifu-diffusion-v1-4.zip"
     ],
     "metadata": {
       "src": "https://huggingface.co/hakurei/waifu-diffusion-v1-4/blob/main/models/wd-1-3-penultimate-ucg-cont.ckpt"
@@ -43,9 +37,7 @@
     "name": "aniverse_v50",
     "size": "1.79 Gb",
     "sources": [
-      "https://github.com/ShiftHackZ/Local-Diffusion-Models-SDAI-MediaPipe/releases/download/patch-19092024/aniverse_v50.zip",
-      "https://sdai-models.moroz.cc/SDAI/MediaPipe/aniverse_v50.zip",
-      "https://gh-proxy.ygxz.in/https://github.com/ShiftHackZ/Local-Diffusion-Models-SDAI-MediaPipe/releases/download/patch-19092024/aniverse_v50.zip"
+      "https://github.com/ShiftHackZ/Local-Diffusion-Models-SDAI-MediaPipe/releases/download/patch-19092024/aniverse_v50.zip"
     ],
     "metadata": {
       "src": "https://civitai.com/models/107842/aniverse"
