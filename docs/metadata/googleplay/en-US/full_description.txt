@@ -1,5 +1,7 @@
 Create AI images on mobile with SDAI.
 
+ChatGPT OAuth (Beta) adds direct sign-in and gpt-image-2 text-to-image with sequential batches. Enable device-code login in your ChatGPT account or workspace. Sessions stay in protected device storage; sign out in Configuration. No external proxy or API key is required. This unofficial integration depends on account access and service limits.
+
 OpenAI-compatible supports text-to-image, your server's model ID, image size and sequential batches. Enter the full API prefix and provide a key only if your server requires it.
 
 SDAI is an open-source AI image generator for Android that gives you a clean mobile workflow for prompting, tuning generation settings, reviewing results, and choosing the AI provider that fits your setup.

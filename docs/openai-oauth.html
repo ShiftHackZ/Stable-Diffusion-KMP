@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ChatGPT OAuth Provider - SDAI</title>
+    <meta
+      name="description"
+      content="Sign into ChatGPT from SDAI on Android or iOS using device-code authorization, protected sessions and direct gpt-image-2 generation."
+    />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#514a91" />
+    <link rel="canonical" href="https://sdai.moroz.cc/openai-oauth.html" />
+    <link rel="icon" href="assets/sdai.png" />
+    <link rel="apple-touch-icon" href="assets/sdai.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta property="og:title" content="ChatGPT OAuth Provider - SDAI" />
+    <meta
+      property="og:description"
+      content="Device-code login and direct image generation from SDAI on Android and iOS."
+    />
+    <meta property="og:url" content="https://sdai.moroz.cc/openai-oauth.html" />
+    <meta property="og:site_name" content="SDAI" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://sdai.moroz.cc/assets/sdai.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="ChatGPT OAuth Provider - SDAI" />
+    <meta
+      name="twitter:description"
+      content="Sign into ChatGPT directly from SDAI on Android and iOS."
+    />
+    <meta
+      name="twitter:image"
+      content="https://sdai.moroz.cc/assets/sdai.png"
+    />
+    <link rel="stylesheet" href="css/site.css" />
+    <script src="js/site.js?v=20261107" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "ChatGPT OAuth Provider",
+        "description": "Device-code sign-in and direct image generation in SDAI.",
+        "url": "https://sdai.moroz.cc/openai-oauth.html",
+        "dateModified": "2026-11-14",
+        "inLanguage": "en",
+        "isPartOf": { "@id": "https://sdai.moroz.cc/#website" }
+      }
+    </script>
+  </head>
+  <body data-page="openai-oauth">
+    <div id="site-header"></div>
+    <main>
+      <section class="page-hero">
+        <div class="shell">
+          <p class="eyebrow">Provider guide · Beta</p>
+          <h1>ChatGPT OAuth</h1>
+          <p>Sign into ChatGPT and generate directly from your phone.</p>
+        </div>
+      </section>
+      <section class="section">
+        <article class="shell legal-copy">
+          <h2>Sign in</h2>
+          <ol>
+            <li>
+              Enable device-code login in your ChatGPT account security
+              settings. Your workspace may require administrator approval.
+            </li>
+            <li>
+              Open SDAI Configuration and choose <strong>ChatGPT OAuth</strong>,
+              immediately after OpenAI.
+            </li>
+            <li>
+              Tap <strong>Sign in with ChatGPT</strong>. SDAI displays a
+              one-time code.
+            </li>
+            <li>
+              Tap <strong>Open the sign-in page</strong> and enter the code at
+              <code>https://auth.openai.com/codex/device</code>. Enter only a
+              code for a login you started yourself.
+            </li>
+            <li>
+              Return to SDAI and tap <strong>Connect</strong> after
+              authorization completes.
+            </li>
+          </ol>
+          <p>
+            The code expires after fifteen minutes. Cancel, leave the
+            configuration screen or restart the app to discard a pending
+            attempt. A failed or cancelled replacement login preserves the
+            previous completed session.
+          </p>
+          <h2>Generate images</h2>
+          <p>
+            This Beta provider supports text-to-image with
+            <code>gpt-image-2</code>, a prompt, positive width/height and
+            sequential batches. Accepted dimensions, image access and limits
+            depend on the account and upstream service. Actual output dimensions
+            are recorded in the shared gallery.
+          </p>
+          <p>
+            Chat, image editing, negative prompts, samplers, steps, CFG scale,
+            seed and quality controls are unsupported. The integration uses an
+            unofficial backend and may require updates when the service changes.
+          </p>
+          <h2>Sessions and sign-out</h2>
+          <p>
+            Tokens stay in Android Keystore-backed encrypted storage or
+            device-only iOS Keychain. Refresh runs inside the bundled feature.
+            No external proxy, Node process, desktop credential import or API
+            key is needed. Credentials are not sent through queued generation
+            jobs or stored in gallery metadata.
+          </p>
+          <p>
+            Open provider configuration and tap <strong>Sign out</strong> to
+            delete the local session. Signing out, switching accounts or
+            selecting another provider stops affected work; an older queued job
+            cannot use the replacement account. Signing out locally does not
+            revoke other OpenAI sessions.
+          </p>
+          <h2>Troubleshooting</h2>
+          <p>
+            If protected session data cannot be read, unlock the device and
+            return to SDAI. The app retries initialization without stopping
+            account-state updates. If the stored session is corrupt, use
+            <strong>Reset local session</strong> in provider configuration, then
+            sign in again. Reset deletes the local envelope without decoding it;
+            it never falls back to unprotected storage.
+          </p>
+          <ul>
+            <li>
+              <strong>Device login unavailable:</strong> enable device-code
+              login in account security settings or ask the workspace
+              administrator.
+            </li>
+            <li>
+              <strong>Expired code:</strong> start sign-in again. Keep SDAI open
+              or return promptly; operating systems can suspend background
+              polling.
+            </li>
+            <li>
+              <strong>Session expired:</strong> sign in again if refresh is
+              rejected.
+            </li>
+            <li>
+              <strong>Account/provider changed:</strong> submit a new generation
+              using the selected account.
+            </li>
+            <li>
+              <strong>Rate limit, timeout or unsupported dimensions:</strong>
+              check access/limits and retry deliberately. SDAI does not
+              automatically replay an image request after an ambiguous network
+              failure.
+            </li>
+          </ul>
+          <h2>Other OpenAI sources</h2>
+          <p>
+            <strong>OpenAI</strong> uses a regular API key.
+            <a href="openai-compatible.html">OpenAI-compatible</a> connects to a
+            user-hosted server or external proxy. All three sources keep their
+            configuration independent.
+          </p>
+          <p>
+            See the <a href="privacy.html">privacy policy</a> and
+            <a
+              href="https://github.com/ShiftHackZ/SDAI-KMP/blob/master/network/openai-oauth.openapi.json"
+              >consumed API contract</a
+            >. The Kotlin module adapts device authorization from
+            <a href="https://github.com/openai/codex">OpenAI Codex</a> and
+            direct image transport from
+            <a href="https://github.com/EvanZhouDev/openai-oauth"
+              >openai-oauth</a
+            >, with Apache-2.0 notices retained.
+          </p>
+        </article>
+      </section>
+    </main>
+    <div id="site-footer"></div>
+  </body>
+</html>

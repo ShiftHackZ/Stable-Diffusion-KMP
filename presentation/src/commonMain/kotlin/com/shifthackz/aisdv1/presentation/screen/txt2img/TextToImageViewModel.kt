@@ -5,10 +5,17 @@ import com.shifthackz.aisdv1.core.common.platform.Platform
 import com.shifthackz.aisdv1.core.common.schedulers.DispatchersProvider
 import com.shifthackz.aisdv1.core.mvi.BaseMviViewModel
 import com.shifthackz.aisdv1.core.mvi.EmptyEffect
+import com.shifthackz.aisdv1.core.model.UiText
 import com.shifthackz.aisdv1.core.validation.dimension.DimensionValidator
+import com.shifthackz.aisdv1.domain.entity.AiGenerationResult
 import com.shifthackz.aisdv1.domain.entity.ForgeModule
 import com.shifthackz.aisdv1.domain.entity.LocalDiffusionStatus
 import com.shifthackz.aisdv1.domain.entity.ServerSource
+import com.shifthackz.aisdv1.domain.feature.openaioauth.OpenAiOAuthGateway
+import com.shifthackz.aisdv1.domain.entity.OpenAiOAuthFailure
+import com.shifthackz.aisdv1.domain.gateway.ProviderSelectionGuard
+import com.shifthackz.aisdv1.presentation.model.localizedDescription
+import com.shifthackz.aisdv1.presentation.model.observeOpenAiOAuthIdentity
 import com.shifthackz.aisdv1.domain.entity.Settings
 import com.shifthackz.aisdv1.domain.entity.StableDiffusionModel
 import com.shifthackz.aisdv1.domain.entity.StableDiffusionSampler
@@ -44,6 +51,9 @@ import kotlinx.coroutines.withContext
  * It loads provider configuration, mirrors the shared generation form state,
  * gates local providers through benchmark recommendations, and delegates actual
  * generation work to the action handler.
+ * @param openAiOAuthGateway Observes token-free account revisions captured in submitted OAuth work.
+ * @param providerSelectionGuard Serializes final UI publication with provider replacement.
+ * @author Dmitriy Moroz
  */
 class TextToImageViewModel(
     private val dispatchersProvider: DispatchersProvider,
@@ -73,6 +83,8 @@ class TextToImageViewModel(
     private val imageSaver: ImageSaver,
     private val imageSharer: ImageSharer,
     private val router: TextToImageRouter,
+    private val openAiOAuthGateway: OpenAiOAuthGateway,
+    private val providerSelectionGuard: ProviderSelectionGuard,
     private val onError: (Throwable) -> Unit = {},
 ) : BaseMviViewModel<TextToImageState, TextToImageIntent, EmptyEffect>(
     initialState = TextToImageState(
@@ -86,6 +98,25 @@ class TextToImageViewModel(
 ) {
 
     init {
+        launch(dispatchersProvider.io) {
+            observeOpenAiOAuthIdentity(
+                gateway = openAiOAuthGateway,
+                onIdentity = { identity ->
+                    updateState {
+                        val changed = it.mode == ServerSource.OPEN_AI_OAUTH && it.openAiOAuthRevision != identity?.revision
+                        it.copy(
+                            openAiOAuthAccountId = identity?.accountId,
+                            openAiOAuthRevision = identity?.revision,
+                            screenModal = if (changed) GenerationModal.None else it.screenModal,
+                            results = if (changed) emptyList() else it.results,
+                        )
+                    }
+                },
+                onUnavailable = { error -> updateState {
+                    if (it.mode == ServerSource.OPEN_AI_OAUTH) it.copy(error = UiText.Static(error.localizedDescription())) else it
+                } },
+            )
+        }
         loadConfiguration()
         observeSettings()
         consumePendingGenerationFormUpdate()
@@ -103,6 +134,8 @@ class TextToImageViewModel(
     private var arliAiModelsKey: String? = null
 
     private val actionHandler = TextToImageActionHandler(
+        openAiOAuthGateway = openAiOAuthGateway,
+        providerSelectionGuard = providerSelectionGuard,
         dispatchersProvider = dispatchersProvider,
         textToImageUseCase = textToImageUseCase,
         saveGenerationResultUseCase = saveGenerationResultUseCase,
@@ -170,7 +203,7 @@ class TextToImageViewModel(
      * @param ai Gallery image whose available parameters are applied to the form.
      * @author Dmitriy Moroz
      */
-    private fun applyGenerationResult(ai: com.shifthackz.aisdv1.domain.entity.AiGenerationResult) {
+    private fun applyGenerationResult(ai: AiGenerationResult) {
         val hasDiffusionParameters = ai.samplingSteps > 0
         updateState { state ->
             state.copy(
@@ -285,6 +318,7 @@ class TextToImageViewModel(
                             it.copy(
                                 loadingConfiguration = false,
                                 openAiCompatibleModel = configuration.openAiCompatibleModel,
+                                providerSelectionRevision = configuration.providerSelectionRevision,
                             ).withSource(
                                 source = configuration.source,
                                 stableDiffusionSamplers = stableDiffusionSamplers,

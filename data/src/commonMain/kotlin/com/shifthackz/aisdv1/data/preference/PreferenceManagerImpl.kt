@@ -260,8 +260,14 @@ internal class PreferenceManagerImpl(
      * @author Dmitriy Moroz
      */
     override var source: ServerSource
-        get() = ServerSource.parse(keyValueStore.getString(KEY_SERVER_SOURCE, ServerSource.AUTOMATIC1111.key))
-        set(value) = putString(KEY_SERVER_SOURCE, value.key)
+        get() = keyValueStore.readProviderSelection().first
+        set(value) {
+            keyValueStore.writeProviderSelection(value)
+            onPreferencesChanged()
+        }
+
+    override val providerSelectionRevision: Long
+        get() = keyValueStore.readProviderSelection().second
 
     /**
      * Exposes the `sdModel` value used by the SDAI data layer.
@@ -575,6 +581,7 @@ internal class PreferenceManagerImpl(
                 formAdvancedOptionsAlwaysShow = formAdvancedOptionsAlwaysShow,
                 formPromptTaggedInput = formPromptTaggedInput,
                 source = source,
+                providerSelectionRevision = providerSelectionRevision,
                 hordeApiKey = hordeApiKey,
                 arliAiModel = arliAiModel,
                 localUseNNAPI = localOnnxUseNNAPI,

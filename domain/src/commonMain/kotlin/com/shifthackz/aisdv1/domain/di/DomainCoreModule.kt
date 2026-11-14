@@ -7,6 +7,7 @@ import com.shifthackz.aisdv1.domain.feature.work.BackgroundWorkObserver
 import com.shifthackz.aisdv1.domain.feature.work.NoOpBackgroundTaskManager
 import com.shifthackz.aisdv1.domain.feature.work.NoOpBackgroundWorkObserver
 import com.shifthackz.aisdv1.domain.gateway.NoOpServerConnectivityGateway
+import com.shifthackz.aisdv1.domain.gateway.ProviderSelectionGuard
 import com.shifthackz.aisdv1.domain.gateway.ServerConnectivityGateway
 import com.shifthackz.aisdv1.domain.interactor.wakelock.WakeLockInterActor
 import com.shifthackz.aisdv1.domain.interactor.wakelock.WakeLockInterActorImpl
@@ -213,6 +214,7 @@ import org.koin.dsl.module
  * @author Dmitriy Moroz
  */
 val coreDomainModule = module {
+    single { ProviderSelectionGuard() }
     single<ServerConnectivityGateway> { NoOpServerConnectivityGateway }
     single<BackgroundWorkObserver> { NoOpBackgroundWorkObserver }
     single<BackgroundTaskManager> { NoOpBackgroundTaskManager }
@@ -371,6 +373,7 @@ val coreDomainModule = module {
             huggingFaceGenerationRepository = get(),
             openAiGenerationRepository = get(),
             openAiCompatibleGenerationRepository = get(),
+            openAiOAuthGenerationRepository = get(),
             stabilityAiGenerationRepository = get(),
             falAiGenerationRepository = get(),
             arliAiGenerationRepository = get(),
@@ -474,6 +477,7 @@ val coreDomainModule = module {
     }
     factory<SetServerConfigurationUseCase> {
         DefaultSetServerConfigurationUseCaseImpl(
+            providerSelectionGuard = get(),
             configurationStore = get(),
             authorizationStore = get(),
             preferenceManager = get(),

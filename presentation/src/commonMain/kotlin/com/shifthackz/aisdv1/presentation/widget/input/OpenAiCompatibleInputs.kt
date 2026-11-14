@@ -14,6 +14,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.shifthackz.aisdv1.core.localization.Localization
 import com.shifthackz.aisdv1.core.model.asString
+import com.shifthackz.aisdv1.domain.entity.ServerSource
 
 /**
  * Displays arbitrary model and pixel dimensions without Stable Diffusion size restrictions.
@@ -25,7 +26,8 @@ import com.shifthackz.aisdv1.core.model.asString
 @Composable
 internal fun OpenAiCompatibleInputs(state: GenerationInputFormState, onEvent: (GenerationInputFormEvent) -> Unit) {
     Column {
-        PlatformOutlinedTextField(
+        if (state.mode == ServerSource.OPEN_AI_OAUTH) Text("gpt-image-2")
+        else PlatformOutlinedTextField(
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
             value = state.openAiCompatibleModel,
             onValueChange = { onEvent(GenerationInputFormEvent.UpdateOpenAiCompatibleModel(it)) },

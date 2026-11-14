@@ -50,6 +50,7 @@ class TextToImageUseCaseImplTest {
         huggingFaceGenerationRepository = stubHuggingFaceGenerationRepository,
         openAiGenerationRepository = stubOpenAiGenerationRepository,
         openAiCompatibleGenerationRepository = mockk(),
+        openAiOAuthGenerationRepository = mockk(),
         stabilityAiGenerationRepository = stubStabilityAiGenerationRepository,
         falAiGenerationRepository = stubFalAiGenerationRepository,
         arliAiGenerationRepository = stubArliAiGenerationRepository,

@@ -58,6 +58,7 @@ internal fun ServerSetupState.validateServerSetup(
         ))
     }
 
+    ServerSource.OPEN_AI_OAUTH -> ServerSetupValidationResult(openAiOAuthAccount != null && !openAiOAuthBusy, this)
     ServerSource.OPEN_AI -> validateApiKey(
         key = openAiApiKey,
         stringValidator = stringValidator,

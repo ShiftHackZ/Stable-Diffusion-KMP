@@ -40,6 +40,9 @@ interface ConfigurationStore {
      * @author Dmitriy Moroz
      */
     var source: ServerSource
+    /** Durable source-selection revision; a source changed away and back has a newer revision.
+     * @author Dmitriy Moroz */
+    val providerSelectionRevision: Long
     /**
      * Exposes the `hordeApiKey` value used by the SDAI domain layer.
      *
@@ -178,6 +181,7 @@ interface ConfigurationStore {
         swarmUiModel = swarmUiModel,
         demoMode = demoMode,
         source = source,
+        providerSelectionRevision = providerSelectionRevision,
         hordeApiKey = hordeApiKey,
         openAiApiKey = openAiApiKey,
         openAiCompatibleModel = openAiCompatibleModel,

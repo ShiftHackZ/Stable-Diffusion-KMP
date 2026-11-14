@@ -14,6 +14,7 @@ import com.shifthackz.aisdv1.domain.entity.ForgeModule
 import com.shifthackz.aisdv1.domain.entity.ServerSource
 import com.shifthackz.aisdv1.domain.entity.Settings
 import com.shifthackz.aisdv1.domain.entity.StabilityAiSampler
+import com.shifthackz.aisdv1.domain.entity.OpenAiOAuthFailure
 import com.shifthackz.aisdv1.presentation.model.GenerationModal
 
 /**
@@ -150,12 +151,12 @@ internal fun List<AiGenerationResult>.toTextToImageResultModal(
 internal fun TextToImageState.validated(
     dimensionValidator: DimensionValidator,
 ): TextToImageState {
-    val compatible = mode == ServerSource.OPEN_AI_COMPATIBLE
+    val compatible = mode == ServerSource.OPEN_AI_COMPATIBLE || mode == ServerSource.OPEN_AI_OAUTH
     val validateDimensions = mode != ServerSource.OPEN_AI && !compatible
     val widthResult = dimensionValidator(width).takeIf { validateDimensions }
     val heightResult = dimensionValidator(height).takeIf { validateDimensions }
     val sourceError = when {
-        compatible && openAiCompatibleModel.isBlank() -> Localization.string("open_ai_compatible_model_required").asUiText()
+        mode == ServerSource.OPEN_AI_COMPATIBLE && openAiCompatibleModel.isBlank() -> Localization.string("open_ai_compatible_model_required").asUiText()
         mode == ServerSource.ARLI_AI && arliAiModel.isBlank() -> Localization.string("error_invalid").asUiText()
         else -> null
     }
@@ -225,7 +226,12 @@ internal fun TextToImageState.withSettings(
     aDetailerAvailable: Boolean?,
     arliAiModels: List<String>?,
 ): TextToImageState =
-    copy(arliAiModel = settings.arliAiModel)
+    copy(
+        arliAiModel = settings.arliAiModel,
+        providerSelectionRevision = settings.providerSelectionRevision,
+        screenModal = if (mode == ServerSource.OPEN_AI_OAUTH && providerSelectionRevision != settings.providerSelectionRevision) GenerationModal.None else screenModal,
+        results = if (mode == ServerSource.OPEN_AI_OAUTH && providerSelectionRevision != settings.providerSelectionRevision) emptyList() else results,
+    )
         .withSource(settings.source, stableDiffusionSamplers, forgeModules, aDetailerAvailable, arliAiModels)
         .copy(
         advancedToggleButtonVisible = !settings.formAdvancedOptionsAlwaysShow,
@@ -312,6 +318,7 @@ internal fun TextToImageState.withSource(
 internal fun Throwable.localizedMessageText(): UiText {
     val message = message
     val text = when {
+    this is OpenAiOAuthFailure -> localizedDescription()
         this is OpenAiCompatibleHttpFailure -> localizedDescription()
         this is OpenAiCompatibleImageFailure -> Localization.string("open_ai_compatible_image_failure")
         message == null -> Localization.string("error_invalid")

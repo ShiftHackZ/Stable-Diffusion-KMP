@@ -24,6 +24,13 @@ internal interface KeyValueStore {
      */
     fun putString(key: String, value: String)
     /**
+     * Commits an identity-sensitive value before reporting success to a queued-work producer.
+     * @param key Stable application preference key.
+     * @param value Complete atomic value to persist.
+     * @author Dmitriy Moroz
+     */
+    fun putStringDurably(key: String, value: String) = putString(key, value)
+    /**
      * Loads SDAI data through `getBoolean`.
      *
      * @param key key value consumed by the API.

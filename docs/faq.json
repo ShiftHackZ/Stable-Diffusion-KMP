@@ -42,6 +42,15 @@
             "Nightly and TestFlight builds can include fresh fixes and features, but they can also change faster than stable releases."
           ],
           "tags": ["release", "nightly", "testflight"]
+        },
+        {
+          "id": "chatgpt-oauth",
+          "question": "Can I sign in with ChatGPT directly in SDAI?",
+          "answer": [
+            "Choose ChatGPT OAuth (Beta), immediately after OpenAI in Configuration. Enable device-code login in ChatGPT account security settings or your workspace policy, start sign-in and enter the displayed code at https://auth.openai.com/codex/device. Return to SDAI and connect after authorization.",
+            "This separate provider generates with gpt-image-2 on Android and iOS without an external proxy or API key. Sessions use Android Keystore-backed storage or iOS Keychain. Sign out in provider configuration to delete the local session. The unofficial integration may change, and account access and limits apply. Chat, image editing and Stable Diffusion controls are not supported."
+          ],
+          "tags": ["chatgpt", "oauth", "providers", "setup"]
         }
       ]
     },

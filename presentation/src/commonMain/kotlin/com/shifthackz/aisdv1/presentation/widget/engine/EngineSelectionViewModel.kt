@@ -266,6 +266,7 @@ class EngineSelectionViewModel(
             ServerSource.HORDE,
             ServerSource.OPEN_AI,
         ServerSource.OPEN_AI_COMPATIBLE,
+        ServerSource.OPEN_AI_OAUTH,
             ServerSource.FAL_AI,
             ServerSource.ARLI_AI,
             -> remoteOptions

@@ -191,6 +191,7 @@ internal fun ServerSource.icon(platform: Platform): ImageVector = when (this) {
         ServerSource.HORDE,
         ServerSource.HUGGING_FACE,
         ServerSource.OPEN_AI,
+        ServerSource.OPEN_AI_OAUTH,
         ServerSource.STABILITY_AI,
         ServerSource.FAL_AI,
         ServerSource.ARLI_AI,
@@ -216,6 +217,7 @@ internal fun ServerSource.title(strings: ServerSetupStrings, platform: Platform)
     ServerSource.HORDE -> strings.hordeTitle
     ServerSource.HUGGING_FACE -> strings.huggingFaceTitle
     ServerSource.OPEN_AI_COMPATIBLE -> strings.openAiCompatibleTitle
+    ServerSource.OPEN_AI_OAUTH -> Localization.string("srv_type_open_ai_oauth")
     ServerSource.OPEN_AI -> strings.openAiTitle
     ServerSource.STABILITY_AI -> strings.stabilityTitle
     ServerSource.FAL_AI -> strings.falAiTitle
@@ -236,6 +238,7 @@ internal fun ServerSource.subtitle(strings: ServerSetupStrings, platform: Platfo
     ServerSource.HORDE -> strings.hordeSubtitle
     ServerSource.HUGGING_FACE -> strings.huggingFaceSubtitle
     ServerSource.OPEN_AI_COMPATIBLE -> strings.openAiCompatibleSubtitle
+    ServerSource.OPEN_AI_OAUTH -> Localization.string("open_ai_oauth_help")
     ServerSource.OPEN_AI -> strings.openAiSubtitle
     ServerSource.STABILITY_AI -> strings.stabilitySubtitle
     ServerSource.FAL_AI -> strings.falAiSubtitle
@@ -264,6 +267,7 @@ internal val ServerSetupState.mainButtonEnabled: Boolean
     get() = when (step) {
         ServerSetupState.Step.SOURCE -> true
         ServerSetupState.Step.CONFIGURE -> when (mode) {
+            ServerSource.OPEN_AI_OAUTH -> openAiOAuthAccount != null && !openAiOAuthBusy
             ServerSource.LOCAL_MICROSOFT_ONNX -> localOnnxCustomModel ||
                 localOnnxModels.any { it.selected && it.downloaded }
 

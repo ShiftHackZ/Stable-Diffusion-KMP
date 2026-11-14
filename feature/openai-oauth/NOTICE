@@ -1,0 +1,13 @@
+SDAI bundled OpenAI OAuth feature
+
+Device authorization protocol adapted from OpenAI Codex
+Copyright OpenAI
+https://github.com/openai/codex
+
+Direct image transport adapted from OpenAI OAuth
+Copyright 2026 Evan Zhou and OpenAI OAuth contributors
+https://github.com/EvanZhouDev/openai-oauth
+
+Both upstream projects are licensed under the Apache License, Version 2.0.
+This module contains a Kotlin Multiplatform adaptation; it does not embed their
+Node runtime, local credential discovery, proxy server or chat implementation.

@@ -19,6 +19,11 @@ import com.shifthackz.aisdv1.domain.feature.auth.AuthorizationCredentials
  * The first group of fields controls provider discovery and filtering, the middle group stores
  * per-provider form inputs, and the local model lists mirror downloadable model state for each
  * local runtime. Derived properties expose the active provider's local model selection.
+ * @param openAiOAuthAccount Token-free account identifier, or null before initialization/sign-in.
+ * @param openAiOAuthCode Transient device code displayed only during the current login attempt.
+ * @param openAiOAuthBusy Whether device authorization is pending; disables conflicting actions.
+ * @param openAiOAuthStorageError Whether protected storage requires recovery or an explicit local reset.
+ * @author Dmitriy Moroz
  */
 @Immutable
 data class ServerSetupState(
@@ -43,6 +48,10 @@ data class ServerSetupState(
     val openAiCompatibleUrl: String = "",
     val openAiCompatibleApiKey: String = "",
     val openAiCompatibleUrlValidationError: ValidationError? = null,
+    val openAiOAuthAccount: String? = null,
+    val openAiOAuthCode: String? = null,
+    val openAiOAuthBusy: Boolean = false,
+    val openAiOAuthStorageError: Boolean = false,
     val stabilityAiApiKey: String = "",
     val falAiApiKey: String = "",
     val arliAiApiKey: String = "",
@@ -342,6 +351,7 @@ data class ServerSetupState(
             ServerSource.HORDE,
             ServerSource.HUGGING_FACE,
             ServerSource.OPEN_AI,
+            ServerSource.OPEN_AI_OAUTH,
             ServerSource.STABILITY_AI,
             ServerSource.FAL_AI,
             ServerSource.ARLI_AI,

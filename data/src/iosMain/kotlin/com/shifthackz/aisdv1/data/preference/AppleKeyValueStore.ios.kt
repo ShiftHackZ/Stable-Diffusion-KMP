@@ -43,6 +43,17 @@ private class NsUserDefaultsKeyValueStore(
     }
 
     /**
+     * Synchronizes a complete preference value before returning; synchronization failure throws.
+     * @param key Stable preference key.
+     * @param value Complete source/revision envelope to persist.
+     * @author Dmitriy Moroz
+     */
+    override fun putStringDurably(key: String, value: String) {
+        defaults.setObject(value, forKey = key)
+        check(defaults.synchronize()) { "Provider selection could not be persisted" }
+    }
+
+    /**
      * Loads SDAI data through `getBoolean`.
      *
      * @param key key value consumed by the API.

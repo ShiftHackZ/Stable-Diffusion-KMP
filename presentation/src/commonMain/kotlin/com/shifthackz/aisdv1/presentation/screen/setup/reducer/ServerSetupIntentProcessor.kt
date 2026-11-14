@@ -28,6 +28,7 @@ internal class ServerSetupIntentProcessor(
 
     fun process(intent: ServerSetupIntent) {
         when (intent) {
+            ServerSetupIntent.OAuthLogin, ServerSetupIntent.OAuthCancel, ServerSetupIntent.OAuthLogout, ServerSetupIntent.OAuthOpenBrowser -> Unit
             is ServerSetupIntent.AllowLocalCustomModel -> updateState { state ->
                 state.withAllowCustomModel(intent.allow)
             }

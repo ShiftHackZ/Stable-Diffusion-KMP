@@ -60,8 +60,11 @@ internal class KeyValueConfigurationStore(
      * @author Dmitriy Moroz
      */
     override var source: ServerSource
-        get() = ServerSource.parse(keyValueStore.getString(KEY_SERVER_SOURCE, ServerSource.AUTOMATIC1111.key))
-        set(value) = keyValueStore.putString(KEY_SERVER_SOURCE, value.key)
+        get() = keyValueStore.readProviderSelection().first
+        set(value) = keyValueStore.writeProviderSelection(value)
+
+    override val providerSelectionRevision: Long
+        get() = keyValueStore.readProviderSelection().second
 
     /**
      * Exposes the `hordeApiKey` value used by the SDAI data layer.

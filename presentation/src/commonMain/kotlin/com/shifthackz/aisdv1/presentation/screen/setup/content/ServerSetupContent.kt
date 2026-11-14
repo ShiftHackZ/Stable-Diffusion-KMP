@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.shifthackz.aisdv1.domain.entity.ServerSource
 import com.shifthackz.aisdv1.presentation.screen.setup.component.ConfigurationStepBar
+import com.shifthackz.aisdv1.presentation.screen.setup.component.OpenAiOAuthActionBar
 import com.shifthackz.aisdv1.presentation.screen.setup.component.ServerSetupLoading
 import com.shifthackz.aisdv1.presentation.screen.setup.component.ServerSetupModal
 import com.shifthackz.aisdv1.presentation.screen.setup.component.mainButtonEnabled
@@ -42,12 +43,20 @@ import com.shifthackz.aisdv1.presentation.screen.setup.form.local.ConfigurationS
 import com.shifthackz.aisdv1.presentation.screen.setup.model.ServerSetupIntent
 import com.shifthackz.aisdv1.presentation.screen.setup.model.ServerSetupState
 import com.shifthackz.aisdv1.presentation.screen.setup.source.SourceFiltersBottomSheet
+import com.shifthackz.aisdv1.presentation.screen.setup.source.SourceSelectionEffects
 import com.shifthackz.aisdv1.presentation.screen.setup.source.SourceSelectionStep
-import com.shifthackz.aisdv1.presentation.screen.setup.source.SourceSelectionToolbar
 import com.shifthackz.aisdv1.presentation.screen.setup.source.SourceSortBottomSheet
 import com.shifthackz.aisdv1.presentation.theme.global.persistentBottomBarWindowInsets
 import com.shifthackz.aisdv1.presentation.theme.global.persistentTopAppBarWindowInsets
 
+/**
+ * Hosts source selection and a scrolling configuration form with actions pinned above system insets.
+ * @param state Current wizard, provider and form state.
+ * @param processIntent Dispatches navigation, configuration and account actions through MVI.
+ * @param modifier Bounds supplied by the navigation host.
+ * @param strings Localized shared wizard labels.
+ * @author Dmitriy Moroz
+ */
 @Composable
 fun ServerSetupContent(
     state: ServerSetupState,
@@ -57,6 +66,8 @@ fun ServerSetupContent(
 ) {
     val sourceListState = rememberLazyListState()
     val configurationListState = rememberLazyListState()
+
+    SourceSelectionEffects(state, strings, sourceListState, processIntent)
 
     LaunchedEffect(state.mode) {
         configurationListState.scrollToItem(0)
@@ -91,41 +102,38 @@ fun ServerSetupContent(
                         currentStep = state.step,
                         strings = strings,
                     )
-                    if (state.step == ServerSetupState.Step.SOURCE && !state.loadingConfiguration) {
-                        SourceSelectionToolbar(
-                            state = state,
-                            strings = strings,
-                            processIntent = processIntent,
-                        )
-                    }
                 }
             },
             bottomBar = {
-                Button(
-                    modifier = Modifier
-                        .windowInsetsPadding(persistentBottomBarWindowInsets())
-                        .fillMaxWidth()
-                        .height(68.dp)
-                        .background(MaterialTheme.colorScheme.background)
-                        .padding(horizontal = 16.dp)
-                        .padding(bottom = 16.dp, top = 8.dp),
-                    enabled = !state.loadingConfiguration && state.mainButtonEnabled,
-                    onClick = { processIntent(ServerSetupIntent.MainButtonClick) },
-                ) {
-                    Text(
-                        text = when (state.step) {
-                            ServerSetupState.Step.SOURCE -> strings.next
-                            ServerSetupState.Step.CONFIGURE -> when (state.mode) {
-                                ServerSource.LOCAL_MICROSOFT_ONNX,
-                                ServerSource.LOCAL_GOOGLE_MEDIA_PIPE,
-                                ServerSource.LOCAL_STABLE_DIFFUSION_CPP,
-                                -> strings.setup
+                if (state.step == ServerSetupState.Step.CONFIGURE && state.mode == ServerSource.OPEN_AI_OAUTH) {
+                    OpenAiOAuthActionBar(state = state, strings = strings, processIntent = processIntent)
+                } else {
+                    Button(
+                        modifier = Modifier
+                            .windowInsetsPadding(persistentBottomBarWindowInsets())
+                            .fillMaxWidth()
+                            .height(68.dp)
+                            .background(MaterialTheme.colorScheme.background)
+                            .padding(horizontal = 16.dp)
+                            .padding(bottom = 16.dp, top = 8.dp),
+                        enabled = !state.loadingConfiguration && state.mainButtonEnabled,
+                        onClick = { processIntent(ServerSetupIntent.MainButtonClick) },
+                    ) {
+                        Text(
+                            text = when (state.step) {
+                                ServerSetupState.Step.SOURCE -> strings.next
+                                ServerSetupState.Step.CONFIGURE -> when (state.mode) {
+                                    ServerSource.LOCAL_MICROSOFT_ONNX,
+                                    ServerSource.LOCAL_GOOGLE_MEDIA_PIPE,
+                                    ServerSource.LOCAL_STABLE_DIFFUSION_CPP,
+                                    -> strings.setup
 
-                                else -> strings.connect
-                            }
-                        },
-                        color = LocalContentColor.current,
-                    )
+                                    else -> strings.connect
+                                }
+                            },
+                            color = LocalContentColor.current,
+                        )
+                    }
                 }
             },
         ) { paddingValues ->

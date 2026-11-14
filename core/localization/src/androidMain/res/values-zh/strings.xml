@@ -73,6 +73,7 @@
     <string name="action_back">返回</string>
     <string name="action_menu">菜单</string>
     <string name="action_copy">复制</string>
+    <string name="message_text_copied">已复制</string>
     <string name="action_refresh">刷新</string>
     <string name="action_install_instructions">安装</string>
     <string name="action_swap_dimensions">交换宽度和高度</string>
@@ -216,7 +217,7 @@
     <string name="hint_args_swarm_ui_warning" tools:ignore="TypographyDashes">在连接之前确保：\n• 您的防火墙没有阻止 7801 端口\n• 手机与您的 PC 在同一 WiFi 下</string>
 
     <!-- Horde AI云连接提示 -->
-    <string name="hint_server_horde_title">连接到 Horde AI 云</string>
+    <string name="hint_server_horde_title">Horde AI Cloud</string>
     <string name="hint_server_horde_sub_title">Horde AI 是由图像生成和文本生成服务器组成的分布式集群。</string>
     <string name="hint_server_horde_usage">您可以使用默认 API 密钥以匿名方式连接。然而，匿名账户在并发请求过多时优先级最低。</string>
     <string name="hint_server_horde_api_key">API 密钥</string>
@@ -225,28 +226,28 @@
     <string name="hint_server_horde_get_api_key">获取您的 API 密钥</string>
 
     <!-- Hugging Face连接提示 -->
-    <string name="hint_hugging_face_title">连接到 Hugging Face</string>
+    <string name="hint_hugging_face_title">Hugging Face</string>
     <string name="hint_hugging_face_sub_title">Hugging Face 推理云提供免费测试、评估公开可访问的机器学习模型的服务，您也可以使用私有的自定义模型。</string>
     <string name="hint_hugging_face_about">关于 Hugging Face</string>
     <string name="hint_hugging_face_model">Hugging Face 模型</string>
 
     <!-- OpenAI连接提示 -->
-    <string name="hint_open_ai_title">连接到 OpenAI</string>
+    <string name="hint_open_ai_title">OpenAI API</string>
     <string name="hint_open_ai_sub_title">OpenAI 服务支持使用 GPT Image 模型生成图像。</string>
     <string name="hint_open_ai_about">关于 OpenAI</string>
 
     <!-- Fal.ai连接提示 -->
-    <string name="hint_fal_ai_title">连接到 Fal.ai</string>
+    <string name="hint_fal_ai_title">Fal.ai</string>
     <string name="hint_fal_ai_sub_title">Fal.ai 提供托管的图像生成模型 API，并使用基于队列的推理。</string>
     <string name="hint_fal_ai_about">Fal.ai API 密钥</string>
 
-    <string name="hint_arli_ai_title">连接到 ArliAI</string>
+    <string name="hint_arli_ai_title">ArliAI</string>
     <string name="hint_arli_ai_sub_title">ArliAI 提供兼容 SDNext 的云端图像生成 API。</string>
     <string name="hint_arli_ai_about">ArliAI API 文档</string>
     <string name="hint_arli_ai_model">ArliAI 模型 checkpoint</string>
 
     <!-- Stability AI连接提示 -->
-    <string name="hint_stability_ai_title">连接到 Stability AI</string>
+    <string name="hint_stability_ai_title">Stability AI</string>
     <string name="hint_stability_ai_sub_title">StabilityAI 是由 DreamStudio 提供的图像生成服务。</string>
     <string name="hint_stability_ai_about">关于 Stability AI</string>
     <string name="hint_stability_ai_engine">Stability AI 引擎</string>
@@ -680,4 +681,19 @@
     <string name="open_ai_compatible_http_server">图像服务器发生错误。请稍后重试。</string>
     <string name="open_ai_compatible_http_error">服务器请求失败（HTTP %1$d）。</string>
     <string name="open_ai_compatible_image_failure">无法接收或解码图像。请检查服务器后重试。</string>
+    <string name="srv_type_open_ai_oauth">ChatGPT OAuth</string>
+    <string name="open_ai_oauth_help">使用 ChatGPT 登录并直接生成图像。需要在账户或工作区中启用设备代码登录。此非官方集成可能发生变化。</string>
+    <string name="open_ai_oauth_login">使用 ChatGPT 登录</string>
+    <string name="open_ai_oauth_logout">退出登录</string>
+    <string name="open_ai_oauth_signed_in">已登录。点击连接以使用此账户。</string>
+    <string name="open_ai_oauth_open_browser">打开登录页面</string>
+    <string name="open_ai_oauth_code_help">仅将此代码用于您在 SDAI 中发起的登录。代码在 15 分钟后过期。</string>
+    <string name="open_ai_oauth_waiting">正在等待授权…</string>
+    <string name="open_ai_oauth_login_required">请先在服务商设置中使用 ChatGPT 登录。</string>
+    <string name="open_ai_oauth_unavailable">设备代码登录不可用。请在 ChatGPT 安全设置中启用，或联系工作区管理员。</string>
+    <string name="open_ai_oauth_expired">登录代码已过期。请重新登录。</string>
+    <string name="open_ai_oauth_identity_changed">账户或服务商已更改。请重新开始生成。</string>
+    <string name="open_ai_oauth_storage_error">受保护的账户存储不可用。请解锁设备后重试。</string>
+    <string name="open_ai_oauth_error">ChatGPT 请求失败。请检查网络、账户访问权限和图像尺寸，然后重试。</string>
+    <string name="open_ai_oauth_reset">重置本地会话</string>
 </resources>

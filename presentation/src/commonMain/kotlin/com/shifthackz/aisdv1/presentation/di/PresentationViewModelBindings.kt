@@ -236,6 +236,8 @@ internal fun Module.registerPresentationViewModelBindings() {
     }
     factory { (router: TextToImageRouter) ->
         TextToImageViewModel(
+            openAiOAuthGateway = get(),
+            providerSelectionGuard = get(),
             dispatchersProvider = get(),
             getConfigurationUseCase = get(),
             getStableDiffusionSamplersUseCase = get(),
@@ -359,6 +361,8 @@ internal fun Module.registerPresentationViewModelBindings() {
             connectToBonsaiUseCase = get(),
             connectToOpenAiUseCase = get(),
             connectToOpenAiCompatibleUseCase = get(),
+            openAiOAuthGateway = get(),
+            setServerConfigurationUseCase = get(),
             connectToStabilityAiUseCase = get(),
             connectToFalAiUseCase = get(),
             connectToArliAiUseCase = get(),

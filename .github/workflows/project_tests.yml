@@ -17,6 +17,9 @@ jobs:
       - name: Test OpenAI-compatible API contract
         run: python3 scripts/test_openai_compatible_contract.py
 
+      - name: Test OpenAI OAuth API contract
+        run: python3 scripts/test_openai_oauth_contract.py
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3.13.0
         with:

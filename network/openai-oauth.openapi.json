@@ -1,0 +1,452 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "SDAI bundled ChatGPT OAuth image client",
+    "version": "1.0.0",
+    "description": "Consumed unofficial Codex device-authorization and image contracts. Fixed origins, protected session storage, no Node server, chat, SSE, desktop token import or arbitrary endpoints. Unknown response properties are ignored."
+  },
+  "paths": {
+    "/api/accounts/deviceauth/usercode": {
+      "post": {
+        "operationId": "requestDeviceCode",
+        "description": "Starts device authorization. A non-success status reports login unavailable without replacing an existing session.",
+        "servers": [
+          {
+            "url": "https://auth.openai.com",
+            "description": "Fixed service origin; redirects are disabled."
+          }
+        ],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "description": "Typed request sent by the bundled feature.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceCodeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful typed response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceCodeResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Failure response counted but never parsed into UI or retained in an exception. Only safe status/categories are exposed.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "description": "Opaque upstream failure body; discarded without logging."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/accounts/deviceauth/token": {
+      "post": {
+        "operationId": "pollDeviceAuthorization",
+        "description": "Polls at the server interval for at most fifteen minutes. HTTP 403/404 is pending; cancellation and process restart discard pending state.",
+        "servers": [
+          {
+            "url": "https://auth.openai.com",
+            "description": "Fixed service origin; redirects are disabled."
+          }
+        ],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "description": "Typed request sent by the bundled feature.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DevicePollRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful typed response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DevicePollResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Failure response counted but never parsed into UI or retained in an exception. Only safe status/categories are exposed.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "description": "Opaque upstream failure body; discarded without logging."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/token": {
+      "post": {
+        "operationId": "exchangeOrRefreshToken",
+        "description": "Exchanges a single-use authorization code or rotates refresh credentials. A failed replacement login preserves the prior session; invalid refresh requires sign-in again.",
+        "servers": [
+          {
+            "url": "https://auth.openai.com",
+            "description": "Fixed service origin; redirects are disabled."
+          }
+        ],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "description": "Typed request sent by the bundled feature.",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "description": "One of the two supported typed OAuth grants.",
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/TokenExchangeRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TokenRefreshRequest"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful typed response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Failure response counted but never parsed into UI or retained in an exception. Only safe status/categories are exposed.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "description": "Opaque upstream failure body; discarded without logging."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/backend-api/codex/images/generations": {
+      "post": {
+        "operationId": "generateOAuthImage",
+        "description": "Generates one image under the pinned account/revision. One confirmed 401 may refresh and retry once. Network/timeout/429 failures never replay an ambiguous POST.",
+        "servers": [
+          {
+            "url": "https://chatgpt.com",
+            "description": "Fixed service origin; redirects are disabled."
+          }
+        ],
+        "security": [
+          {
+            "chatGptBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Typed request sent by the bundled feature.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful typed response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImageResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Failure response counted but never parsed into UI or retained in an exception. Only safe status/categories are exposed.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "description": "Opaque upstream failure body; discarded without logging."
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "chatgpt-account-id",
+            "in": "header",
+            "required": true,
+            "description": "Account bound to the access token and captured work identity.",
+            "schema": {
+              "type": "string",
+              "description": "ChatGPT account identifier."
+            }
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "chatGptBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Access token loaded only from protected storage; never user-entered or attached to redirects."
+      }
+    },
+    "schemas": {
+      "DeviceCodeRequest": {
+        "type": "object",
+        "description": "Starts authorization for the fixed public Codex OAuth client.",
+        "additionalProperties": false,
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "Public OAuth client identifier; not a secret."
+          }
+        },
+        "required": ["client_id"]
+      },
+      "DeviceCodeResponse": {
+        "type": "object",
+        "description": "Transient device code challenge; retained only in memory.",
+        "additionalProperties": false,
+        "properties": {
+          "device_auth_id": {
+            "type": "string",
+            "description": "Opaque pending authorization identifier."
+          },
+          "user_code": {
+            "type": "string",
+            "description": "One-time code the user enters on the trusted verification page."
+          },
+          "usercode": {
+            "type": "string",
+            "description": "Legacy spelling of user_code accepted by the upstream protocol."
+          },
+          "interval": {
+            "description": "Server polling interval in seconds; a numeric string or integer is accepted. Missing interval defaults to five seconds.",
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Polling interval encoded as a decimal string."
+              },
+              {
+                "type": "integer",
+                "description": "Polling interval encoded as whole seconds.",
+                "minimum": 1
+              }
+            ]
+          }
+        },
+        "required": ["device_auth_id"]
+      },
+      "DevicePollRequest": {
+        "type": "object",
+        "description": "Polls only the authorization initiated by this application session.",
+        "additionalProperties": false,
+        "properties": {
+          "device_auth_id": {
+            "type": "string",
+            "description": "Pending authorization identifier from the device challenge."
+          },
+          "user_code": {
+            "type": "string",
+            "description": "One-time user code from the same challenge."
+          }
+        },
+        "required": ["device_auth_id", "user_code"]
+      },
+      "DevicePollResponse": {
+        "type": "object",
+        "description": "Successful device authorization, exchanged immediately and never persisted.",
+        "additionalProperties": false,
+        "properties": {
+          "authorization_code": {
+            "type": "string",
+            "description": "Single-use authorization code."
+          },
+          "code_verifier": {
+            "type": "string",
+            "description": "PKCE verifier supplied by the authorization service."
+          },
+          "code_challenge": {
+            "type": "string",
+            "description": "PKCE challenge associated with the verifier."
+          }
+        },
+        "required": ["authorization_code", "code_verifier", "code_challenge"]
+      },
+      "TokenExchangeRequest": {
+        "type": "object",
+        "description": "Form-encoded authorization-code exchange.",
+        "additionalProperties": false,
+        "properties": {
+          "grant_type": {
+            "type": "string",
+            "description": "OAuth grant type.",
+            "const": "authorization_code"
+          },
+          "client_id": {
+            "type": "string",
+            "description": "Fixed public OAuth client ID."
+          },
+          "redirect_uri": {
+            "type": "string",
+            "description": "Fixed device callback URI registered for this client.",
+            "const": "https://auth.openai.com/deviceauth/callback"
+          },
+          "code": {
+            "type": "string",
+            "description": "Single-use authorization code returned by polling."
+          },
+          "code_verifier": {
+            "type": "string",
+            "description": "PKCE verifier returned by polling."
+          }
+        },
+        "required": [
+          "grant_type",
+          "client_id",
+          "redirect_uri",
+          "code",
+          "code_verifier"
+        ]
+      },
+      "TokenRefreshRequest": {
+        "type": "object",
+        "description": "Form-encoded token rotation.",
+        "additionalProperties": false,
+        "properties": {
+          "grant_type": {
+            "type": "string",
+            "description": "OAuth grant type.",
+            "const": "refresh_token"
+          },
+          "client_id": {
+            "type": "string",
+            "description": "Fixed public OAuth client ID."
+          },
+          "refresh_token": {
+            "type": "string",
+            "description": "Protected refresh credential; never logged or exported."
+          }
+        },
+        "required": ["grant_type", "client_id", "refresh_token"]
+      },
+      "TokenResponse": {
+        "type": "object",
+        "description": "Credential envelope retained only in protected platform storage. Unknown claims are ignored.",
+        "additionalProperties": false,
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "description": "Short-lived bearer JWT; account ID and expiry are read from its claims."
+          },
+          "refresh_token": {
+            "type": "string",
+            "description": "Refresh credential. Required for initial login; omitted refresh responses preserve the previous value."
+          },
+          "id_token": {
+            "type": "string",
+            "description": "Optional identity JWT used transiently to obtain the ChatGPT account ID; not persisted."
+          },
+          "expires_in": {
+            "type": "integer",
+            "description": "Access-token lifetime in seconds; fallback when access JWT has no exp claim.",
+            "minimum": 1
+          }
+        },
+        "required": ["access_token"]
+      },
+      "ImageRequest": {
+        "type": "object",
+        "description": "One text-to-image request; batches use separate sequential requests.",
+        "additionalProperties": false,
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "description": "User image description."
+          },
+          "size": {
+            "type": "string",
+            "description": "Requested width and height in pixels, WIDTHxHEIGHT.",
+            "pattern": "^[1-9][0-9]*x[1-9][0-9]*$"
+          },
+          "model": {
+            "type": "string",
+            "description": "Image model for this provider.",
+            "const": "gpt-image-2"
+          },
+          "n": {
+            "type": "integer",
+            "description": "Exactly one image per upstream request.",
+            "const": 1
+          }
+        },
+        "required": ["prompt", "size", "model", "n"]
+      },
+      "ImageResponse": {
+        "type": "object",
+        "description": "Generation response. Only the first returned image is consumed.",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "description": "Generated images encoded as Base64.",
+            "items": {
+              "$ref": "#/components/schemas/ImageData"
+            }
+          }
+        },
+        "required": ["data"]
+      },
+      "ImageData": {
+        "type": "object",
+        "description": "Generated image content, validated by the platform decoder before gallery persistence.",
+        "additionalProperties": false,
+        "properties": {
+          "b64_json": {
+            "type": "string",
+            "description": "Base64 encoded image bytes. URL-only image responses are unsupported."
+          }
+        },
+        "required": ["b64_json"]
+      }
+    }
+  }
+}

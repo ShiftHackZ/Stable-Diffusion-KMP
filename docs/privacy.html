@@ -100,13 +100,31 @@
             those actions.
           </p>
 
+          <h2>ChatGPT OAuth Sessions</h2>
+          <p>
+            When you choose ChatGPT OAuth, SDAI requests a temporary device code
+            from auth.openai.com. You authorize the code in your browser.
+            Completed sessions are stored using Android Keystore-backed
+            encrypted storage or iOS Keychain with device-only protection.
+            Access and refresh tokens are not stored in ordinary preferences,
+            gallery records, queued work or application logs. Pending codes are
+            kept only in memory.
+          </p>
+          <p>
+            Direct image requests send your prompt, requested dimensions, access
+            token and ChatGPT account identifier to chatgpt.com. No SDAI proxy
+            or desktop credential import is used. Sign out in provider
+            configuration to delete the local session; this does not revoke
+            other sessions in your OpenAI account. This unofficial integration
+            is subject to account access and service changes.
+          </p>
           <h2>AI Providers</h2>
           <p>
             SDAI can connect to providers you choose, including AUTOMATIC1111,
             SwarmUI, OpenAI-compatible image servers and proxies, AI Horde,
-            Hugging Face, OpenAI, Stability AI, Fal.ai, ArliAI, Android local
-            ONNX, Google AI MediaPipe, Android local SDXL, Silicon Diffusion
-            Core ML, and Silicon Diffusion PrismML Bonsai.
+            Hugging Face, OpenAI, ChatGPT OAuth, Stability AI, Fal.ai, ArliAI,
+            Android local ONNX, Google AI MediaPipe, Android local SDXL, Silicon
+            Diffusion Core ML, and Silicon Diffusion PrismML Bonsai.
           </p>
           <p>
             When you use a remote provider, prompts, input images, generation

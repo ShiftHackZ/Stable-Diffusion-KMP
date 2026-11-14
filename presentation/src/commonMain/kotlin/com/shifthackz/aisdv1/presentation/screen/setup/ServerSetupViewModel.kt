@@ -6,6 +6,9 @@ import com.shifthackz.aisdv1.core.common.links.LinksProvider
 import com.shifthackz.aisdv1.core.common.schedulers.DispatchersProvider
 import com.shifthackz.aisdv1.domain.entity.OpenAiCompatibleHttpFailure
 import com.shifthackz.aisdv1.presentation.model.localizedDescription
+import com.shifthackz.aisdv1.presentation.model.observeOpenAiOAuthIdentity
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.cancel
 import com.shifthackz.aisdv1.core.localization.Localization
 import com.shifthackz.aisdv1.core.mvi.BaseMviViewModel
 import com.shifthackz.aisdv1.core.validation.common.CommonStringValidator
@@ -15,6 +18,9 @@ import com.shifthackz.aisdv1.domain.entity.DownloadState
 import com.shifthackz.aisdv1.domain.entity.HuggingFaceModel
 import com.shifthackz.aisdv1.domain.entity.OpenAiCompatibleConnection
 import com.shifthackz.aisdv1.domain.entity.ServerSource
+import com.shifthackz.aisdv1.domain.feature.openaioauth.OpenAiOAuthGateway
+import com.shifthackz.aisdv1.domain.entity.OpenAiOAuthFailure
+import com.shifthackz.aisdv1.domain.usecase.settings.SetServerConfigurationUseCase
 import com.shifthackz.aisdv1.domain.feature.auth.AuthorizationCredentials
 import com.shifthackz.aisdv1.domain.preference.PreferenceManager
 import com.shifthackz.aisdv1.domain.usecase.downloadable.DeleteModelUseCase
@@ -96,6 +102,8 @@ import kotlin.time.Duration.Companion.milliseconds
  * @param linksProvider External links and demo mode URL used by setup.
  * @param preferenceManager Persists setup preferences.
  * @param router Setup navigation contract.
+ * @param openAiOAuthGateway Device authorization and protected session lifecycle.
+ * @param setServerConfigurationUseCase Commits the selected source after a completed login.
  * @param onError Error callback forwarded to the app-level error handling pipeline.
  *
  * @author Dmitriy Moroz
@@ -135,6 +143,8 @@ class ServerSetupViewModel(
     private val linksProvider: LinksProvider,
     private val preferenceManager: PreferenceManager,
     private val router: ServerSetupRouter,
+    private val openAiOAuthGateway: OpenAiOAuthGateway,
+    private val setServerConfigurationUseCase: SetServerConfigurationUseCase,
     private val onError: (Throwable) -> Unit = {},
 ) : BaseMviViewModel<ServerSetupState, ServerSetupIntent, ServerSetupEffect>(
     initialState = ServerSetupState(
@@ -147,8 +157,23 @@ class ServerSetupViewModel(
 ) {
 
     private val downloadJobs: MutableMap<String, Job> = mutableMapOf()
+    private var oauthLoginJob: Job? = null
+    private var oauthAttempt = 0L
 
     init {
+        launch(dispatchersProvider.io) {
+            observeOpenAiOAuthIdentity(
+                gateway = openAiOAuthGateway,
+                onIdentity = { identity ->
+                    updateState { it.copy(openAiOAuthAccount = identity?.accountId) }
+                },
+                onUnavailable = { error -> updateState {
+                    it.copy(openAiOAuthStorageError = true,
+                        modal = if (it.mode == ServerSource.OPEN_AI_OAUTH) ServerSetupState.Modal.Error(error.localizedDescription()) else it.modal)
+                } },
+                onReady = { updateState { it.copy(openAiOAuthStorageError = false) } },
+            )
+        }
         launch(dispatchersProvider.io) {
             runCatching {
                 val configuration = getConfigurationUseCase()
@@ -203,7 +228,10 @@ class ServerSetupViewModel(
             }
                 .onSuccess { state ->
                     withContext(dispatchersProvider.immediate) {
-                        emitState(state)
+                        emitState(state.copy(
+                            openAiOAuthAccount = currentState.openAiOAuthAccount,
+                            openAiOAuthStorageError = currentState.openAiOAuthStorageError,
+                        ))
                     }
                 }
                 .onFailure { t ->
@@ -236,6 +264,28 @@ class ServerSetupViewModel(
     )
 
     override fun processIntent(intent: ServerSetupIntent) {
+        when (intent) {
+            ServerSetupIntent.OAuthLogin -> { startOAuthLogin(); return }
+            ServerSetupIntent.OAuthCancel -> { cancelOAuthLogin(); return }
+            ServerSetupIntent.OAuthLogout -> {
+                cancelOAuthLogin()
+                launch(dispatchersProvider.io) {
+                    try {
+                        openAiOAuthGateway.logout()
+                        updateState { it.copy(openAiOAuthAccount = null, openAiOAuthStorageError = false) }
+                    }
+                    catch (error: CancellationException) { throw error }
+                    catch (error: OpenAiOAuthFailure) { updateState { it.copy(modal = ServerSetupState.Modal.Error(error.localizedDescription())) } }
+                }
+                return
+            }
+            ServerSetupIntent.OAuthOpenBrowser -> {
+                if (currentState.openAiOAuthCode != null) emitEffect(ServerSetupEffect.OpenUrl("https://auth.openai.com/codex/device"))
+                return
+            }
+            is ServerSetupIntent.UpdateServerMode, ServerSetupIntent.NavigateBack -> cancelOAuthLogin()
+            else -> Unit
+        }
         if (intent == ServerSetupIntent.AcknowledgeUnverifiedConnection) {
             if (currentState.modal == ServerSetupState.Modal.ConnectionUnverified) finishConnection()
         } else {
@@ -243,9 +293,60 @@ class ServerSetupViewModel(
         }
     }
 
+    /**
+     * Releases the factory-created setup ViewModel when its route leaves composition.
+     * Pending authorization, protected identity initialization and subscriptions cannot outlive it.
+     * @author Dmitriy Moroz
+     */
+    fun onRouteDisposed() {
+        cancelOAuthLogin()
+        viewModelScope.cancel()
+    }
+
     private fun validateAndConnectToServer() {
         if (!validate()) return
         connectToServer()
+    }
+
+    /**
+     * Invalidates pending UI callbacks, cancels polling and discards only the transient device code.
+     * The previously committed protected session remains unchanged.
+     * @author Dmitriy Moroz
+     */
+    private fun cancelOAuthLogin() {
+        oauthAttempt++
+        oauthLoginJob?.cancel()
+        oauthLoginJob = null
+        updateState { it.copy(openAiOAuthBusy = false, openAiOAuthCode = null) }
+    }
+
+    /**
+     * Starts one device authorization attempt for the active OAuth form and publishes safe UI state.
+     * Superseded attempts cannot restore their code, account or error after route cancellation.
+     * @author Dmitriy Moroz
+     */
+    private fun startOAuthLogin() {
+        if (currentState.mode != ServerSource.OPEN_AI_OAUTH || currentState.openAiOAuthBusy) return
+        updateState { it.copy(openAiOAuthBusy = true, openAiOAuthCode = null) }
+        val attempt = ++oauthAttempt
+        oauthLoginJob = launch(dispatchersProvider.io) {
+            try {
+                val identity = openAiOAuthGateway.login { code, _ ->
+                    if (attempt == oauthAttempt) updateState { it.copy(openAiOAuthCode = code) }
+                }
+                if (attempt == oauthAttempt) updateState { it.copy(openAiOAuthAccount = identity.accountId, openAiOAuthStorageError = false) }
+            } catch (error: CancellationException) { throw error }
+            catch (error: OpenAiOAuthFailure) {
+                if (attempt == oauthAttempt) updateState {
+                    it.copy(
+                        openAiOAuthStorageError = it.openAiOAuthStorageError || error.category == "STORAGE",
+                        modal = ServerSetupState.Modal.Error(error.localizedDescription()),
+                    )
+                }
+            } finally {
+                if (attempt == oauthAttempt) updateState { it.copy(openAiOAuthBusy = false, openAiOAuthCode = null) }
+            }
+        }
     }
 
     private fun validate(): Boolean {
@@ -274,6 +375,12 @@ class ServerSetupViewModel(
                         apiKey = currentState.openAiCompatibleApiKey,
                     ).map { outcome -> connectionUnverified = outcome == OpenAiCompatibleConnection.UNVERIFIED }
                     ServerSource.OPEN_AI -> connectToOpenAi()
+                    ServerSource.OPEN_AI_OAUTH -> {
+                        if (openAiOAuthGateway.currentIdentity() == null) throw OpenAiOAuthFailure("LOGIN_REQUIRED")
+                        val previous = getConfigurationUseCase()
+                        setServerConfigurationUseCase(previous.copy(source = ServerSource.OPEN_AI_OAUTH, demoMode = false))
+                        Result.success(Unit)
+                    }
                     ServerSource.STABILITY_AI -> connectToStabilityAi()
                     ServerSource.FAL_AI -> connectToFalAi()
                     ServerSource.ARLI_AI -> connectToArliAi()
@@ -300,7 +407,7 @@ class ServerSetupViewModel(
                         updateState { state ->
                             state.copy(
                                 modal = ServerSetupState.Modal.Error(
-                                    (t as? OpenAiCompatibleHttpFailure)?.localizedDescription() ?: t.message ?: Localization.string("error_invalid"),
+                                    (t as? OpenAiOAuthFailure)?.localizedDescription() ?: (t as? OpenAiCompatibleHttpFailure)?.localizedDescription() ?: t.message ?: Localization.string("error_invalid"),
                                 ),
                             )
                         }

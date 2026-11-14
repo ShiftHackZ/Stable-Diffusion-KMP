@@ -327,6 +327,7 @@ private fun ProviderPreviewItem(
 
 private fun ServerSource.previewTitle(strings: ServerSetupStrings): String = when (this) {
     ServerSource.HUGGING_FACE -> strings.huggingFaceTitle
+    ServerSource.OPEN_AI_OAUTH -> Localization.string("srv_type_open_ai_oauth")
     ServerSource.OPEN_AI_COMPATIBLE -> Localization.string("srv_type_open_ai_compatible")
     ServerSource.OPEN_AI -> strings.openAiTitle
     ServerSource.STABILITY_AI -> strings.stabilityTitle
@@ -336,6 +337,7 @@ private fun ServerSource.previewTitle(strings: ServerSetupStrings): String = whe
 
 private fun ServerSource.previewSubtitle(strings: ServerSetupStrings): String = when (this) {
     ServerSource.HUGGING_FACE -> strings.huggingFaceSubtitle
+    ServerSource.OPEN_AI_OAUTH -> Localization.string("open_ai_oauth_help")
     ServerSource.OPEN_AI_COMPATIBLE -> Localization.string("open_ai_compatible_help")
     ServerSource.OPEN_AI -> strings.openAiSubtitle
     ServerSource.STABILITY_AI -> strings.stabilitySubtitle

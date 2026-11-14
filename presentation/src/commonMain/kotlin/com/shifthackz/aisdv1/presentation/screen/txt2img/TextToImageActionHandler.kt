@@ -8,6 +8,11 @@ import com.shifthackz.aisdv1.core.model.asUiText
 import com.shifthackz.aisdv1.core.validation.dimension.DimensionValidator
 import com.shifthackz.aisdv1.domain.entity.AiGenerationResult
 import com.shifthackz.aisdv1.domain.entity.TextToImagePayload
+import com.shifthackz.aisdv1.domain.entity.ServerSource
+import com.shifthackz.aisdv1.domain.feature.openaioauth.OpenAiOAuthGateway
+import com.shifthackz.aisdv1.domain.entity.OpenAiOAuthIdentity
+import com.shifthackz.aisdv1.domain.entity.OpenAiOAuthFailure
+import com.shifthackz.aisdv1.domain.gateway.ProviderSelectionGuard
 import com.shifthackz.aisdv1.domain.feature.work.BackgroundTaskManager
 import com.shifthackz.aisdv1.domain.feature.work.BackgroundWorkObserver
 import com.shifthackz.aisdv1.domain.interactor.wakelock.WakeLockInterActor
@@ -31,10 +36,16 @@ import kotlinx.coroutines.withContext
 
 /**
  * Coordinates `TextToImageActionHandler` behavior in the SDAI presentation layer.
+ * @param openAiOAuthGateway Guards completed results against account replacement or logout.
+ * @param providerSelectionGuard Serializes final UI publication with provider replacement.
  *
  * @author Dmitriy Moroz
  */
 internal class TextToImageActionHandler(
+    /** Token-free account publication guard. @author Dmitriy Moroz */
+    private val openAiOAuthGateway: OpenAiOAuthGateway,
+    /** Serializes source replacement with final UI publication. @author Dmitriy Moroz */
+    private val providerSelectionGuard: ProviderSelectionGuard,
     /**
      * Exposes the `dispatchersProvider` value used by the SDAI presentation layer.
      *
@@ -306,25 +317,13 @@ internal class TextToImageActionHandler(
                         } else {
                             results
                         }
-                    }
+                    }.also { results -> publishGenerationResults(payload, results) }
                 } finally {
                     wakeLockInterActor.releaseWakeLockUseCase()
                 }
             }
-                .onSuccess { results ->
+                .onSuccess {
                     platformServices.showGenerationSucceeded()
-                    withContext(dispatchersProvider.immediate) {
-                        updateState {
-                            it.copy(
-                                generating = false,
-                                screenModal = results.toTextToImageResultModal(
-                                    autoSaveEnabled = preferenceManager.autoSaveAiResults,
-                                    reportEnabled = buildInfoProvider.type != BuildType.FOSS,
-                                ),
-                                results = emptyList(),
-                            )
-                        }
-                    }
                 }
                 .onFailure { t ->
                     if (t is CancellationException) throw t
@@ -567,6 +566,45 @@ internal class TextToImageActionHandler(
      */
     private suspend fun cacheResultIfNeeded(result: AiGenerationResult): AiGenerationResult =
         saveLastResultToCacheUseCase(result)
+
+    /**
+     * Checks the submitted account and durable source revision on main immediately before publishing.
+     * No suspension separates the final checks from the state update while both guards are held.
+     * @param payload Immutable source/account/revision captured at submission.
+     * @param results Completed generation results; never reused across identities.
+     * @author Dmitriy Moroz
+     */
+    private suspend fun publishGenerationResults(payload: TextToImagePayload, results: List<AiGenerationResult>) {
+        withContext(dispatchersProvider.immediate) {
+            val publish = {
+                updateState {
+                    it.copy(
+                        generating = false,
+                        screenModal = results.toTextToImageResultModal(
+                            autoSaveEnabled = preferenceManager.autoSaveAiResults,
+                            reportEnabled = buildInfoProvider.type != BuildType.FOSS,
+                        ),
+                        results = emptyList(),
+                    )
+                }
+            }
+            if (payload.sourceSnapshot == ServerSource.OPEN_AI_OAUTH) {
+                val identity = OpenAiOAuthIdentity(
+                    payload.openAiOAuthAccountId ?: throw OpenAiOAuthFailure("IDENTITY_CHANGED"),
+                    payload.openAiOAuthRevision ?: throw OpenAiOAuthFailure("IDENTITY_CHANGED"),
+                )
+                providerSelectionGuard.withSelection {
+                    openAiOAuthGateway.withIdentity(identity) {
+                        if (payload.providerSelectionRevision == null || preferenceManager.source != ServerSource.OPEN_AI_OAUTH ||
+                            preferenceManager.providerSelectionRevision != payload.providerSelectionRevision ||
+                            results.any { it.openAiOAuthIdentity != identity || it.providerSelectionRevision != payload.providerSelectionRevision })
+                            throw OpenAiOAuthFailure("IDENTITY_CHANGED")
+                        publish()
+                    }
+                }
+            } else publish()
+        }
+    }
 }
 
 private data class PendingGeneration(

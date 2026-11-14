@@ -7,6 +7,7 @@ import com.shifthackz.aisdv1.domain.entity.FalAiImageSize
 import com.shifthackz.aisdv1.domain.entity.FalAiModel
 import com.shifthackz.aisdv1.domain.entity.Scheduler
 import com.shifthackz.aisdv1.domain.entity.SdxlBackend
+import com.shifthackz.aisdv1.domain.entity.ServerSource
 import com.shifthackz.aisdv1.domain.entity.StabilityAiClipGuidance
 import com.shifthackz.aisdv1.domain.entity.StabilityAiStylePreset
 import com.shifthackz.aisdv1.domain.entity.TextToImagePayload
@@ -52,6 +53,11 @@ internal fun ByteArray.toTextToImagePayload(): TextToImagePayload? {
  *
  * The DTO stores provider-specific options as strings so enum aliases can be
  * parsed with backwards-compatible defaults when app versions change.
+ * @param sourceSnapshot Persisted ServerSource.key; null routes older jobs using the selected source.
+ * @param providerSelectionRevision Persisted source revision; null identifies legacy jobs rejected for native OAuth.
+ * @param openAiOAuthAccountId Token-free account identifier; null for older/non-OAuth jobs.
+ * @param openAiOAuthRevision Stable login revision; null for older/non-OAuth jobs, never an access token.
+ * @author Dmitriy Moroz
  */
 @Serializable
 private data class TextToImagePayloadDto(
@@ -77,6 +83,10 @@ private data class TextToImagePayloadDto(
      * @author Dmitriy Moroz
      */
     val openAiCompatibleModel: String = "gpt-image-2",
+    val sourceSnapshot: String? = null,
+    val providerSelectionRevision: Long? = null,
+    val openAiOAuthAccountId: String? = null,
+    val openAiOAuthRevision: String? = null,
     val stabilityAiClipGuidance: String?,
     val stabilityAiStylePreset: String?,
     val aDetailer: ADetailerConfigDto = ADetailerConfigDto(),
@@ -108,6 +118,10 @@ private data class TextToImagePayloadDto(
         quality = quality,
         openAiModel = openAiModel?.let(OpenAiModel::parse),
         openAiCompatibleModel = openAiCompatibleModel,
+        sourceSnapshot = sourceSnapshot?.let { key -> requireNotNull(ServerSource.entries.firstOrNull { it.key == key }) },
+        openAiOAuthAccountId = openAiOAuthAccountId,
+        providerSelectionRevision = providerSelectionRevision,
+        openAiOAuthRevision = openAiOAuthRevision,
         stabilityAiClipGuidance = stabilityAiClipGuidance.parseEnumOrNull<StabilityAiClipGuidance>(),
         stabilityAiStylePreset = stabilityAiStylePreset.parseEnumOrNull<StabilityAiStylePreset>(),
         aDetailer = aDetailer.toDomain(),
@@ -141,6 +155,10 @@ private data class TextToImagePayloadDto(
             quality = payload.quality,
             openAiModel = payload.openAiModel?.alias,
             openAiCompatibleModel = payload.openAiCompatibleModel,
+            sourceSnapshot = payload.sourceSnapshot?.key,
+            providerSelectionRevision = payload.providerSelectionRevision,
+            openAiOAuthAccountId = payload.openAiOAuthAccountId,
+            openAiOAuthRevision = payload.openAiOAuthRevision,
             stabilityAiClipGuidance = payload.stabilityAiClipGuidance?.name,
             stabilityAiStylePreset = payload.stabilityAiStylePreset?.name,
             aDetailer = ADetailerConfigDto.from(payload.aDetailer),

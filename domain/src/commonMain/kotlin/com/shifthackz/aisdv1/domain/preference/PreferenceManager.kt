@@ -163,6 +163,9 @@ interface PreferenceManager {
      * @author Dmitriy Moroz
      */
     var source: ServerSource
+    /** Durable revision of the currently selected provider, shared with ConfigurationStore.
+     * @author Dmitriy Moroz */
+    val providerSelectionRevision: Long
     /**
      * Exposes the `sdModel` value used by the SDAI domain layer.
      *

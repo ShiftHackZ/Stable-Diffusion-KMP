@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CONTRACT = ROOT / "network/openai-compatible.openapi.json"
 
 
-def validate(document):
+def validate(document, compatible_client=True):
     """Raise ValueError for an incomplete schema or operation anywhere in the document."""
     errors = []
 
@@ -128,6 +128,10 @@ def validate(document):
             for parameter in operation.get("parameters", []):
                 parameter = dereference(parameter, location + "/parameters")
                 require(bool(parameter.get("description")) and "schema" in parameter, location, "parameter description/schema required")
+    if not compatible_client:
+        if errors:
+            raise ValueError("\n".join(errors))
+        return
     for route in ("/models", "/images/generations"):
         require(route in document.get("paths", {}), "#/paths", f"missing client route {route}")
     generation = document.get("paths", {}).get("/images/generations", {}).get("post", {})

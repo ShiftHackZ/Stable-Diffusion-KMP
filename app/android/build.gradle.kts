@@ -87,6 +87,7 @@ dependencies {
     implementation(project(":storage"))
     implementation(project(":domain"))
     implementation(project(":feature:auth"))
+    implementation(project(":feature:openai-oauth"))
     implementation(project(":feature:benchmark"))
     implementation(project(":feature:coreml"))
     implementation(project(":feature:onnx"))

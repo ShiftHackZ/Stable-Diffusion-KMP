@@ -1,7 +1,9 @@
 package com.shifthackz.aisdv1.domain.entity
 
 /**
- * Carries `AiGenerationResult` data through the SDAI domain layer.
+ * Generated image, metadata and transient guards used by gallery persistence.
+ * @param openAiOAuthIdentity Original OAuth account/revision for an unsaved result; not persisted in gallery rows.
+ * @param providerSelectionRevision Source-selection revision captured during OAuth generation; null for other providers.
  *
  * @author Dmitriy Moroz
  */
@@ -126,6 +128,12 @@ data class AiGenerationResult(
      * @author Dmitriy Moroz
      */
     val modelName: String = "",
+    /** Transient identity guard for unsaved OAuth results. Gallery storage deliberately omits it.
+     * @author Dmitriy Moroz */
+    val openAiOAuthIdentity: OpenAiOAuthIdentity? = null,
+    /** Transient source-selection guard for an unsaved OAuth result; gallery rows omit this field.
+     * @author Dmitriy Moroz */
+    val providerSelectionRevision: Long? = null,
 ) {
     /**
      * Coordinates `Type` behavior in the SDAI domain layer.

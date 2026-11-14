@@ -1,8 +1,11 @@
 import SwiftUI
+import AiSdPresentation
 
 @main
 struct AIStableDiffusionIOSApp: App {
     init() {
+        KoinBootstrapKt.doInitKoin()
+        OpenAiOAuthModuleKt.registerOpenAiOAuthFeature()
         SiliconDiffusionBonsaiRuntimeRegistration.registerIfAvailable()
         SiliconDiffusionCoreMLRuntimeRegistration.registerIfAvailable()
     }

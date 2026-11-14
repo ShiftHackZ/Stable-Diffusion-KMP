@@ -12,6 +12,7 @@ class ConfigurationStoreStub(
     override var swarmUiModel: String = configuration.swarmUiModel
     override var demoMode: Boolean = configuration.demoMode
     override var source: ServerSource = configuration.source
+    override val providerSelectionRevision: Long = configuration.providerSelectionRevision
     override var hordeApiKey: String = configuration.hordeApiKey
     override var openAiCompatibleUrl: String = configuration.openAiCompatibleUrl
     override var openAiCompatibleApiKey: String = configuration.openAiCompatibleApiKey

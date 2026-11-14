@@ -7,6 +7,11 @@ package com.shifthackz.aisdv1.domain.entity
  * runtimes. Repository and feature implementations pick the fields relevant to
  * their provider, including Android local runtime backend choices such as SDXL
  * and Bonsai.
+ * @param sourceSnapshot Source selected at submission; null preserves legacy queued-work routing.
+ * @param providerSelectionRevision Durable source-selection revision; mandatory for native OAuth work.
+ * @param openAiOAuthAccountId Token-free ChatGPT account identifier captured at submission.
+ * @param openAiOAuthRevision Stable protected-session revision; replacement logins invalidate earlier work.
+ * @author Dmitriy Moroz
  */
 data class TextToImagePayload(
     val prompt: String,
@@ -43,4 +48,16 @@ data class TextToImagePayload(
      * @author Dmitriy Moroz
      */
     val openAiCompatibleModel: String = "gpt-image-2",
+    /** Selected source at submission; null preserves legacy queued-work routing.
+     * @author Dmitriy Moroz */
+    val sourceSnapshot: ServerSource? = null,
+    /** Durable provider selection revision captured with this work; null marks an older payload.
+     * @author Dmitriy Moroz */
+    val providerSelectionRevision: Long? = null,
+    /** Token-free account identifier captured when OAuth work is submitted.
+     * @author Dmitriy Moroz */
+    val openAiOAuthAccountId: String? = null,
+    /** Stable login revision; stale queued work must never use a replacement session.
+     * @author Dmitriy Moroz */
+    val openAiOAuthRevision: String? = null,
 )
