@@ -649,4 +649,20 @@
     <string name="settings_connection_timeout">Verbindungszeitlimit</string>
     <string name="settings_connection_timeout_description">Zeit zum Verbindungsaufbau mit einem KI-Anbieter. Gilt für neue Anfragen.</string>
     <string name="settings_connection_timeout_ios_description">iOS verwaltet die Verbindungsdauer automatisch. Dieser Wert wird gespeichert, kann unter iOS aber nicht erzwungen werden.</string>
+    <string name="srv_type_open_ai_compatible">OpenAI-kompatibel</string>
+    <string name="open_ai_compatible_help">Verbinde einen Bildserver oder Proxy über die OpenAI-Bild-API. Gib das vollständige API-Präfix ein, z. B. https://host/prefix/v1. Der API-Schlüssel ist optional. Der Server bestimmt die unterstützten Modelle und Größen.</string>
+    <string name="open_ai_compatible_url">API-Basis-URL (einschließlich /v1)</string>
+    <string name="open_ai_compatible_optional_key">API-Schlüssel (optional)</string>
+    <string name="open_ai_compatible_unverified_title">Verbindung nicht verifiziert</string>
+    <string name="open_ai_compatible_unverified_text">Der Server unterstützt keine Modellabfrage. Die Konfiguration wurde gespeichert, aber die Bilderzeugung wurde nicht geprüft. Gib die Bildmodell-ID auf dem Generierungsbildschirm ein.</string>
+    <string name="open_ai_compatible_model">Bildmodell-ID</string>
+    <string name="open_ai_compatible_model_required">Gib eine Bildmodell-ID ein.</string>
+    <string name="open_ai_compatible_positive_size">Gib eine positive Pixelgröße ein.</string>
+    <string name="open_ai_compatible_img2img_unsupported">Dieser Anbieter unterstützt nur Text-zu-Bild.</string>
+    <string name="open_ai_compatible_http_auth">Authentifizierung fehlgeschlagen. Prüfe den API-Schlüssel und die Serverberechtigungen.</string>
+    <string name="open_ai_compatible_http_rate">Das Raten- oder Kontolimit des Servers wurde erreicht. Versuche es später erneut.</string>
+    <string name="open_ai_compatible_http_request">Der Server hat die Anfrage abgelehnt. Prüfe Modell, Abmessungen und Prompt.</string>
+    <string name="open_ai_compatible_http_server">Der Bildserver ist fehlgeschlagen. Versuche es später erneut.</string>
+    <string name="open_ai_compatible_http_error">Die Serveranfrage ist fehlgeschlagen (HTTP %1$d).</string>
+    <string name="open_ai_compatible_image_failure">Das Bild konnte nicht empfangen oder dekodiert werden. Prüfe den Server und versuche es erneut.</string>
 </resources>

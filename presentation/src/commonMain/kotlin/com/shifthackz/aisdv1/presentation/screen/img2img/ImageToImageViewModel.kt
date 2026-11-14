@@ -176,10 +176,19 @@ class ImageToImageViewModel(
         )
     }
 
+    /**
+     * Restores available image metadata without replacing diffusion controls with absent values.
+     * A zero step count marks results from providers that do not expose diffusion parameters.
+     *
+     * @param ai Gallery image providing the prompt, dimensions and any diffusion parameters.
+     * @param imageBase64 Optional image replacing the current img2img input.
+     * @author Dmitriy Moroz
+     */
     private fun applyGenerationResult(
         ai: AiGenerationResult,
         imageBase64: String?,
     ) {
+        val hasDiffusionParameters = ai.samplingSteps > 0
         updateState { state ->
             state.copy(
                 advancedOptionsVisible = true,
@@ -187,16 +196,16 @@ class ImageToImageViewModel(
                 inPaint = if (imageBase64 == null) state.inPaint else ImageInPaintState(),
                 results = if (imageBase64 == null) state.results else emptyList(),
                 prompt = ai.prompt,
-                negativePrompt = ai.negativePrompt,
+                negativePrompt = if (hasDiffusionParameters) ai.negativePrompt else state.negativePrompt,
                 width = ai.width.toString(),
                 height = ai.height.toString(),
-                seed = ai.seed,
-                subSeed = ai.subSeed,
-                subSeedStrength = ai.subSeedStrength,
-                samplingSteps = ai.samplingSteps,
-                cfgScale = ai.cfgScale,
-                restoreFaces = ai.restoreFaces,
-                denoisingStrength = ai.denoisingStrength,
+                seed = if (hasDiffusionParameters) ai.seed else state.seed,
+                subSeed = if (hasDiffusionParameters) ai.subSeed else state.subSeed,
+                subSeedStrength = if (hasDiffusionParameters) ai.subSeedStrength else state.subSeedStrength,
+                samplingSteps = if (hasDiffusionParameters) ai.samplingSteps else state.samplingSteps,
+                cfgScale = if (hasDiffusionParameters) ai.cfgScale else state.cfgScale,
+                restoreFaces = if (hasDiffusionParameters) ai.restoreFaces else state.restoreFaces,
+                denoisingStrength = if (hasDiffusionParameters) ai.denoisingStrength else state.denoisingStrength,
                 selectedSampler = ai.sampler.takeIf(state.availableSamplers::contains)
                     ?: state.selectedSampler,
                 error = null,

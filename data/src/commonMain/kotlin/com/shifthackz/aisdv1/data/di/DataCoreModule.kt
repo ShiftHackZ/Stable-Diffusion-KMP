@@ -1,5 +1,9 @@
 package com.shifthackz.aisdv1.data.di
 
+import com.shifthackz.aisdv1.domain.repository.OpenAiCompatibleGenerationRepository
+import com.shifthackz.aisdv1.domain.datasource.OpenAiCompatibleGenerationDataSource
+import com.shifthackz.aisdv1.data.remote.KtorOpenAiCompatibleGenerationRemoteDataSource
+import com.shifthackz.aisdv1.data.repository.OpenAiCompatibleGenerationRepositoryImpl
 import com.shifthackz.aisdv1.core.common.extensions.fixUrlSlashes
 import com.shifthackz.aisdv1.data.gateway.ServerConnectivityGatewayImpl
 import com.shifthackz.aisdv1.data.local.ArliAiModelsLocalDataSource
@@ -297,6 +301,18 @@ val coreDataModule = module {
             remoteDataSource = get(),
             localDataSource = get(),
             preferenceManager = get(),
+        )
+    }
+    single<OpenAiCompatibleGenerationDataSource.Remote> {
+        KtorOpenAiCompatibleGenerationRemoteDataSource(api = get())
+    }
+    single<OpenAiCompatibleGenerationRepository> {
+        OpenAiCompatibleGenerationRepositoryImpl(
+            mediaStoreGateway = get(),
+            localDataSource = get(),
+            preferenceManager = get(),
+            backgroundWorkObserver = get(),
+            remoteDataSource = get(),
         )
     }
     single<OpenAiGenerationDataSource.Remote> {

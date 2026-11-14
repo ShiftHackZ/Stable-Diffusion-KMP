@@ -38,4 +38,9 @@ data class TextToImagePayload(
     val bonsaiBackend: BonsaiBackend = BonsaiBackend.AUTO,
     val falAiSyncMode: Boolean = false,
     val arliAiModel: String = "",
+    /**
+     * Arbitrary image model ID used only by OPEN_AI_COMPATIBLE.
+     * @author Dmitriy Moroz
+     */
+    val openAiCompatibleModel: String = "gpt-image-2",
 )

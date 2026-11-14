@@ -664,4 +664,20 @@
     <string name="settings_connection_timeout">连接超时</string>
     <string name="settings_connection_timeout_description">连接到 AI 服务提供商所允许的时间。适用于新请求。</string>
     <string name="settings_connection_timeout_ios_description">iOS 自动管理连接时长。此值会被保存，但无法在 iOS 上强制执行。</string>
+    <string name="srv_type_open_ai_compatible">OpenAI 兼容服务</string>
+    <string name="open_ai_compatible_help">通过 OpenAI 图像 API 连接图像服务器或代理。请输入完整的 API 前缀，例如 https://host/prefix/v1。API 密钥可选。支持的模型和尺寸由服务器决定。</string>
+    <string name="open_ai_compatible_url">API 基础 URL（包含 /v1）</string>
+    <string name="open_ai_compatible_optional_key">API 密钥（可选）</string>
+    <string name="open_ai_compatible_unverified_title">连接未经验证</string>
+    <string name="open_ai_compatible_unverified_text">服务器不支持模型列表查询。配置已保存，但尚未验证图像生成功能。请在生成页面输入图像模型 ID。</string>
+    <string name="open_ai_compatible_model">图像模型 ID</string>
+    <string name="open_ai_compatible_model_required">请输入图像模型 ID。</string>
+    <string name="open_ai_compatible_positive_size">请输入正整数像素尺寸。</string>
+    <string name="open_ai_compatible_img2img_unsupported">此服务仅支持文生图。</string>
+    <string name="open_ai_compatible_http_auth">身份验证失败。请检查 API 密钥和服务器权限。</string>
+    <string name="open_ai_compatible_http_rate">已达到服务器请求频率或账户限额。请稍后重试。</string>
+    <string name="open_ai_compatible_http_request">服务器拒绝了请求。请检查模型、尺寸和提示词。</string>
+    <string name="open_ai_compatible_http_server">图像服务器发生错误。请稍后重试。</string>
+    <string name="open_ai_compatible_http_error">服务器请求失败（HTTP %1$d）。</string>
+    <string name="open_ai_compatible_image_failure">无法接收或解码图像。请检查服务器后重试。</string>
 </resources>

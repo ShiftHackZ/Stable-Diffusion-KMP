@@ -1,7 +1,10 @@
 SDAI is an open-source mobile AI image generation client for Android and iOS. It gives artists, hobbyists, and builders one clean workflow for prompting, tuning generation settings, reviewing results, and switching between the providers they already use.
 
+OpenAI-compatible supports text-to-image, your server's model ID, image size and sequential batches. Enter the full API prefix and provide a key only if your server requires it.
+
 Choose the backend that fits the moment:
 - Your own AUTOMATIC1111 or SwarmUI server
+- OpenAI-compatible
 - AI Horde community workers
 - Hugging Face Inference API
 - OpenAI Images API

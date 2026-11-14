@@ -84,6 +84,7 @@ sealed interface TextToImageIntent : MviIntent {
     data class UpdateSdxlBackend(val value: SdxlBackend) : TextToImageIntent
     data class UpdateBonsaiBackend(val value: BonsaiBackend) : TextToImageIntent
     data class UpdateFalAiSyncMode(val value: Boolean) : TextToImageIntent
+    data class UpdateOpenAiCompatibleModel(val value: String) : TextToImageIntent
     data class UpdateArliAiModel(val value: String) : TextToImageIntent
     data class UpdateStabilityAiStyle(val value: StabilityAiStylePreset) : TextToImageIntent
     data class UpdateStabilityAiClipGuidance(val value: StabilityAiClipGuidance) : TextToImageIntent

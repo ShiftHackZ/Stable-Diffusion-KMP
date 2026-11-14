@@ -51,6 +51,21 @@ data class Configuration(
      */
     val openAiApiKey: String = "",
     /**
+     * Editable image model identifier supplied to the compatible server.
+     * @author Dmitriy Moroz
+     */
+    val openAiCompatibleModel: String = "gpt-image-2",
+    /**
+     * Optional bearer token for the independent compatible server.
+     * @author Dmitriy Moroz
+     */
+    val openAiCompatibleApiKey: String = "",
+    /**
+     * Complete HTTP(S) API prefix, including any version and reverse-proxy path.
+     * @author Dmitriy Moroz
+     */
+    val openAiCompatibleUrl: String = "",
+    /**
      * Exposes the `huggingFaceApiKey` value used by the SDAI domain layer.
      *
      * @author Dmitriy Moroz

@@ -67,6 +67,7 @@ data class TextToImageState(
     override val availableSamplers: List<String> = emptyList(),
     override val selectedStylePreset: StabilityAiStylePreset = StabilityAiStylePreset.NONE,
     override val selectedClipGuidancePreset: StabilityAiClipGuidance = StabilityAiClipGuidance.NONE,
+    override val openAiCompatibleModel: String = "gpt-image-2",
     override val openAiModel: OpenAiModel = OpenAiModel.default,
     override val openAiSize: OpenAiSize = OpenAiSize.W1024_H1024,
     override val openAiQuality: OpenAiQuality = OpenAiQuality.AUTO,
@@ -175,6 +176,7 @@ internal fun TextToImageState.mapToPayload(): TextToImagePayload = TextToImagePa
     } ?: BonsaiBackend.AUTO,
     falAiSyncMode = falAiSyncMode,
     arliAiModel = arliAiModel.takeIf { mode == ServerSource.ARLI_AI }.orEmpty(),
+    openAiCompatibleModel = openAiCompatibleModel.trim(),
 )
 
 internal const val DEFAULT_SIZE = 512

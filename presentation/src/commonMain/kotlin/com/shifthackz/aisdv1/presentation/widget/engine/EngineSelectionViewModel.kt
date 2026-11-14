@@ -265,6 +265,7 @@ class EngineSelectionViewModel(
             ServerSource.LOCAL_APPLE_BONSAI,
             ServerSource.HORDE,
             ServerSource.OPEN_AI,
+        ServerSource.OPEN_AI_COMPATIBLE,
             ServerSource.FAL_AI,
             ServerSource.ARLI_AI,
             -> remoteOptions

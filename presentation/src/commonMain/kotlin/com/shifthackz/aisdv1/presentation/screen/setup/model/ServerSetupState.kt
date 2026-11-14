@@ -40,6 +40,9 @@ data class ServerSetupState(
     val hordeApiKey: String = "",
     val huggingFaceApiKey: String = "",
     val openAiApiKey: String = "",
+    val openAiCompatibleUrl: String = "",
+    val openAiCompatibleApiKey: String = "",
+    val openAiCompatibleUrlValidationError: ValidationError? = null,
     val stabilityAiApiKey: String = "",
     val falAiApiKey: String = "",
     val arliAiApiKey: String = "",
@@ -310,6 +313,7 @@ data class ServerSetupState(
     }
 
     sealed interface Modal {
+        data object ConnectionUnverified : Modal
         data object None : Modal
         data object Communicating : Modal
         data object SourceFilters : Modal
@@ -334,6 +338,7 @@ data class ServerSetupState(
         val remoteSetupSources = listOf(
             ServerSource.AUTOMATIC1111,
             ServerSource.SWARM_UI,
+            ServerSource.OPEN_AI_COMPATIBLE,
             ServerSource.HORDE,
             ServerSource.HUGGING_FACE,
             ServerSource.OPEN_AI,
@@ -397,6 +402,8 @@ fun Configuration.toServerSetupState(
         localBonsaiModels = localBonsaiModels.mapToCommonSetupModels(),
         localBonsaiCustomModelPath = localBonsaiModelPath,
         openAiApiKey = openAiApiKey,
+        openAiCompatibleUrl = openAiCompatibleUrl,
+        openAiCompatibleApiKey = openAiCompatibleApiKey,
         stabilityAiApiKey = stabilityAiApiKey,
         falAiApiKey = falAiApiKey,
         arliAiApiKey = arliAiApiKey,

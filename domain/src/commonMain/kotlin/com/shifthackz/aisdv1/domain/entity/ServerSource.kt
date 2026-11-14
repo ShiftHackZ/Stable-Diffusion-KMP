@@ -54,6 +54,13 @@ enum class ServerSource(
             FeatureTag.Batch,
         ),
     ),
+    OPEN_AI_COMPATIBLE(
+        key = "open_ai_compatible",
+        type = ServerSourceType.SELF_HOSTED,
+        readiness = PlatformValue(ServerSourceReadiness.STABLE),
+        version = "2026.11.14",
+        featureTags = setOf(FeatureTag.Txt2Img, FeatureTag.OwnServer, FeatureTag.MultipleModels, FeatureTag.Batch),
+    ),
     LOCAL_MICROSOFT_ONNX(
         key = "local",
         type = ServerSourceType.LOCAL,

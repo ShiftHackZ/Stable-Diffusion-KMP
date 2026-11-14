@@ -13,6 +13,9 @@ class ConfigurationStoreStub(
     override var demoMode: Boolean = configuration.demoMode
     override var source: ServerSource = configuration.source
     override var hordeApiKey: String = configuration.hordeApiKey
+    override var openAiCompatibleUrl: String = configuration.openAiCompatibleUrl
+    override var openAiCompatibleApiKey: String = configuration.openAiCompatibleApiKey
+    override var openAiCompatibleModel: String = configuration.openAiCompatibleModel
     override var openAiApiKey: String = configuration.openAiApiKey
     override var huggingFaceApiKey: String = configuration.huggingFaceApiKey
     override var huggingFaceModel: String = configuration.huggingFaceModel

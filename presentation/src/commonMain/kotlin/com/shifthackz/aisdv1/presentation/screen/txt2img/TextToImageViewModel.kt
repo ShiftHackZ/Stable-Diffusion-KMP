@@ -76,6 +76,7 @@ class TextToImageViewModel(
     private val onError: (Throwable) -> Unit = {},
 ) : BaseMviViewModel<TextToImageState, TextToImageIntent, EmptyEffect>(
     initialState = TextToImageState(
+        openAiCompatibleModel = preferenceManager.openAiCompatibleModel,
         samplingSteps = preferenceManager.textToImageSamplingSteps,
         cfgScale = preferenceManager.textToImageCfgScale,
         platform = buildInfoProvider.platform,
@@ -149,6 +150,10 @@ class TextToImageViewModel(
             TextToImageIntent.SuppressBenchmarkWarningAndContinue ->
                 actionHandler.continueAfterBenchmarkWarning(suppressFutureWarnings = true)
             TextToImageIntent.DismissModal -> actionHandler.dismissBenchmarkDialog()
+            is TextToImageIntent.UpdateOpenAiCompatibleModel -> {
+                preferenceManager.openAiCompatibleModel = intent.value
+                intentProcessor.process(intent)
+            }
             is TextToImageIntent.UpdateArliAiModel -> {
                 preferenceManager.arliAiModel = intent.value
                 intentProcessor.process(intent)
@@ -158,20 +163,28 @@ class TextToImageViewModel(
         persistGenerationParameters()
     }
 
+    /**
+     * Restores image metadata while retaining diffusion controls when sampling metadata is absent.
+     * A zero step count marks results from providers that do not expose diffusion parameters.
+     *
+     * @param ai Gallery image whose available parameters are applied to the form.
+     * @author Dmitriy Moroz
+     */
     private fun applyGenerationResult(ai: com.shifthackz.aisdv1.domain.entity.AiGenerationResult) {
+        val hasDiffusionParameters = ai.samplingSteps > 0
         updateState { state ->
             state.copy(
                 advancedOptionsVisible = true,
                 prompt = ai.prompt,
-                negativePrompt = ai.negativePrompt,
+                negativePrompt = if (hasDiffusionParameters) ai.negativePrompt else state.negativePrompt,
                 width = ai.width.toString(),
                 height = ai.height.toString(),
-                seed = ai.seed,
-                subSeed = ai.subSeed,
-                subSeedStrength = ai.subSeedStrength,
-                samplingSteps = ai.samplingSteps,
-                cfgScale = ai.cfgScale,
-                restoreFaces = ai.restoreFaces,
+                seed = if (hasDiffusionParameters) ai.seed else state.seed,
+                subSeed = if (hasDiffusionParameters) ai.subSeed else state.subSeed,
+                subSeedStrength = if (hasDiffusionParameters) ai.subSeedStrength else state.subSeedStrength,
+                samplingSteps = if (hasDiffusionParameters) ai.samplingSteps else state.samplingSteps,
+                cfgScale = if (hasDiffusionParameters) ai.cfgScale else state.cfgScale,
+                restoreFaces = if (hasDiffusionParameters) ai.restoreFaces else state.restoreFaces,
                 selectedSampler = ai.sampler.takeIf(state.availableSamplers::contains)
                     ?: state.selectedSampler,
                 error = null,
@@ -189,6 +202,9 @@ class TextToImageViewModel(
      */
     private fun persistGenerationParameters() {
         val state = currentState
+        if (state.mode == ServerSource.OPEN_AI_COMPATIBLE && preferenceManager.openAiCompatibleModel != state.openAiCompatibleModel) {
+            preferenceManager.openAiCompatibleModel = state.openAiCompatibleModel
+        }
         if (preferenceManager.textToImageSamplingSteps != state.samplingSteps) {
             preferenceManager.textToImageSamplingSteps = state.samplingSteps
         }
@@ -268,6 +284,7 @@ class TextToImageViewModel(
                         updateState {
                             it.copy(
                                 loadingConfiguration = false,
+                                openAiCompatibleModel = configuration.openAiCompatibleModel,
                             ).withSource(
                                 source = configuration.source,
                                 stableDiffusionSamplers = stableDiffusionSamplers,

@@ -1,5 +1,7 @@
 package com.shifthackz.aisdv1.domain.di
 
+import com.shifthackz.aisdv1.domain.usecase.settings.ConnectToOpenAiCompatibleUseCase
+import com.shifthackz.aisdv1.domain.usecase.settings.DefaultConnectToOpenAiCompatibleUseCaseImpl
 import com.shifthackz.aisdv1.domain.feature.work.BackgroundTaskManager
 import com.shifthackz.aisdv1.domain.feature.work.BackgroundWorkObserver
 import com.shifthackz.aisdv1.domain.feature.work.NoOpBackgroundTaskManager
@@ -368,6 +370,7 @@ val coreDomainModule = module {
             hordeGenerationRepository = get(),
             huggingFaceGenerationRepository = get(),
             openAiGenerationRepository = get(),
+            openAiCompatibleGenerationRepository = get(),
             stabilityAiGenerationRepository = get(),
             falAiGenerationRepository = get(),
             arliAiGenerationRepository = get(),
@@ -537,6 +540,13 @@ val coreDomainModule = module {
     }
     factory<ConnectToBonsaiUseCase> {
         ConnectToBonsaiUseCaseImpl(
+            getConfigurationUseCase = get(),
+            setServerConfigurationUseCase = get(),
+        )
+    }
+    factory<ConnectToOpenAiCompatibleUseCase> {
+        DefaultConnectToOpenAiCompatibleUseCaseImpl(
+            repository = get(),
             getConfigurationUseCase = get(),
             setServerConfigurationUseCase = get(),
         )

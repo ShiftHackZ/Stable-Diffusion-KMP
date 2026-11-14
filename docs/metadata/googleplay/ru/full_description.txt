@@ -1,8 +1,10 @@
 Создавайте изображения с ИИ на телефоне в SDAI.
 
+OpenAI-compatible поддерживает генерацию по тексту, ID модели вашего сервера, размер изображения и последовательные пакеты. Укажите полный API-префикс; ключ нужен только тогда, когда его требует сервер.
+
 SDAI — открытый генератор изображений с ИИ для Android. Приложение дает понятный мобильный workflow для промптов, настройки генерации, просмотра результатов и выбора AI provider под вашу задачу.
 
-SDAI подходит, когда нужен гибкий AI art generator без привязки к одному облачному сервису. Подключайте собственный сервер AUTOMATIC1111 или SwarmUI, используйте community workers AI Horde, работайте с hosted providers вроде Hugging Face, OpenAI Images или Stability AI, либо пробуйте поддерживаемые Android local diffusion engines там, где они доступны.
+SDAI подходит, когда нужен гибкий AI art generator без привязки к одному облачному сервису. Подключайте собственный сервер AUTOMATIC1111, SwarmUI или OpenAI-compatible сервер изображений, используйте community workers AI Horde, работайте с hosted providers вроде Hugging Face, OpenAI Images или Stability AI, либо пробуйте поддерживаемые Android local diffusion engines там, где они доступны.
 
 Что можно делать:
 - создавать изображения по текстовому prompt

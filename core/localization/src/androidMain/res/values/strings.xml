@@ -649,4 +649,20 @@
     <string name="settings_connection_timeout">Connection timeout</string>
     <string name="settings_connection_timeout_description">Time allowed to connect to an AI provider. Applies to new requests.</string>
     <string name="settings_connection_timeout_ios_description">iOS manages connection timing automatically. This value is saved but cannot be enforced on iOS.</string>
+    <string name="srv_type_open_ai_compatible">OpenAI-compatible</string>
+    <string name="open_ai_compatible_help">Connect to an image server or proxy using the OpenAI image API. Enter the complete API prefix, for example https://host/prefix/v1. The API key is optional. The server determines which models and sizes are supported.</string>
+    <string name="open_ai_compatible_url">API base URL (including /v1)</string>
+    <string name="open_ai_compatible_optional_key">API key (optional)</string>
+    <string name="open_ai_compatible_unverified_title">Connection unverified</string>
+    <string name="open_ai_compatible_unverified_text">The server does not support model discovery. Configuration is saved, but image generation has not been verified. Enter the image model ID on the generation screen.</string>
+    <string name="open_ai_compatible_model">Image model ID</string>
+    <string name="open_ai_compatible_model_required">Enter an image model ID.</string>
+    <string name="open_ai_compatible_positive_size">Enter a positive pixel dimension.</string>
+    <string name="open_ai_compatible_img2img_unsupported">This provider supports text-to-image only.</string>
+    <string name="open_ai_compatible_http_auth">Authentication failed. Check the API key and server permissions.</string>
+    <string name="open_ai_compatible_http_rate">The server rate or account limit was reached. Try again later.</string>
+    <string name="open_ai_compatible_http_request">The server rejected the request. Check the model, dimensions and prompt.</string>
+    <string name="open_ai_compatible_http_server">The image server failed. Try again later.</string>
+    <string name="open_ai_compatible_http_error">The server request failed (HTTP %1$d).</string>
+    <string name="open_ai_compatible_image_failure">The image could not be received or decoded. Check the server and try again.</string>
 </resources>

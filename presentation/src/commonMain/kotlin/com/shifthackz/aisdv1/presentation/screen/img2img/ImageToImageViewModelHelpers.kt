@@ -154,6 +154,7 @@ internal fun ImageToImageState.validated(
     val widthResult = dimensionValidator(width)
     val heightResult = dimensionValidator(height)
     val sourceError = when {
+        mode == ServerSource.OPEN_AI_COMPATIBLE -> Localization.string("open_ai_compatible_img2img_unsupported")
         !sourceSupportsImageToImage && mode == ServerSource.OPEN_AI ->
             Localization.string("error_img2img_openai_unsupported")
         !sourceSupportsImageToImage ->

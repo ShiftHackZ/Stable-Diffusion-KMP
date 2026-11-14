@@ -141,6 +141,16 @@ internal class ServerSetupIntentProcessor(
                 it.copy(modal = ServerSetupState.Modal.SourceSort)
             }
 
+            ServerSetupIntent.AcknowledgeUnverifiedConnection -> Unit
+
+            is ServerSetupIntent.UpdateOpenAiCompatibleUrl -> updateState {
+                it.copy(openAiCompatibleUrl = intent.url, openAiCompatibleUrlValidationError = null)
+            }
+
+            is ServerSetupIntent.UpdateOpenAiCompatibleApiKey -> updateState {
+                it.copy(openAiCompatibleApiKey = intent.key)
+            }
+
             is ServerSetupIntent.UpdateServerUrl -> updateState {
                 it.copy(serverUrl = intent.url, serverUrlValidationError = null)
             }

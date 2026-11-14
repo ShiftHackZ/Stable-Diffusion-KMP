@@ -4,6 +4,8 @@ import com.shifthackz.aisdv1.core.common.appbuild.BuildInfoProvider
 import com.shifthackz.aisdv1.core.common.appbuild.BuildType
 import com.shifthackz.aisdv1.core.common.links.LinksProvider
 import com.shifthackz.aisdv1.core.common.schedulers.DispatchersProvider
+import com.shifthackz.aisdv1.domain.entity.OpenAiCompatibleHttpFailure
+import com.shifthackz.aisdv1.presentation.model.localizedDescription
 import com.shifthackz.aisdv1.core.localization.Localization
 import com.shifthackz.aisdv1.core.mvi.BaseMviViewModel
 import com.shifthackz.aisdv1.core.validation.common.CommonStringValidator
@@ -11,6 +13,7 @@ import com.shifthackz.aisdv1.core.validation.path.FilePathValidator
 import com.shifthackz.aisdv1.core.validation.url.UrlValidator
 import com.shifthackz.aisdv1.domain.entity.DownloadState
 import com.shifthackz.aisdv1.domain.entity.HuggingFaceModel
+import com.shifthackz.aisdv1.domain.entity.OpenAiCompatibleConnection
 import com.shifthackz.aisdv1.domain.entity.ServerSource
 import com.shifthackz.aisdv1.domain.feature.auth.AuthorizationCredentials
 import com.shifthackz.aisdv1.domain.preference.PreferenceManager
@@ -31,6 +34,7 @@ import com.shifthackz.aisdv1.domain.usecase.settings.ConnectToHordeUseCase
 import com.shifthackz.aisdv1.domain.usecase.settings.ConnectToHuggingFaceUseCase
 import com.shifthackz.aisdv1.domain.usecase.settings.ConnectToLocalDiffusionUseCase
 import com.shifthackz.aisdv1.domain.usecase.settings.ConnectToMediaPipeUseCase
+import com.shifthackz.aisdv1.domain.usecase.settings.ConnectToOpenAiCompatibleUseCase
 import com.shifthackz.aisdv1.domain.usecase.settings.ConnectToOpenAiUseCase
 import com.shifthackz.aisdv1.domain.usecase.settings.ConnectToSdxlUseCase
 import com.shifthackz.aisdv1.domain.usecase.settings.ConnectToStabilityAiUseCase
@@ -81,6 +85,7 @@ import kotlin.time.Duration.Companion.milliseconds
  * @param connectToMediaPipeUseCase Applies MediaPipe local diffusion configuration.
  * @param connectToSdxlUseCase Applies SDXL local diffusion configuration.
  * @param connectToCoreMlUseCase Applies Core ML local diffusion configuration.
+ * @param connectToOpenAiCompatibleUseCase Validates and applies independent image-server configuration.
  * @param connectToOpenAiUseCase Applies OpenAI configuration.
  * @param connectToStabilityAiUseCase Applies Stability AI configuration.
  * @param connectToFalAiUseCase Applies Fal AI configuration.
@@ -118,6 +123,7 @@ class ServerSetupViewModel(
     private val connectToSdxlUseCase: ConnectToSdxlUseCase,
     private val connectToCoreMlUseCase: ConnectToCoreMlUseCase,
     private val connectToBonsaiUseCase: ConnectToBonsaiUseCase,
+    private val connectToOpenAiCompatibleUseCase: ConnectToOpenAiCompatibleUseCase,
     private val connectToOpenAiUseCase: ConnectToOpenAiUseCase,
     private val connectToStabilityAiUseCase: ConnectToStabilityAiUseCase,
     private val connectToFalAiUseCase: ConnectToFalAiUseCase,
@@ -229,7 +235,13 @@ class ServerSetupViewModel(
         connectToServer = ::connectToServer,
     )
 
-    override fun processIntent(intent: ServerSetupIntent) = intentProcessor.process(intent)
+    override fun processIntent(intent: ServerSetupIntent) {
+        if (intent == ServerSetupIntent.AcknowledgeUnverifiedConnection) {
+            if (currentState.modal == ServerSetupState.Modal.ConnectionUnverified) finishConnection()
+        } else {
+            intentProcessor.process(intent)
+        }
+    }
 
     private fun validateAndConnectToServer() {
         if (!validate()) return
@@ -250,12 +262,17 @@ class ServerSetupViewModel(
         emitEffect(ServerSetupEffect.HideKeyboard)
         updateState { it.copy(modal = ServerSetupState.Modal.Communicating) }
         launch(dispatchersProvider.io) {
+            var connectionUnverified = false
             val result = try {
                 when (currentState.mode) {
                     ServerSource.AUTOMATIC1111 -> connectToAutomaticInstance()
                     ServerSource.SWARM_UI -> connectToSwarmUi()
                     ServerSource.HORDE -> connectToHorde()
                     ServerSource.HUGGING_FACE -> connectToHuggingFace()
+                    ServerSource.OPEN_AI_COMPATIBLE -> connectToOpenAiCompatibleUseCase(
+                        url = currentState.openAiCompatibleUrl,
+                        apiKey = currentState.openAiCompatibleApiKey,
+                    ).map { outcome -> connectionUnverified = outcome == OpenAiCompatibleConnection.UNVERIFIED }
                     ServerSource.OPEN_AI -> connectToOpenAi()
                     ServerSource.STABILITY_AI -> connectToStabilityAi()
                     ServerSource.FAL_AI -> connectToFalAi()
@@ -273,15 +290,17 @@ class ServerSetupViewModel(
             withContext(dispatchersProvider.immediate) {
                 result.fold(
                     onSuccess = {
-                        preferenceManager.forceSetupAfterUpdate = false
-                        updateState { state -> state.copy(modal = ServerSetupState.Modal.None) }
-                        router.navigateToPostSetupConfigLoader()
+                        if (connectionUnverified) {
+                            updateState { it.copy(modal = ServerSetupState.Modal.ConnectionUnverified) }
+                        } else {
+                            finishConnection()
+                        }
                     },
                     onFailure = { t ->
                         updateState { state ->
                             state.copy(
                                 modal = ServerSetupState.Modal.Error(
-                                    t.message ?: "Connection failed",
+                                    (t as? OpenAiCompatibleHttpFailure)?.localizedDescription() ?: t.message ?: Localization.string("error_invalid"),
                                 ),
                             )
                         }
@@ -290,6 +309,12 @@ class ServerSetupViewModel(
                 )
             }
         }
+    }
+
+    private fun finishConnection() {
+        preferenceManager.forceSetupAfterUpdate = false
+        updateState { it.copy(modal = ServerSetupState.Modal.None) }
+        router.navigateToPostSetupConfigLoader()
     }
 
     private suspend fun connectToAutomaticInstance(): Result<Unit> {

@@ -129,6 +129,12 @@ data class ImageToImageStrings(
      */
     val unsupportedTitle: String = Localization.string("local_no_img2img_support_title"),
     /**
+     * Explains the compatible image provider's current text-to-image scope.
+     *
+     * @author Dmitriy Moroz
+     */
+    val compatibleUnsupportedSubtitle: String = Localization.string("open_ai_compatible_img2img_unsupported"),
+    /**
      * Exposes the `openAiUnsupportedSubtitle` value used by the SDAI presentation layer.
      *
      * @author Dmitriy Moroz

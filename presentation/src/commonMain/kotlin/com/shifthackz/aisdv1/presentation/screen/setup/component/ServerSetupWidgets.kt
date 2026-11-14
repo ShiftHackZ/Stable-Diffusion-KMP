@@ -83,6 +83,16 @@ internal fun ServerSetupModal(
     processIntent: (ServerSetupIntent) -> Unit,
 ) {
     when (modal) {
+        ServerSetupState.Modal.ConnectionUnverified -> AlertDialog(
+            onDismissRequest = { processIntent(ServerSetupIntent.AcknowledgeUnverifiedConnection) },
+            title = { Text(strings.connectionUnverifiedTitle) },
+            text = { Text(strings.connectionUnverifiedText) },
+            confirmButton = {
+                TextButton(onClick = { processIntent(ServerSetupIntent.AcknowledgeUnverifiedConnection) }) {
+                    Text(strings.ok)
+                }
+            },
+        )
         ServerSetupState.Modal.None -> Unit
         ServerSetupState.Modal.SourceFilters -> Unit
         ServerSetupState.Modal.SourceSort -> Unit
@@ -175,6 +185,7 @@ internal fun ServerSetupModal(
 internal fun ServerSource.icon(platform: Platform): ImageVector = when (this) {
         ServerSource.AUTOMATIC1111,
         ServerSource.SWARM_UI,
+        ServerSource.OPEN_AI_COMPATIBLE,
         -> Icons.Default.Computer
 
         ServerSource.HORDE,
@@ -204,6 +215,7 @@ internal fun ServerSource.title(strings: ServerSetupStrings, platform: Platform)
     ServerSource.SWARM_UI -> strings.swarmTitle
     ServerSource.HORDE -> strings.hordeTitle
     ServerSource.HUGGING_FACE -> strings.huggingFaceTitle
+    ServerSource.OPEN_AI_COMPATIBLE -> strings.openAiCompatibleTitle
     ServerSource.OPEN_AI -> strings.openAiTitle
     ServerSource.STABILITY_AI -> strings.stabilityTitle
     ServerSource.FAL_AI -> strings.falAiTitle
@@ -223,6 +235,7 @@ internal fun ServerSource.subtitle(strings: ServerSetupStrings, platform: Platfo
     ServerSource.SWARM_UI -> strings.swarmSubtitle
     ServerSource.HORDE -> strings.hordeSubtitle
     ServerSource.HUGGING_FACE -> strings.huggingFaceSubtitle
+    ServerSource.OPEN_AI_COMPATIBLE -> strings.openAiCompatibleSubtitle
     ServerSource.OPEN_AI -> strings.openAiSubtitle
     ServerSource.STABILITY_AI -> strings.stabilitySubtitle
     ServerSource.FAL_AI -> strings.falAiSubtitle

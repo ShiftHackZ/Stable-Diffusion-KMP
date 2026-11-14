@@ -50,7 +50,7 @@
         },
         "providers": {
           "headline": ["Choose your", "AI provider"],
-          "subline": "Connect AUTOMATIC1111, SwarmUI, AI Horde, Hugging Face, OpenAI, Stability AI, or supported local Android engines."
+          "subline": "Connect AUTOMATIC1111, SwarmUI, OpenAI-compatible, AI Horde, Hugging Face, OpenAI, Stability AI, or supported local Android engines."
         },
         "gallery": {
           "headline": ["Build your", "image library"],
@@ -112,7 +112,7 @@
         },
         "providers": {
           "headline": ["Выбирай", "AI provider"],
-          "subline": "AUTOMATIC1111, SwarmUI, AI Horde, Hugging Face, OpenAI, Stability AI или поддерживаемые локальные движки Android."
+          "subline": "AUTOMATIC1111, SwarmUI, OpenAI-compatible, AI Horde, Hugging Face, OpenAI, Stability AI или поддерживаемые локальные движки Android."
         },
         "gallery": {
           "headline": ["Собирай", "свою галерею"],
@@ -174,7 +174,7 @@
         },
         "providers": {
           "headline": ["Обирай", "AI provider"],
-          "subline": "AUTOMATIC1111, SwarmUI, AI Horde, Hugging Face, OpenAI, Stability AI або підтримувані локальні рушії Android."
+          "subline": "AUTOMATIC1111, SwarmUI, OpenAI-compatible, AI Horde, Hugging Face, OpenAI, Stability AI або підтримувані локальні рушії Android."
         },
         "gallery": {
           "headline": ["Збирай", "свою галерею"],

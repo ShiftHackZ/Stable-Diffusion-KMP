@@ -59,7 +59,7 @@ internal fun GenerationInputAdvancedOptions(
     afterSlidersSection: @Composable () -> Unit,
 ) {
         AnimatedVisibility(
-            visible = state.advancedOptionsVisible && state.mode != ServerSource.OPEN_AI,
+            visible = state.advancedOptionsVisible && state.mode != ServerSource.OPEN_AI && state.mode != ServerSource.OPEN_AI_COMPATIBLE,
         ) {
             Column {
                 // Sampler selection only supported for A1111, STABILITY AI

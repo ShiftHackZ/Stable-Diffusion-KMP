@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-07",
+  "updated": "2026-11-14",
   "title": "Frequently Asked Questions",
   "intro": "Short answers for the setup and capability questions that come up most often around SDAI.",
   "categories": [
@@ -20,7 +20,7 @@
           "id": "which-provider",
           "question": "Which provider should I choose first?",
           "answer": [
-            "If you already run AUTOMATIC1111 or SwarmUI, start there. If you want a hosted API, use the provider where you already have an API key, such as OpenAI, Stability AI, Hugging Face, Fal.ai, ArliAI, or AI Horde.",
+            "If you already run AUTOMATIC1111 or SwarmUI, start there. For an image server or proxy implementing the OpenAI image API, select OpenAI-compatible and supply its API prefix and optional key. For a hosted API, choose the service where you already have access, such as OpenAI, Stability AI, Hugging Face, Fal.ai, ArliAI, or AI Horde.",
             "Use local providers when privacy, offline work, or device experiments matter and your phone has enough memory for the selected model. Demo mode is useful when you only want to explore the app UI."
           ],
           "tags": ["providers", "setup", "local"]
@@ -57,6 +57,39 @@
             "If the server runs on your computer, do not use the computer's own localhost address from the phone. Use the LAN IP, a reachable VPN or tunnel address, or a properly exposed HTTPS URL."
           ],
           "tags": ["automatic1111", "setup", "server-url"]
+        },
+        {
+          "id": "openai-compatible-setup",
+          "question": "How do I connect an OpenAI-compatible image server or proxy?",
+          "answer": [
+            "Choose OpenAI-compatible, the Stable source immediately after Swarm UI in the default provider list. It is available on Android (all flavors) and iOS. Enter the full API prefix, such as http://192.168.1.10:10531/v1 or https://images.example.com/proxy/v1, and leave the API key empty unless the server requires bearer authentication.",
+            "For a computer on the same LAN, use its LAN IP and enable its LAN listener, not localhost. Connect, then enter a model ID available on that server and supported dimensions. SDAI supports txt2img and sequential batches. Img2img, negative prompts, samplers, steps, CFG scale and quality options are not sent.",
+            "An external proxy such as openai-oauth runs separately. Complete any ChatGPT sign-in in the proxy; SDAI connects only to its image API. The official OpenAI provider has separate settings."
+          ],
+          "tags": [
+            "openai-compatible",
+            "openai-oauth",
+            "setup",
+            "api-key",
+            "server-url",
+            "proxy"
+          ]
+        },
+        {
+          "id": "openai-compatible-unverified",
+          "question": "Why is my OpenAI-compatible connection unverified, or generation failing?",
+          "answer": [
+            "If the model-discovery route returns 404 or 405, SDAI can save the connection as unverified. Enter the image model ID manually. A successful discovery response only confirms connectivity; it does not confirm image generation or model access.",
+            "Check that the API prefix includes any required version and reverse-proxy path. Confirm the model, size, account access and server limits with the server operator. The API must return Base64 image data or a downloadable image URL; a chat-only OpenAI-compatible endpoint is insufficient.",
+            "The server may return a different image size from the requested size. SDAI stores the decoded image's actual dimensions in gallery details."
+          ],
+          "tags": [
+            "openai-compatible",
+            "models",
+            "compatibility",
+            "errors",
+            "dimensions"
+          ]
         },
         {
           "id": "a1111-forks",

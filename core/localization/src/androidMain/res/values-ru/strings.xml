@@ -612,4 +612,20 @@
     <string name="settings_connection_timeout">Тайм-аут подключения</string>
     <string name="settings_connection_timeout_description">Время на подключение к ИИ-провайдеру. Применяется к новым запросам.</string>
     <string name="settings_connection_timeout_ios_description">iOS автоматически управляет временем подключения. Значение сохраняется, но не может применяться в iOS.</string>
+    <string name="srv_type_open_ai_compatible">OpenAI-совместимый</string>
+    <string name="open_ai_compatible_help">Подключите сервер изображений или прокси через OpenAI Image API. Введите полный префикс API, например https://host/prefix/v1. Ключ API необязателен. Доступные модели и размеры определяет сервер.</string>
+    <string name="open_ai_compatible_url">Базовый URL API (включая /v1)</string>
+    <string name="open_ai_compatible_optional_key">Ключ API (необязательно)</string>
+    <string name="open_ai_compatible_unverified_title">Соединение не проверено</string>
+    <string name="open_ai_compatible_unverified_text">Сервер не поддерживает получение списка моделей. Настройки сохранены, но генерация изображений не проверена. Введите ID модели на экране генерации.</string>
+    <string name="open_ai_compatible_model">ID модели изображений</string>
+    <string name="open_ai_compatible_model_required">Введите ID модели изображений.</string>
+    <string name="open_ai_compatible_positive_size">Введите положительный размер в пикселях.</string>
+    <string name="open_ai_compatible_img2img_unsupported">Этот провайдер поддерживает только генерацию из текста.</string>
+    <string name="open_ai_compatible_http_auth">Ошибка авторизации. Проверьте ключ API и права доступа к серверу.</string>
+    <string name="open_ai_compatible_http_rate">Достигнут лимит запросов или аккаунта на сервере. Повторите позже.</string>
+    <string name="open_ai_compatible_http_request">Сервер отклонил запрос. Проверьте модель, размеры и промпт.</string>
+    <string name="open_ai_compatible_http_server">Ошибка сервера изображений. Повторите позже.</string>
+    <string name="open_ai_compatible_http_error">Ошибка запроса к серверу (HTTP %1$d).</string>
+    <string name="open_ai_compatible_image_failure">Не удалось получить или декодировать изображение. Проверьте сервер и повторите попытку.</string>
 </resources>

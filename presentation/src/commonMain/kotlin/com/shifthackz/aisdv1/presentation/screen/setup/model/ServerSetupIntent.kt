@@ -27,6 +27,9 @@ sealed interface ServerSetupIntent : MviIntent {
     data class UpdatePassword(val password: String) : ServerSetupIntent
     data class UpdatePasswordVisibility(val visible: Boolean) : ServerSetupIntent
     data class UpdateHordeApiKey(val key: String) : ServerSetupIntent
+    data class UpdateOpenAiCompatibleUrl(val url: String) : ServerSetupIntent
+    data class UpdateOpenAiCompatibleApiKey(val key: String) : ServerSetupIntent
+    data object AcknowledgeUnverifiedConnection : ServerSetupIntent
     data class UpdateOpenAiApiKey(val key: String) : ServerSetupIntent
     data class UpdateStabilityAiApiKey(val key: String) : ServerSetupIntent
     data class UpdateFalAiApiKey(val key: String) : ServerSetupIntent

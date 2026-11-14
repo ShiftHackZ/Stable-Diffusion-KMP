@@ -1,5 +1,7 @@
 package com.shifthackz.aisdv1.domain.usecase.generation
 
+import kotlinx.coroutines.ensureActive
+import kotlin.coroutines.coroutineContext
 import com.shifthackz.aisdv1.domain.entity.AiGenerationResult
 import com.shifthackz.aisdv1.domain.entity.ServerSource
 import com.shifthackz.aisdv1.domain.entity.TextToImagePayload
@@ -12,6 +14,7 @@ import com.shifthackz.aisdv1.domain.repository.HordeGenerationRepository
 import com.shifthackz.aisdv1.domain.repository.HuggingFaceGenerationRepository
 import com.shifthackz.aisdv1.domain.repository.LocalDiffusionGenerationRepository
 import com.shifthackz.aisdv1.domain.repository.MediaPipeGenerationRepository
+import com.shifthackz.aisdv1.domain.repository.OpenAiCompatibleGenerationRepository
 import com.shifthackz.aisdv1.domain.repository.OpenAiGenerationRepository
 import com.shifthackz.aisdv1.domain.repository.StableDiffusionCppGenerationRepository
 import com.shifthackz.aisdv1.domain.repository.StabilityAiGenerationRepository
@@ -21,6 +24,7 @@ import com.shifthackz.aisdv1.domain.repository.SwarmUiGenerationRepository
 /**
  * Implements `TextToImageUseCase` behavior in the SDAI domain layer.
  *
+ * @param openAiCompatibleGenerationRepository Independent compatible image-server repository.
  * @throws IllegalStateException when the current state is invalid.
  * @author Dmitriy Moroz
  */
@@ -53,6 +57,7 @@ internal class TextToImageUseCaseImpl(
      * @author Dmitriy Moroz
      */
     private val openAiGenerationRepository: OpenAiGenerationRepository,
+    private val openAiCompatibleGenerationRepository: OpenAiCompatibleGenerationRepository,
     /**
      * Exposes the `stabilityAiGenerationRepository` value used by the SDAI domain layer.
      *
@@ -138,6 +143,7 @@ internal class TextToImageUseCaseImpl(
         ServerSource.FAL_AI -> falAiGenerationRepository.generateFromText(payload)
         ServerSource.ARLI_AI -> arliAiGenerationRepository.generateFromText(payload)
         else -> List(payload.batchCount.coerceAtLeast(1)) {
+            coroutineContext.ensureActive()
             generateSingle(payload)
         }
     }
@@ -153,6 +159,7 @@ internal class TextToImageUseCaseImpl(
         ServerSource.LOCAL_MICROSOFT_ONNX -> localDiffusionGenerationRepository.generateFromText(payload)
         ServerSource.HUGGING_FACE -> huggingFaceGenerationRepository.generateFromText(payload)
         ServerSource.OPEN_AI -> openAiGenerationRepository.generateFromText(payload)
+        ServerSource.OPEN_AI_COMPATIBLE -> openAiCompatibleGenerationRepository.generateFromText(payload)
         ServerSource.STABILITY_AI -> stabilityAiGenerationRepository.generateFromText(payload)
         ServerSource.SWARM_UI -> swarmUiGenerationRepository.generateFromText(payload)
         ServerSource.LOCAL_GOOGLE_MEDIA_PIPE -> mediaPipeGenerationRepository.generateFromText(payload)

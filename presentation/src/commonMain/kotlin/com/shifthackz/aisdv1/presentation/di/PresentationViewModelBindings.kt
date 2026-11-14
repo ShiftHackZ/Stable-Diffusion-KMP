@@ -358,6 +358,7 @@ internal fun Module.registerPresentationViewModelBindings() {
             connectToCoreMlUseCase = get(),
             connectToBonsaiUseCase = get(),
             connectToOpenAiUseCase = get(),
+            connectToOpenAiCompatibleUseCase = get(),
             connectToStabilityAiUseCase = get(),
             connectToFalAiUseCase = get(),
             connectToArliAiUseCase = get(),

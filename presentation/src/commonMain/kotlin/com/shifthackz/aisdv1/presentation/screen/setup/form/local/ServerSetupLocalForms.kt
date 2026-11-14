@@ -36,6 +36,7 @@ import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.FormTitle
 import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.HintText
 import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.HordeForm
 import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.HuggingFaceForm
+import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.OpenAiCompatibleForm
 import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.OpenAiForm
 import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.SetupTextField
 import com.shifthackz.aisdv1.presentation.screen.setup.form.remote.StabilityAiForm
@@ -85,6 +86,8 @@ internal fun ConfigurationStep(
                     strings = strings,
                     processIntent = processIntent,
                 )
+
+                ServerSource.OPEN_AI_COMPATIBLE -> OpenAiCompatibleForm(state, strings, processIntent)
 
                 ServerSource.OPEN_AI -> OpenAiForm(
                     state = state,

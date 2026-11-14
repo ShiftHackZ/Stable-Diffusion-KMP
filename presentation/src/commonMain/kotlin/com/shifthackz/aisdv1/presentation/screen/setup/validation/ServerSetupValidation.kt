@@ -3,6 +3,7 @@ package com.shifthackz.aisdv1.presentation.screen.setup.validation
 import com.shifthackz.aisdv1.core.validation.common.CommonStringValidator
 import com.shifthackz.aisdv1.core.validation.path.FilePathValidator
 import com.shifthackz.aisdv1.core.validation.url.UrlValidator
+import com.shifthackz.aisdv1.domain.entity.isOpenAiCompatibleEndpoint
 import com.shifthackz.aisdv1.domain.entity.ServerSource
 import com.shifthackz.aisdv1.presentation.screen.setup.model.ServerSetupState
 import com.shifthackz.aisdv1.presentation.screen.setup.viewmodel.mapFilePathToValidationError
@@ -49,6 +50,13 @@ internal fun ServerSetupState.validateServerSetup(
         stringValidator = stringValidator,
         update = { error -> copy(huggingFaceApiKeyValidationError = error) },
     )
+
+    ServerSource.OPEN_AI_COMPATIBLE -> {
+        val valid = isOpenAiCompatibleEndpoint(openAiCompatibleUrl.trim())
+        ServerSetupValidationResult(valid, copy(
+            openAiCompatibleUrlValidationError = if (valid) null else ServerSetupState.ValidationError.InvalidUrl,
+        ))
+    }
 
     ServerSource.OPEN_AI -> validateApiKey(
         key = openAiApiKey,

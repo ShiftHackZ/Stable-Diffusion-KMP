@@ -53,6 +53,21 @@ interface ConfigurationStore {
      */
     var openAiApiKey: String
     /**
+     * Editable image model identifier supplied to the compatible server.
+     * @author Dmitriy Moroz
+     */
+    var openAiCompatibleModel: String
+    /**
+     * Optional bearer token for the independent compatible server.
+     * @author Dmitriy Moroz
+     */
+    var openAiCompatibleApiKey: String
+    /**
+     * Complete HTTP(S) API prefix, including any version and reverse-proxy path.
+     * @author Dmitriy Moroz
+     */
+    var openAiCompatibleUrl: String
+    /**
      * Exposes the `huggingFaceApiKey` value used by the SDAI domain layer.
      *
      * @author Dmitriy Moroz
@@ -165,6 +180,9 @@ interface ConfigurationStore {
         source = source,
         hordeApiKey = hordeApiKey,
         openAiApiKey = openAiApiKey,
+        openAiCompatibleModel = openAiCompatibleModel,
+        openAiCompatibleApiKey = openAiCompatibleApiKey,
+        openAiCompatibleUrl = openAiCompatibleUrl,
         huggingFaceApiKey = huggingFaceApiKey,
         huggingFaceModel = huggingFaceModel,
         stabilityAiApiKey = stabilityAiApiKey,
@@ -198,6 +216,9 @@ interface ConfigurationStore {
         demoMode = configuration.demoMode
         hordeApiKey = configuration.hordeApiKey
         openAiApiKey = configuration.openAiApiKey
+        openAiCompatibleModel = configuration.openAiCompatibleModel
+        openAiCompatibleApiKey = configuration.openAiCompatibleApiKey
+        openAiCompatibleUrl = configuration.openAiCompatibleUrl
         huggingFaceApiKey = configuration.huggingFaceApiKey
         huggingFaceModel = configuration.huggingFaceModel
         stabilityAiApiKey = configuration.stabilityAiApiKey

@@ -226,6 +226,9 @@ internal class TextToImageIntentProcessor(
             is TextToImageIntent.UpdateFalAiSyncMode -> updateState {
                 it.copy(falAiSyncMode = intent.value, message = null)
             }
+            is TextToImageIntent.UpdateOpenAiCompatibleModel -> updateState {
+                it.copy(openAiCompatibleModel = intent.value, message = null, error = null)
+            }
             is TextToImageIntent.UpdateArliAiModel -> updateState {
                 it.copy(arliAiModel = intent.value, message = null, error = null)
             }

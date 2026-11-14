@@ -102,6 +102,7 @@ private fun Configuration.requiresRemotePreload(): Boolean = when (source) {
     ServerSource.HORDE,
     ServerSource.HUGGING_FACE,
     ServerSource.OPEN_AI,
+    ServerSource.OPEN_AI_COMPATIBLE,
     ServerSource.STABILITY_AI,
     ServerSource.FAL_AI,
     ServerSource.ARLI_AI,

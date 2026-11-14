@@ -612,4 +612,20 @@
     <string name="settings_connection_timeout">Bağlantı zaman aşımı</string>
     <string name="settings_connection_timeout_description">Yapay zekâ sağlayıcısına bağlanmak için izin verilen süre. Yeni istekler için geçerlidir.</string>
     <string name="settings_connection_timeout_ios_description">iOS bağlantı süresini otomatik olarak yönetir. Bu değer kaydedilir ancak iOS üzerinde uygulanamaz.</string>
+    <string name="srv_type_open_ai_compatible">OpenAI uyumlu</string>
+    <string name="open_ai_compatible_help">OpenAI görüntü API’sini kullanan bir görüntü sunucusuna veya proxy’ye bağlanın. Tam API önekini girin, örneğin https://host/prefix/v1. API anahtarı isteğe bağlıdır. Desteklenen modelleri ve boyutları sunucu belirler.</string>
+    <string name="open_ai_compatible_url">API temel URL’si (/v1 dahil)</string>
+    <string name="open_ai_compatible_optional_key">API anahtarı (isteğe bağlı)</string>
+    <string name="open_ai_compatible_unverified_title">Bağlantı doğrulanmadı</string>
+    <string name="open_ai_compatible_unverified_text">Sunucu model listesini desteklemiyor. Yapılandırma kaydedildi ancak görüntü üretimi doğrulanmadı. Üretim ekranında görüntü modeli kimliğini girin.</string>
+    <string name="open_ai_compatible_model">Görüntü modeli kimliği</string>
+    <string name="open_ai_compatible_model_required">Bir görüntü modeli kimliği girin.</string>
+    <string name="open_ai_compatible_positive_size">Pozitif bir piksel boyutu girin.</string>
+    <string name="open_ai_compatible_img2img_unsupported">Bu sağlayıcı yalnızca metinden görüntü üretimini destekler.</string>
+    <string name="open_ai_compatible_http_auth">Kimlik doğrulama başarısız. API anahtarını ve sunucu izinlerini kontrol edin.</string>
+    <string name="open_ai_compatible_http_rate">Sunucunun istek veya hesap sınırına ulaşıldı. Daha sonra tekrar deneyin.</string>
+    <string name="open_ai_compatible_http_request">Sunucu isteği reddetti. Modeli, boyutları ve istemi kontrol edin.</string>
+    <string name="open_ai_compatible_http_server">Görüntü sunucusunda hata oluştu. Daha sonra tekrar deneyin.</string>
+    <string name="open_ai_compatible_http_error">Sunucu isteği başarısız oldu (HTTP %1$d).</string>
+    <string name="open_ai_compatible_image_failure">Görüntü alınamadı veya çözümlenemedi. Sunucuyu kontrol edip tekrar deneyin.</string>
 </resources>

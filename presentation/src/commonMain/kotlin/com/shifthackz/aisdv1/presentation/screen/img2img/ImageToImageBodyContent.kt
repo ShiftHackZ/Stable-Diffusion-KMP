@@ -77,16 +77,16 @@ internal fun UnsupportedImageToImageBody(
         )
         Text(
             modifier = Modifier.padding(top = 14.dp),
-            text = if (mode == ServerSource.OPEN_AI) {
-                strings.openAiUnsupportedSubtitle
-            } else {
-                strings.localUnsupportedSubtitle
+            text = when (mode) {
+                ServerSource.OPEN_AI -> strings.openAiUnsupportedSubtitle
+                ServerSource.OPEN_AI_COMPATIBLE -> strings.compatibleUnsupportedSubtitle
+                else -> strings.localUnsupportedSubtitle
             },
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-        Text(
+        if (mode != ServerSource.OPEN_AI_COMPATIBLE) Text(
             modifier = Modifier.padding(top = 14.dp),
             text = if (mode == ServerSource.OPEN_AI) {
                 strings.openAiUnsupportedSubtitle2

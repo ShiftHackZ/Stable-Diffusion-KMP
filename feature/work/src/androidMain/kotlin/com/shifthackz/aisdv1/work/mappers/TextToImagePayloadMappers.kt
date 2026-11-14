@@ -72,6 +72,11 @@ private data class TextToImagePayloadDto(
     val style: String?,
     val quality: String?,
     val openAiModel: String?,
+    /**
+     * Arbitrary compatible-server model retained across the WorkManager handoff.
+     * @author Dmitriy Moroz
+     */
+    val openAiCompatibleModel: String = "gpt-image-2",
     val stabilityAiClipGuidance: String?,
     val stabilityAiStylePreset: String?,
     val aDetailer: ADetailerConfigDto = ADetailerConfigDto(),
@@ -102,6 +107,7 @@ private data class TextToImagePayloadDto(
         style = style,
         quality = quality,
         openAiModel = openAiModel?.let(OpenAiModel::parse),
+        openAiCompatibleModel = openAiCompatibleModel,
         stabilityAiClipGuidance = stabilityAiClipGuidance.parseEnumOrNull<StabilityAiClipGuidance>(),
         stabilityAiStylePreset = stabilityAiStylePreset.parseEnumOrNull<StabilityAiStylePreset>(),
         aDetailer = aDetailer.toDomain(),
@@ -134,6 +140,7 @@ private data class TextToImagePayloadDto(
             style = payload.style,
             quality = payload.quality,
             openAiModel = payload.openAiModel?.alias,
+            openAiCompatibleModel = payload.openAiCompatibleModel,
             stabilityAiClipGuidance = payload.stabilityAiClipGuidance?.name,
             stabilityAiStylePreset = payload.stabilityAiStylePreset?.name,
             aDetailer = ADetailerConfigDto.from(payload.aDetailer),

@@ -5,6 +5,18 @@ generator. Treat documentation changes as part of the code change: when a class,
 method, constructor, property, or behavior contract changes, update the KDoc in
 the same commit.
 
+## Provider Guides
+
+The README contains the provider/platform and capability matrices. The website
+setup guide for [OpenAI-compatible image servers](docs/openai-compatible.html)
+covers complete API prefixes, optional authentication, LAN access, manual model
+IDs and troubleshooting. Its consumed API contract lives in
+[network/openai-compatible.openapi.json](network/openai-compatible.openapi.json).
+
+When changing provider behavior, keep the README, website and FAQ, privacy
+description, localized store metadata and screenshot caption sources aligned
+with the implementation.
+
 ## What To Document
 
 Document declarations that explain module boundaries, public contracts, shared
