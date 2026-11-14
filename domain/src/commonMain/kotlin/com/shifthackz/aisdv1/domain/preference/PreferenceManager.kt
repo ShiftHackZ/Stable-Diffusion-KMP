@@ -14,6 +14,34 @@ import kotlinx.coroutines.flow.Flow
  */
 interface PreferenceManager {
     /**
+     * Last sampling step count in the txt2img form; defaults to 20 on first launch.
+     *
+     * @author Dmitriy Moroz
+     */
+    var textToImageSamplingSteps: Int
+
+    /**
+     * Last CFG scale in the txt2img form; defaults to 7.0 on first launch.
+     *
+     * @author Dmitriy Moroz
+     */
+    var textToImageCfgScale: Float
+
+    /**
+     * Last sampling step count in the img2img form, stored independently of txt2img.
+     *
+     * @author Dmitriy Moroz
+     */
+    var imageToImageSamplingSteps: Int
+
+    /**
+     * Last CFG scale in the img2img form, stored independently of txt2img.
+     *
+     * @author Dmitriy Moroz
+     */
+    var imageToImageCfgScale: Float
+
+    /**
      * Time allowed to establish provider connections, independent of generation waiting limits.
      *
      * @author Dmitriy Moroz

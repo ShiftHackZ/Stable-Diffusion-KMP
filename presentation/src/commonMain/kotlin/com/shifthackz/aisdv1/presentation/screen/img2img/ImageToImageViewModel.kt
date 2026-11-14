@@ -76,6 +76,8 @@ class ImageToImageViewModel(
     private val onError: (Throwable) -> Unit = {},
 ) : BaseMviViewModel<ImageToImageState, ImageToImageIntent, EmptyEffect>(
     initialState = ImageToImageState(
+        samplingSteps = preferenceManager.imageToImageSamplingSteps,
+        cfgScale = preferenceManager.imageToImageCfgScale,
         platform = buildInfoProvider.platform,
         bonsaiBackendSelectionVisible = buildInfoProvider.platform == Platform.ANDROID,
     ),
@@ -157,6 +159,7 @@ class ImageToImageViewModel(
             }
             else -> intentProcessor.process(intent)
         }
+        persistGenerationParameters()
     }
 
     private fun applyGenerationResult(
@@ -199,6 +202,23 @@ class ImageToImageViewModel(
                 error = null,
                 message = null,
             )
+        }
+        persistGenerationParameters()
+    }
+
+    /**
+     * Saves effective form values after edits, model clamping, or applying a history result.
+     * Unchanged values do not trigger preference writes.
+     *
+     * @author Dmitriy Moroz
+     */
+    private fun persistGenerationParameters() {
+        val state = currentState
+        if (preferenceManager.imageToImageSamplingSteps != state.samplingSteps) {
+            preferenceManager.imageToImageSamplingSteps = state.samplingSteps
+        }
+        if (preferenceManager.imageToImageCfgScale != state.cfgScale) {
+            preferenceManager.imageToImageCfgScale = state.cfgScale
         }
     }
 
