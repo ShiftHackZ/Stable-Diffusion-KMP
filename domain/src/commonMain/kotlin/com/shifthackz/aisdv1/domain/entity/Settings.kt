@@ -9,6 +9,12 @@ import com.shifthackz.aisdv1.core.common.schedulers.SchedulersToken
  */
 data class Settings(
     /**
+     * Request and socket waiting limit for network image generation.
+     *
+     * @author Dmitriy Moroz
+     */
+    val generationRequestTimeout: GenerationRequestTimeout = GenerationRequestTimeout.TWO_MINUTES,
+    /**
      * Exposes the `serverUrl` value used by the SDAI domain layer.
      *
      * @author Dmitriy Moroz

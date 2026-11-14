@@ -102,6 +102,17 @@ internal fun SettingsModalRenderer(
             )
         }
 
+        is SettingsModal.GenerationTimeout -> ModalBottomSheet(
+            onDismissRequest = dismiss,
+            shape = RectangleShape,
+            containerColor = MaterialTheme.colorScheme.background,
+        ) {
+            GenerationTimeoutBottomSheet(
+                selected = screenModal.selected,
+                onSelected = { processIntent(SettingsIntent.SetGenerationTimeout(it)) },
+            )
+        }
+
         is SettingsModal.ManualPermission -> InfoDialog(
             title = text("premission_rationale_title"),
             subTitle = Localization.string(

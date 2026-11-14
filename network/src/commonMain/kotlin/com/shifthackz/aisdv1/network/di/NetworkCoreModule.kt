@@ -49,37 +49,41 @@ val coreNetworkModule = module {
         KtorStabilityAiEnginesApi(STABILITY_AI_API_URL)
     }
     single<StabilityAiGenerationApi> {
-        KtorStabilityAiGenerationApi(STABILITY_AI_API_URL)
+        KtorStabilityAiGenerationApi(STABILITY_AI_API_URL, generationTimeoutProvider = get())
     }
     single<OpenAiGenerationApi> {
-        KtorOpenAiGenerationApi(OPEN_AI_API_URL)
+        KtorOpenAiGenerationApi(OPEN_AI_API_URL, generationTimeoutProvider = get())
     }
     single<HordeGenerationApi> {
-        KtorHordeGenerationApi(HORDE_AI_API_URL)
+        KtorHordeGenerationApi(HORDE_AI_API_URL, generationTimeoutProvider = get())
     }
     single<HuggingFaceGenerationApi> {
-        KtorHuggingFaceGenerationApi(HUGGING_FACE_API_URL, HUGGING_FACE_INFERENCE_API_URL)
+        KtorHuggingFaceGenerationApi(
+            HUGGING_FACE_API_URL,
+            HUGGING_FACE_INFERENCE_API_URL,
+            generationTimeoutProvider = get(),
+        )
     }
     single<HuggingFaceModelsApi> {
         KtorHuggingFaceModelsApi(HUGGING_FACE_API_URL)
     }
     single<FalAiGenerationApi> {
-        KtorFalAiGenerationApi(FAL_AI_API_URL, FAL_AI_QUEUE_API_URL)
+        KtorFalAiGenerationApi(FAL_AI_API_URL, FAL_AI_QUEUE_API_URL, generationTimeoutProvider = get())
     }
     single<ArliAiGenerationApi> {
-        KtorArliAiGenerationApi(ARLI_AI_API_URL)
+        KtorArliAiGenerationApi(ARLI_AI_API_URL, generationTimeoutProvider = get())
     }
     single<SwarmUiModelsApi> {
         KtorSwarmUiModelsApi()
     }
     single<SwarmUiGenerationApi> {
-        KtorSwarmUiGenerationApi()
+        KtorSwarmUiGenerationApi(generationTimeoutProvider = get())
     }
     single<Automatic1111MetadataApi> {
         KtorAutomatic1111MetadataApi()
     }
     single<Automatic1111GenerationApi> {
-        KtorAutomatic1111GenerationApi()
+        KtorAutomatic1111GenerationApi(generationTimeoutProvider = get())
     }
 }
 

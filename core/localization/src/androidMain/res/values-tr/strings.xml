@@ -605,4 +605,8 @@
     <string name="benchmark_issue_sdxl_tiny_experimental_only">SDXL burada yalnızca tiny experimental CPU çalıştırması olarak işe yarayabilir, bu yüzden önerilmez.</string>
     <string name="benchmark_issue_sdxl_backend_not_validated">Vulkan API bulundu, ancak SDXL Vulkan backend güvenli benchmark ile doğrulanmadı.</string>
     <string name="benchmark_issue_accelerator_api_not_available">Gerekli hızlandırma APIsi bulunamadı.</string>
+    <string name="settings_generation_timeout">Görsel oluşturma zaman aşımı</string>
+    <string name="settings_generation_timeout_description">Ağ üzerinden yapılan her yapay zekâ görsel oluşturma isteği için azami bekleme süresi. Yeni istekler için geçerlidir.</string>
+    <string name="settings_generation_timeout_minutes">%1$s dk</string>
+    <string name="settings_generation_timeout_unlimited">Sınırsız</string>
 </resources>

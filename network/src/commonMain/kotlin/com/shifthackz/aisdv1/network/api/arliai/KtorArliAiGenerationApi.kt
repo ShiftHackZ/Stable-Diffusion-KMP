@@ -1,6 +1,8 @@
 package com.shifthackz.aisdv1.network.api.arliai
 
 import com.shifthackz.aisdv1.network.client.createConfiguredHttpClient
+import com.shifthackz.aisdv1.network.client.GenerationTimeoutProvider
+import com.shifthackz.aisdv1.network.client.applyGenerationTimeout
 import com.shifthackz.aisdv1.network.client.NetworkUsageCategory
 import com.shifthackz.aisdv1.network.client.setTrackedJsonBody
 import com.shifthackz.aisdv1.network.client.trackUsage
@@ -24,6 +26,7 @@ import io.ktor.http.takeFrom
  * image-to-image request and response bodies are counted as [NetworkUsageCategory.INFERENCE].
  *
  * @param httpClient configured Ktor client used to send provider requests.
+ * @param generationTimeoutProvider Reads the current waiting limit for each generation request.
  * @param baseUrl ArliAI SDNext-compatible API base URL.
  *
  * @author Dmitriy Moroz
@@ -31,18 +34,24 @@ import io.ktor.http.takeFrom
 class KtorArliAiGenerationApi(
     private val httpClient: HttpClient,
     private val baseUrl: String,
+    private val generationTimeoutProvider: GenerationTimeoutProvider = GenerationTimeoutProvider.Default,
 ) : ArliAiGenerationApi {
 
     /**
      * Creates an ArliAI API client with the shared application HTTP configuration.
      *
      * @param baseUrl ArliAI SDNext-compatible API base URL.
+     * @param generationTimeoutProvider Source of the current generation waiting limit.
      *
      * @author Dmitriy Moroz
      */
-    constructor(baseUrl: String) : this(
+    constructor(
+        baseUrl: String,
+        generationTimeoutProvider: GenerationTimeoutProvider = GenerationTimeoutProvider.Default,
+    ) : this(
         httpClient = createConfiguredHttpClient(),
         baseUrl = baseUrl,
+        generationTimeoutProvider = generationTimeoutProvider,
     )
 
     /**
@@ -87,6 +96,7 @@ class KtorArliAiGenerationApi(
         .post {
             url.takeFrom(baseUrl)
             url.appendPathSegments(PATH_SD_API, PATH_V1, PATH_TXT_TO_IMG)
+            applyGenerationTimeout(generationTimeoutProvider)
             header(HttpHeaders.Authorization, apiKey.headerValue)
             setTrackedJsonBody(NetworkUsageCategory.INFERENCE, request)
         }
@@ -108,6 +118,7 @@ class KtorArliAiGenerationApi(
         .post {
             url.takeFrom(baseUrl)
             url.appendPathSegments(PATH_SD_API, PATH_V1, PATH_IMG_TO_IMG)
+            applyGenerationTimeout(generationTimeoutProvider)
             header(HttpHeaders.Authorization, apiKey.headerValue)
             setTrackedJsonBody(NetworkUsageCategory.INFERENCE, request)
         }

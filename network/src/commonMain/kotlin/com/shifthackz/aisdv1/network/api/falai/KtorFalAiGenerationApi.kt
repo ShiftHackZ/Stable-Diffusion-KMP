@@ -1,6 +1,8 @@
 package com.shifthackz.aisdv1.network.api.falai
 
 import com.shifthackz.aisdv1.network.client.createConfiguredHttpClient
+import com.shifthackz.aisdv1.network.client.GenerationTimeoutProvider
+import com.shifthackz.aisdv1.network.client.applyGenerationTimeout
 import com.shifthackz.aisdv1.network.client.NetworkUsageCategory
 import com.shifthackz.aisdv1.network.client.setTrackedJsonBody
 import com.shifthackz.aisdv1.network.client.trackUsage
@@ -23,6 +25,7 @@ import io.ktor.http.takeFrom
  * Ktor implementation of Fal AI generation and queue polling with traffic accounting.
  *
  * @param httpClient Configured Ktor client used to send provider requests.
+ * @param generationTimeoutProvider Reads the current waiting limit for each generation request.
  * @param apiBaseUrl Base API URL for validation and model submission endpoints.
  * @param queueBaseUrl Base queue URL for polling and result endpoints.
  *
@@ -47,6 +50,7 @@ class KtorFalAiGenerationApi(
      * @author Dmitriy Moroz
      */
     private val queueBaseUrl: String,
+    private val generationTimeoutProvider: GenerationTimeoutProvider = GenerationTimeoutProvider.Default,
 ) : FalAiGenerationApi {
 
     /**
@@ -54,15 +58,18 @@ class KtorFalAiGenerationApi(
      *
      * @param apiBaseUrl base url value consumed by the API.
      * @param queueBaseUrl queue base url value consumed by the API.
+     * @param generationTimeoutProvider Source of the current generation waiting limit.
      * @author Dmitriy Moroz
      */
     constructor(
         apiBaseUrl: String,
         queueBaseUrl: String,
+        generationTimeoutProvider: GenerationTimeoutProvider = GenerationTimeoutProvider.Default,
     ) : this(
         httpClient = createConfiguredHttpClient(),
         apiBaseUrl = apiBaseUrl,
         queueBaseUrl = queueBaseUrl,
+        generationTimeoutProvider = generationTimeoutProvider,
     )
 
     /**
@@ -95,6 +102,7 @@ class KtorFalAiGenerationApi(
     ): FalAiQueueSubmitResponse = httpClient
         .post {
             url.takeFrom("$queueBaseUrl/$model")
+            applyGenerationTimeout(generationTimeoutProvider)
             header(HttpHeaders.Authorization, apiKey.headerValue)
             setTrackedJsonBody(NetworkUsageCategory.INFERENCE, request)
         }
@@ -116,6 +124,7 @@ class KtorFalAiGenerationApi(
     ): FalAiQueueSubmitResponse = httpClient
         .post {
             url.takeFrom("$queueBaseUrl/$model")
+            applyGenerationTimeout(generationTimeoutProvider)
             header(HttpHeaders.Authorization, apiKey.headerValue)
             setTrackedJsonBody(NetworkUsageCategory.INFERENCE, request)
         }
@@ -135,6 +144,7 @@ class KtorFalAiGenerationApi(
     ): FalAiQueueStatusResponse = httpClient
         .get {
             url.takeFrom(statusUrl)
+            applyGenerationTimeout(generationTimeoutProvider)
             trackUsage(NetworkUsageCategory.INFERENCE)
             header(HttpHeaders.Authorization, apiKey.headerValue)
         }
@@ -154,6 +164,7 @@ class KtorFalAiGenerationApi(
     ): FalAiGenerationResponse = httpClient
         .get {
             url.takeFrom(responseUrl)
+            applyGenerationTimeout(generationTimeoutProvider)
             trackUsage(NetworkUsageCategory.INFERENCE)
             header(HttpHeaders.Authorization, apiKey.headerValue)
         }
@@ -169,6 +180,7 @@ class KtorFalAiGenerationApi(
     override suspend fun downloadImage(url: String): ByteArray = httpClient
         .get {
             this.url.takeFrom(url)
+            applyGenerationTimeout(generationTimeoutProvider)
             trackUsage(NetworkUsageCategory.INFERENCE)
         }
         .trackedByteArrayBody(NetworkUsageCategory.INFERENCE)

@@ -1,6 +1,8 @@
 package com.shifthackz.aisdv1.network.api.huggingface
 
 import com.shifthackz.aisdv1.network.client.createConfiguredHttpClient
+import com.shifthackz.aisdv1.network.client.GenerationTimeoutProvider
+import com.shifthackz.aisdv1.network.client.applyGenerationTimeout
 import com.shifthackz.aisdv1.network.client.NetworkUsageCategory
 import com.shifthackz.aisdv1.network.client.defaultNetworkJson
 import com.shifthackz.aisdv1.network.client.setTrackedTextBody
@@ -23,6 +25,7 @@ import kotlinx.serialization.json.Json
  * Ktor implementation of Hugging Face generation requests with counted inference traffic.
  *
  * @param httpClient Configured Ktor client used to send provider requests.
+ * @param generationTimeoutProvider Reads the current waiting limit for each generation request.
  * @param apiBaseUrl Hugging Face API base URL used for model validation.
  * @param inferenceBaseUrl Hugging Face inference base URL used for generation requests.
  * @param json JSON codec used for counted request/response payloads.
@@ -54,17 +57,28 @@ class KtorHuggingFaceGenerationApi(
      * @author Dmitriy Moroz
      */
     private val json: Json = defaultNetworkJson,
+    private val generationTimeoutProvider: GenerationTimeoutProvider = GenerationTimeoutProvider.Default,
 ) : HuggingFaceGenerationApi {
 
+    /**
+     * Creates the inference client while keeping validation on the standard HTTP timeout.
+     *
+     * @param apiBaseUrl API URL used to validate credentials.
+     * @param inferenceBaseUrl Inference URL used to generate images.
+     * @param generationTimeoutProvider Source of the current generation waiting limit.
+     * @author Dmitriy Moroz
+     */
     constructor(
         apiBaseUrl: String,
         inferenceBaseUrl: String,
+        generationTimeoutProvider: GenerationTimeoutProvider = GenerationTimeoutProvider.Default,
     ) : this(
         httpClient = createConfiguredHttpClient(
             installContentNegotiation = false,
         ),
         apiBaseUrl = apiBaseUrl,
         inferenceBaseUrl = inferenceBaseUrl,
+        generationTimeoutProvider = generationTimeoutProvider,
     )
 
     override suspend fun validateBearerToken(apiKey: String) {
@@ -84,6 +98,7 @@ class KtorHuggingFaceGenerationApi(
             .post {
                 url.takeFrom(inferenceBaseUrl)
                 url.appendPathSegments(PATH_MODELS, model)
+                applyGenerationTimeout(generationTimeoutProvider)
                 header(HttpHeaders.Authorization, "Bearer $apiKey")
                 header(HttpHeaders.Accept, ContentType.Image.PNG.toString())
                 setTrackedTextBody(

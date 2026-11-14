@@ -1,6 +1,8 @@
 package com.shifthackz.aisdv1.network.api.automatic1111
 
 import com.shifthackz.aisdv1.network.auth.BasicHttpAuthorization
+import com.shifthackz.aisdv1.network.client.GenerationTimeoutProvider
+import com.shifthackz.aisdv1.network.client.applyGenerationTimeout
 import com.shifthackz.aisdv1.network.client.NetworkUsageCategory
 import com.shifthackz.aisdv1.network.client.createConfiguredHttpClient
 import com.shifthackz.aisdv1.network.client.setTrackedJsonBody
@@ -20,6 +22,7 @@ import io.ktor.http.takeFrom
  * Ktor implementation of Automatic1111 generation calls with inference traffic accounting.
  *
  * @param httpClient Configured Ktor client used to send provider requests.
+ * @param generationTimeoutProvider Reads the current waiting limit for each image generation call.
  *
  * @author Dmitriy Moroz
  */
@@ -30,6 +33,7 @@ class KtorAutomatic1111GenerationApi(
      * @author Dmitriy Moroz
      */
     private val httpClient: HttpClient = createConfiguredHttpClient(),
+    private val generationTimeoutProvider: GenerationTimeoutProvider = GenerationTimeoutProvider.Default,
 ) : Automatic1111GenerationApi {
 
     override suspend fun healthCheck(
@@ -50,6 +54,7 @@ class KtorAutomatic1111GenerationApi(
         .post {
             url.takeFrom(baseUrl)
             url.appendPathSegments(PATH_SD_API, PATH_V1, PATH_TXT_TO_IMG)
+            applyGenerationTimeout(generationTimeoutProvider)
             applyAuthorization(authorization)
             setTrackedJsonBody(NetworkUsageCategory.INFERENCE, request)
         }
@@ -63,6 +68,7 @@ class KtorAutomatic1111GenerationApi(
         .post {
             url.takeFrom(baseUrl)
             url.appendPathSegments(PATH_SD_API, PATH_V1, PATH_IMG_TO_IMG)
+            applyGenerationTimeout(generationTimeoutProvider)
             applyAuthorization(authorization)
             setTrackedJsonBody(NetworkUsageCategory.INFERENCE, request)
         }

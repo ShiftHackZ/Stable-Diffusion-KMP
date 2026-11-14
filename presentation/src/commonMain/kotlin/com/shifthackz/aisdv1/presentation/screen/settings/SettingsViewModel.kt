@@ -158,6 +158,7 @@ class SettingsViewModel(
                         state.copy(
                             loading = false,
                             serverSource = settings.source,
+                            generationRequestTimeout = settings.generationRequestTimeout,
                             sdModels = modelTitles,
                             sdModelSelected = selectedRemoteModel
                                 ?: settings.sdModel.takeIf(modelTitles::contains)
@@ -212,6 +213,15 @@ class SettingsViewModel(
             )
 
             SettingsIntent.NavigateBenchmark -> router.navigateToBenchmark()
+
+            SettingsIntent.PickGenerationTimeout -> updateState {
+                it.copy(screenModal = SettingsModal.GenerationTimeout(it.generationRequestTimeout))
+            }
+
+            is SettingsIntent.SetGenerationTimeout -> {
+                preferenceManager.generationRequestTimeout = intent.timeout
+                updateState { it.copy(screenModal = SettingsModal.None) }
+            }
 
             SettingsIntent.NavigateStorageUsage -> router.navigateToStorageUsage()
 

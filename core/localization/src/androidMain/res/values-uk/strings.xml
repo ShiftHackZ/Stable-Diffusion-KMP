@@ -605,4 +605,8 @@
     <string name="benchmark_issue_sdxl_tiny_experimental_only">SDXL тут може спрацювати лише як tiny experimental CPU запуск, тому не рекомендований.</string>
     <string name="benchmark_issue_sdxl_backend_not_validated">Vulkan API знайдено, але SDXL Vulkan backend не валідовано безпечним бенчмарком.</string>
     <string name="benchmark_issue_accelerator_api_not_available">Потрібний API прискорення не знайдено.</string>
+    <string name="settings_generation_timeout">Тайм-аут генерації</string>
+    <string name="settings_generation_timeout_description">Максимальний час очікування кожного мережевого запиту на генерацію зображень. Застосовується до нових запитів.</string>
+    <string name="settings_generation_timeout_minutes">%1$s хв</string>
+    <string name="settings_generation_timeout_unlimited">Без обмеження</string>
 </resources>

@@ -6,6 +6,7 @@ import com.shifthackz.aisdv1.core.common.schedulers.SchedulersToken
 import com.shifthackz.aisdv1.domain.entity.ColorToken
 import com.shifthackz.aisdv1.domain.entity.DarkThemeToken
 import com.shifthackz.aisdv1.domain.entity.FeatureTag
+import com.shifthackz.aisdv1.domain.entity.GenerationRequestTimeout
 import com.shifthackz.aisdv1.domain.entity.Grid
 import com.shifthackz.aisdv1.domain.entity.HuggingFaceModel
 import com.shifthackz.aisdv1.domain.entity.ServerSource
@@ -35,6 +36,17 @@ internal class PreferenceManagerImpl(
      * @author Dmitriy Moroz
      */
     private val preferencesChangedState = MutableStateFlow(Any())
+
+    /**
+     * Persists the generation waiting limit and notifies Settings observers immediately.
+     *
+     * @author Dmitriy Moroz
+     */
+    override var generationRequestTimeout: GenerationRequestTimeout
+        get() = GenerationRequestTimeout.fromSeconds(
+            keyValueStore.getInt(KEY_GENERATION_REQUEST_TIMEOUT_SECONDS, 120),
+        )
+        set(value) = putInt(KEY_GENERATION_REQUEST_TIMEOUT_SECONDS, value.seconds)
 
     /**
      * Exposes the `automatic1111ServerUrl` value used by the SDAI data layer.
@@ -477,6 +489,7 @@ internal class PreferenceManagerImpl(
     override fun observe(): Flow<Settings> = preferencesChangedState
         .map {
             Settings(
+                generationRequestTimeout = generationRequestTimeout,
                 serverUrl = automatic1111ServerUrl,
                 sdModel = sdModel,
                 demoMode = demoMode,
@@ -574,6 +587,13 @@ internal class PreferenceManagerImpl(
      * @author Dmitriy Moroz
      */
     companion object {
+        /**
+         * Stores seconds, with zero representing an unlimited generation wait.
+         *
+         * @author Dmitriy Moroz
+         */
+        const val KEY_GENERATION_REQUEST_TIMEOUT_SECONDS = "key_generation_request_timeout_seconds"
+
         /**
          * Exposes the `KEY_SERVER_URL` value used by the SDAI data layer.
          *

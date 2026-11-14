@@ -4,8 +4,10 @@ import androidx.compose.runtime.Immutable
 import com.shifthackz.aisdv1.core.mvi.MviState
 import com.shifthackz.aisdv1.domain.entity.ColorToken
 import com.shifthackz.aisdv1.domain.entity.DarkThemeToken
+import com.shifthackz.aisdv1.domain.entity.GenerationRequestTimeout
 import com.shifthackz.aisdv1.domain.entity.Grid
 import com.shifthackz.aisdv1.domain.entity.ServerSource
+import com.shifthackz.aisdv1.domain.entity.ServerSourceType
 
 /**
  * Immutable UI model for the Settings screen.
@@ -18,6 +20,7 @@ import com.shifthackz.aisdv1.domain.entity.ServerSource
  * @param onBoardingDemo Whether demo onboarding mode hides provider configuration actions.
  * @param screenModal Modal currently shown above Settings.
  * @param serverSource Current generation provider.
+ * @param generationRequestTimeout Persisted waiting limit for network image generation requests.
  * @param sdModels Provider model names shown in the Settings picker.
  * @param sdModelSelected Current provider model selection.
  * @param stabilityAiCredits Current Stability AI balance shown in Settings.
@@ -48,6 +51,7 @@ data class SettingsState(
     val onBoardingDemo: Boolean = false,
     val screenModal: SettingsModal = SettingsModal.None,
     val serverSource: ServerSource = ServerSource.AUTOMATIC1111,
+    val generationRequestTimeout: GenerationRequestTimeout = GenerationRequestTimeout.TWO_MINUTES,
     val sdModels: List<String> = emptyList(),
     val sdModelSelected: String = "",
     val stabilityAiCredits: Float = 0f,
@@ -82,6 +86,14 @@ data class SettingsState(
 
     val showMonitorConnectionOption: Boolean
         get() = serverSource == ServerSource.AUTOMATIC1111 || serverSource == ServerSource.SWARM_UI
+
+    /**
+     * Shows the waiting-limit control only for providers whose generation calls use it.
+     *
+     * @author Dmitriy Moroz
+     */
+    val showGenerationTimeout: Boolean
+        get() = serverSource.type != ServerSourceType.LOCAL
 
     val showFormAdvancedOption: Boolean
         get() = serverSource != ServerSource.OPEN_AI
@@ -122,4 +134,12 @@ sealed interface SettingsModal {
     data class SelectSdModel(val models: List<String>, val selected: String) : SettingsModal
     data class ManualPermission(val permission: String) : SettingsModal
     data class GalleryGrid(val grid: Grid) : SettingsModal
+
+    /**
+     * Waiting-limit picker initialized with the current preference.
+     *
+     * @param selected Current network image generation timeout.
+     * @author Dmitriy Moroz
+     */
+    data class GenerationTimeout(val selected: GenerationRequestTimeout) : SettingsModal
 }

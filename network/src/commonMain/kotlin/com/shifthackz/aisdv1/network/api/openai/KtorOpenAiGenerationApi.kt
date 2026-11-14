@@ -1,6 +1,8 @@
 package com.shifthackz.aisdv1.network.api.openai
 
 import com.shifthackz.aisdv1.network.client.createConfiguredHttpClient
+import com.shifthackz.aisdv1.network.client.GenerationTimeoutProvider
+import com.shifthackz.aisdv1.network.client.applyGenerationTimeout
 import com.shifthackz.aisdv1.network.client.NetworkUsageCategory
 import com.shifthackz.aisdv1.network.client.setTrackedJsonBody
 import com.shifthackz.aisdv1.network.client.trackedJsonBody
@@ -18,6 +20,7 @@ import io.ktor.http.takeFrom
  * Ktor implementation of OpenAI validation and image generation with traffic accounting.
  *
  * @param httpClient Configured Ktor client used to send provider requests.
+ * @param generationTimeoutProvider Reads the current waiting limit for each generation request.
  * @param baseUrl OpenAI API base URL.
  *
  * @author Dmitriy Moroz
@@ -35,17 +38,23 @@ class KtorOpenAiGenerationApi(
      * @author Dmitriy Moroz
      */
     private val baseUrl: String,
+    private val generationTimeoutProvider: GenerationTimeoutProvider = GenerationTimeoutProvider.Default,
 ) : OpenAiGenerationApi {
 
     /**
      * Creates a new SDAI component instance.
      *
      * @param baseUrl base url value consumed by the API.
+     * @param generationTimeoutProvider Source of the current generation waiting limit.
      * @author Dmitriy Moroz
      */
-    constructor(baseUrl: String) : this(
+    constructor(
+        baseUrl: String,
+        generationTimeoutProvider: GenerationTimeoutProvider = GenerationTimeoutProvider.Default,
+    ) : this(
         httpClient = createConfiguredHttpClient(),
         baseUrl = baseUrl,
+        generationTimeoutProvider = generationTimeoutProvider,
     )
 
     /**
@@ -77,6 +86,7 @@ class KtorOpenAiGenerationApi(
         .post {
             url.takeFrom(baseUrl)
             url.appendPathSegments(PATH_API_VERSION, PATH_IMAGES, PATH_GENERATIONS)
+            applyGenerationTimeout(generationTimeoutProvider)
             header(HttpHeaders.Authorization, "Bearer $apiKey")
             setTrackedJsonBody(NetworkUsageCategory.INFERENCE, request)
         }

@@ -642,4 +642,8 @@
     <string name="benchmark_issue_sdxl_tiny_experimental_only">SDXL may only work here as a tiny experimental CPU run, so it is not recommended.</string>
     <string name="benchmark_issue_sdxl_backend_not_validated">Vulkan API was found, but the SDXL Vulkan backend was not validated by a safe benchmark.</string>
     <string name="benchmark_issue_accelerator_api_not_available">The required acceleration API was not found.</string>
+    <string name="settings_generation_timeout">Generation timeout</string>
+    <string name="settings_generation_timeout_description">Maximum wait for each network AI generation request. Applies to new requests.</string>
+    <string name="settings_generation_timeout_minutes">%1$s min</string>
+    <string name="settings_generation_timeout_unlimited">No limit</string>
 </resources>

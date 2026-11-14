@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.SettingsEthernet
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Storage
 import androidx.compose.material.icons.filled.Tag
+import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -32,6 +33,7 @@ import com.shifthackz.aisdv1.core.localization.Localization
 import com.shifthackz.aisdv1.core.model.asUiText
 import com.shifthackz.aisdv1.presentation.screen.settings.model.SettingsIntent
 import com.shifthackz.aisdv1.presentation.screen.settings.model.SettingsState
+import com.shifthackz.aisdv1.presentation.screen.settings.model.label
 import com.shifthackz.aisdv1.presentation.screen.settings.model.shortTitle
 import com.shifthackz.aisdv1.presentation.screen.settings.model.text
 import com.shifthackz.aisdv1.presentation.widget.item.SettingsHeader
@@ -89,6 +91,16 @@ internal fun SettingsServerSection(
                     startIcon = Icons.Default.Circle,
                     text = text("settings_item_stability_ai_credits"),
                     endValueText = state.stabilityAiCredits.roundTo(4).toString().asUiText(),
+                )
+            }
+            if (state.showGenerationTimeout) {
+                SettingsItem(
+                    modifier = itemModifier,
+                    loading = state.loading,
+                    startIcon = Icons.Default.Timer,
+                    text = text("settings_generation_timeout"),
+                    endValueText = state.generationRequestTimeout.label().asUiText(),
+                    onClick = { processIntent(SettingsIntent.PickGenerationTimeout) },
                 )
             }
             if (state.showSdModelSelector) {
