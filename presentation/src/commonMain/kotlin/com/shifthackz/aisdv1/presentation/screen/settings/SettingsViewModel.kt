@@ -2,6 +2,7 @@ package com.shifthackz.aisdv1.presentation.screen.settings
 
 import com.shifthackz.aisdv1.core.common.appbuild.BuildInfoProvider
 import com.shifthackz.aisdv1.core.common.links.LinksProvider
+import com.shifthackz.aisdv1.core.common.platform.Platform
 import com.shifthackz.aisdv1.core.common.model.Quadruple
 import com.shifthackz.aisdv1.core.common.schedulers.DispatchersProvider
 import com.shifthackz.aisdv1.core.localization.Localization
@@ -159,6 +160,7 @@ class SettingsViewModel(
                             loading = false,
                             serverSource = settings.source,
                             generationRequestTimeout = settings.generationRequestTimeout,
+                            connectionTimeout = settings.connectionTimeout,
                             sdModels = modelTitles,
                             sdModelSelected = selectedRemoteModel
                                 ?: settings.sdModel.takeIf(modelTitles::contains)
@@ -216,6 +218,20 @@ class SettingsViewModel(
 
             SettingsIntent.PickGenerationTimeout -> updateState {
                 it.copy(screenModal = SettingsModal.GenerationTimeout(it.generationRequestTimeout))
+            }
+
+            SettingsIntent.PickConnectionTimeout -> updateState {
+                it.copy(
+                    screenModal = SettingsModal.ConnectionTimeout(
+                        selected = it.connectionTimeout,
+                        supported = buildInfoProvider.platform == Platform.ANDROID,
+                    ),
+                )
+            }
+
+            is SettingsIntent.SetConnectionTimeout -> {
+                preferenceManager.connectionTimeout = intent.timeout
+                updateState { it.copy(screenModal = SettingsModal.None) }
             }
 
             is SettingsIntent.SetGenerationTimeout -> {

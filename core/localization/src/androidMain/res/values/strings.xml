@@ -646,4 +646,7 @@
     <string name="settings_generation_timeout_description">Maximum wait for each network AI generation request. Applies to new requests.</string>
     <string name="settings_generation_timeout_minutes">%1$s min</string>
     <string name="settings_generation_timeout_unlimited">No limit</string>
+    <string name="settings_connection_timeout">Connection timeout</string>
+    <string name="settings_connection_timeout_description">Time allowed to connect to an AI provider. Applies to new requests.</string>
+    <string name="settings_connection_timeout_ios_description">iOS manages connection timing automatically. This value is saved but cannot be enforced on iOS.</string>
 </resources>

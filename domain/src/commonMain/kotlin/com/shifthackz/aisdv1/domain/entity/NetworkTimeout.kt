@@ -1,12 +1,12 @@
 package com.shifthackz.aisdv1.domain.entity
 
 /**
- * Waiting limits for network image generation requests, persisted as seconds rather than ordinals.
+ * Shared duration choices for independent connection and generation timeout preferences.
  *
- * @param seconds Request and socket inactivity limit in seconds; zero means no limit.
+ * @param seconds Timeout duration in seconds; zero means no limit.
  * @author Dmitriy Moroz
  */
-enum class GenerationRequestTimeout(val seconds: Int) {
+enum class NetworkTimeout(val seconds: Int) {
     TWO_MINUTES(120),
     FIVE_MINUTES(300),
     TEN_MINUTES(600),
@@ -20,7 +20,7 @@ enum class GenerationRequestTimeout(val seconds: Int) {
          * @param seconds Persisted timeout in seconds.
          * @author Dmitriy Moroz
          */
-        fun fromSeconds(seconds: Int): GenerationRequestTimeout =
+        fun fromSeconds(seconds: Int): NetworkTimeout =
             entries.firstOrNull { it.seconds == seconds } ?: TWO_MINUTES
     }
 }

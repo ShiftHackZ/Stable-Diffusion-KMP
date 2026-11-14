@@ -3,7 +3,7 @@ package com.shifthackz.aisdv1.presentation.screen.settings.model
 import com.shifthackz.aisdv1.core.mvi.MviIntent
 import com.shifthackz.aisdv1.domain.entity.ColorToken
 import com.shifthackz.aisdv1.domain.entity.DarkThemeToken
-import com.shifthackz.aisdv1.domain.entity.GenerationRequestTimeout
+import com.shifthackz.aisdv1.domain.entity.NetworkTimeout
 import com.shifthackz.aisdv1.domain.entity.Grid
 import com.shifthackz.aisdv1.presentation.screen.drawer.DrawerIntent
 
@@ -29,12 +29,27 @@ sealed interface SettingsIntent : MviIntent {
     data object PickGenerationTimeout : SettingsIntent
 
     /**
+     * Opens the independent provider connection-timeout picker.
+     *
+     * @author Dmitriy Moroz
+     */
+    data object PickConnectionTimeout : SettingsIntent
+
+    /**
+     * Saves the connection limit without changing the generation waiting limit.
+     *
+     * @param timeout Selected connection limit, or no limit.
+     * @author Dmitriy Moroz
+     */
+    data class SetConnectionTimeout(val timeout: NetworkTimeout) : SettingsIntent
+
+    /**
      * Persists a waiting limit for subsequent network image generation requests.
      *
      * @param timeout Selected finite limit or no-limit option.
      * @author Dmitriy Moroz
      */
-    data class SetGenerationTimeout(val timeout: GenerationRequestTimeout) : SettingsIntent
+    data class SetGenerationTimeout(val timeout: NetworkTimeout) : SettingsIntent
 
     /**
      * Opens the benchmark screen from the Settings server section.

@@ -93,7 +93,15 @@ internal fun SettingsServerSection(
                     endValueText = state.stabilityAiCredits.roundTo(4).toString().asUiText(),
                 )
             }
-            if (state.showGenerationTimeout) {
+            if (state.showNetworkTimeoutSettings) {
+                SettingsItem(
+                    modifier = itemModifier,
+                    loading = state.loading,
+                    startIcon = Icons.Default.Timer,
+                    text = text("settings_connection_timeout"),
+                    endValueText = state.connectionTimeout.label().asUiText(),
+                    onClick = { processIntent(SettingsIntent.PickConnectionTimeout) },
+                )
                 SettingsItem(
                     modifier = itemModifier,
                     loading = state.loading,

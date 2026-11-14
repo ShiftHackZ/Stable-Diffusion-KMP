@@ -609,4 +609,7 @@
     <string name="settings_generation_timeout_description">Максимальний час очікування кожного мережевого запиту на генерацію зображень. Застосовується до нових запитів.</string>
     <string name="settings_generation_timeout_minutes">%1$s хв</string>
     <string name="settings_generation_timeout_unlimited">Без обмеження</string>
+    <string name="settings_connection_timeout">Тайм-аут підключення</string>
+    <string name="settings_connection_timeout_description">Час на підключення до ШІ-провайдера. Застосовується до нових запитів.</string>
+    <string name="settings_connection_timeout_ios_description">iOS автоматично керує часом підключення. Значення зберігається, але не може застосовуватися в iOS.</string>
 </resources>

@@ -18,21 +18,25 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.shifthackz.aisdv1.core.localization.Localization
 import com.shifthackz.aisdv1.core.model.asUiText
-import com.shifthackz.aisdv1.domain.entity.GenerationRequestTimeout
+import com.shifthackz.aisdv1.domain.entity.NetworkTimeout
 import com.shifthackz.aisdv1.presentation.screen.settings.model.label
 import com.shifthackz.aisdv1.presentation.widget.item.SettingsItem
 
 /**
- * Picks the waiting limit for subsequent network image generation requests.
+ * Picks a duration for one independent network timeout preference.
  *
  * @param selected Current persisted limit, highlighted in the choice list.
+ * @param titleKey Localized title for the timeout being edited.
+ * @param descriptionKey Localized explanation and any platform limitation.
  * @param onSelected Persists a choice and closes the sheet.
  * @author Dmitriy Moroz
  */
 @Composable
-internal fun GenerationTimeoutBottomSheet(
-    selected: GenerationRequestTimeout,
-    onSelected: (GenerationRequestTimeout) -> Unit,
+internal fun NetworkTimeoutBottomSheet(
+    selected: NetworkTimeout,
+    titleKey: String,
+    descriptionKey: String,
+    onSelected: (NetworkTimeout) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -43,15 +47,15 @@ internal fun GenerationTimeoutBottomSheet(
             .padding(bottom = 16.dp),
     ) {
         Text(
-            text = Localization.string("settings_generation_timeout"),
+            text = Localization.string(titleKey),
             style = MaterialTheme.typography.titleLarge,
         )
         Text(
             modifier = Modifier.padding(vertical = 12.dp),
-            text = Localization.string("settings_generation_timeout_description"),
+            text = Localization.string(descriptionKey),
             style = MaterialTheme.typography.bodyMedium,
         )
-        GenerationRequestTimeout.entries.forEach { option ->
+        NetworkTimeout.entries.forEach { option ->
             val isSelected = option == selected
             SettingsItem(
                 modifier = Modifier

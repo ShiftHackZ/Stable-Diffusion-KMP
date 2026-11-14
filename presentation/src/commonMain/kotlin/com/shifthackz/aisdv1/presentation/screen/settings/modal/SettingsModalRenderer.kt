@@ -107,9 +107,28 @@ internal fun SettingsModalRenderer(
             shape = RectangleShape,
             containerColor = MaterialTheme.colorScheme.background,
         ) {
-            GenerationTimeoutBottomSheet(
+            NetworkTimeoutBottomSheet(
                 selected = screenModal.selected,
+                titleKey = "settings_generation_timeout",
+                descriptionKey = "settings_generation_timeout_description",
                 onSelected = { processIntent(SettingsIntent.SetGenerationTimeout(it)) },
+            )
+        }
+
+        is SettingsModal.ConnectionTimeout -> ModalBottomSheet(
+            onDismissRequest = dismiss,
+            shape = RectangleShape,
+            containerColor = MaterialTheme.colorScheme.background,
+        ) {
+            NetworkTimeoutBottomSheet(
+                selected = screenModal.selected,
+                titleKey = "settings_connection_timeout",
+                descriptionKey = if (screenModal.supported) {
+                    "settings_connection_timeout_description"
+                } else {
+                    "settings_connection_timeout_ios_description"
+                },
+                onSelected = { processIntent(SettingsIntent.SetConnectionTimeout(it)) },
             )
         }
 

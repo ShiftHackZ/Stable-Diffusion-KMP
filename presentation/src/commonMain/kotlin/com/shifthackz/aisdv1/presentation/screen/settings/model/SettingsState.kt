@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import com.shifthackz.aisdv1.core.mvi.MviState
 import com.shifthackz.aisdv1.domain.entity.ColorToken
 import com.shifthackz.aisdv1.domain.entity.DarkThemeToken
-import com.shifthackz.aisdv1.domain.entity.GenerationRequestTimeout
+import com.shifthackz.aisdv1.domain.entity.NetworkTimeout
 import com.shifthackz.aisdv1.domain.entity.Grid
 import com.shifthackz.aisdv1.domain.entity.ServerSource
 import com.shifthackz.aisdv1.domain.entity.ServerSourceType
@@ -21,6 +21,7 @@ import com.shifthackz.aisdv1.domain.entity.ServerSourceType
  * @param screenModal Modal currently shown above Settings.
  * @param serverSource Current generation provider.
  * @param generationRequestTimeout Persisted waiting limit for network image generation requests.
+ * @param connectionTimeout Persisted limit for establishing network provider connections.
  * @param sdModels Provider model names shown in the Settings picker.
  * @param sdModelSelected Current provider model selection.
  * @param stabilityAiCredits Current Stability AI balance shown in Settings.
@@ -51,7 +52,8 @@ data class SettingsState(
     val onBoardingDemo: Boolean = false,
     val screenModal: SettingsModal = SettingsModal.None,
     val serverSource: ServerSource = ServerSource.AUTOMATIC1111,
-    val generationRequestTimeout: GenerationRequestTimeout = GenerationRequestTimeout.TWO_MINUTES,
+    val generationRequestTimeout: NetworkTimeout = NetworkTimeout.TWO_MINUTES,
+    val connectionTimeout: NetworkTimeout = NetworkTimeout.TWO_MINUTES,
     val sdModels: List<String> = emptyList(),
     val sdModelSelected: String = "",
     val stabilityAiCredits: Float = 0f,
@@ -92,7 +94,7 @@ data class SettingsState(
      *
      * @author Dmitriy Moroz
      */
-    val showGenerationTimeout: Boolean
+    val showNetworkTimeoutSettings: Boolean
         get() = serverSource.type != ServerSourceType.LOCAL
 
     val showFormAdvancedOption: Boolean
@@ -141,5 +143,14 @@ sealed interface SettingsModal {
      * @param selected Current network image generation timeout.
      * @author Dmitriy Moroz
      */
-    data class GenerationTimeout(val selected: GenerationRequestTimeout) : SettingsModal
+    data class GenerationTimeout(val selected: NetworkTimeout) : SettingsModal
+
+    /**
+     * Independent connection-limit picker with an explicit notice for unsupported engines.
+     *
+     * @param selected Current persisted connection limit.
+     * @param supported Whether the platform engine enforces an independent connection limit.
+     * @author Dmitriy Moroz
+     */
+    data class ConnectionTimeout(val selected: NetworkTimeout, val supported: Boolean) : SettingsModal
 }

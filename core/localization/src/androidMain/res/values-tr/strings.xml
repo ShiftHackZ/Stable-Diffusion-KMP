@@ -609,4 +609,7 @@
     <string name="settings_generation_timeout_description">Ağ üzerinden yapılan her yapay zekâ görsel oluşturma isteği için azami bekleme süresi. Yeni istekler için geçerlidir.</string>
     <string name="settings_generation_timeout_minutes">%1$s dk</string>
     <string name="settings_generation_timeout_unlimited">Sınırsız</string>
+    <string name="settings_connection_timeout">Bağlantı zaman aşımı</string>
+    <string name="settings_connection_timeout_description">Yapay zekâ sağlayıcısına bağlanmak için izin verilen süre. Yeni istekler için geçerlidir.</string>
+    <string name="settings_connection_timeout_ios_description">iOS bağlantı süresini otomatik olarak yönetir. Bu değer kaydedilir ancak iOS üzerinde uygulanamaz.</string>
 </resources>

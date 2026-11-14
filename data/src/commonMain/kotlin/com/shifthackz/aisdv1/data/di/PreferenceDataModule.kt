@@ -10,6 +10,7 @@ import com.shifthackz.aisdv1.domain.preference.ConfigurationStore
 import com.shifthackz.aisdv1.domain.preference.PreferenceManager
 import com.shifthackz.aisdv1.domain.preference.SessionPreference
 import com.shifthackz.aisdv1.network.client.GenerationTimeoutProvider
+import com.shifthackz.aisdv1.network.client.ConnectionTimeoutProvider
 import org.koin.dsl.module
 
 /**
@@ -18,6 +19,10 @@ import org.koin.dsl.module
  * @author Dmitriy Moroz
  */
 val preferenceDataModule = module {
+    single<ConnectionTimeoutProvider> {
+        val preferences = get<PreferenceManager>()
+        ConnectionTimeoutProvider { preferences.connectionTimeout.seconds * 1000L }
+    }
     single<GenerationTimeoutProvider> {
         val preferences = get<PreferenceManager>()
         GenerationTimeoutProvider { preferences.generationRequestTimeout.seconds * 1000L }
