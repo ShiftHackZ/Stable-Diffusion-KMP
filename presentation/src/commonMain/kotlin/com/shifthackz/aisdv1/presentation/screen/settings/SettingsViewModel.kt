@@ -169,6 +169,7 @@ class SettingsViewModel(
                             backgroundGeneration = settings.backgroundGeneration &&
                                 platformActions.supportsBackgroundGeneration,
                             monitorConnectivity = settings.monitorConnectivity,
+                            requestTimeoutSeconds = settings.requestTimeoutSeconds,
                             autoSaveAiResults = settings.autoSaveAiResults,
                             saveToMediaStore = settings.saveToMediaStore,
                             formAdvancedOptionsAlwaysShow = settings.formAdvancedOptionsAlwaysShow,
@@ -324,6 +325,15 @@ class SettingsViewModel(
             is SettingsIntent.Drawer -> when (intent.intent) {
                 DrawerIntent.Close -> router.closeDrawer()
                 DrawerIntent.Open -> router.openDrawer()
+            }
+
+            SettingsIntent.Action.RequestTimeout.Edit -> updateState {
+                it.copy(screenModal = SettingsModal.RequestTimeout(it.requestTimeoutSeconds))
+            }
+
+            is SettingsIntent.Action.RequestTimeout.Set -> {
+                preferenceManager.requestTimeoutSeconds = intent.seconds
+                updateState { it.copy(screenModal = SettingsModal.None) }
             }
 
             SettingsIntent.Action.Donate -> router.navigateToDonate()

@@ -1,5 +1,6 @@
 package com.shifthackz.aisdv1.data.preference
 
+import com.shifthackz.aisdv1.network.client.NetworkRequestTimeout
 import com.shifthackz.aisdv1.core.common.extensions.fixUrlSlashes
 import com.shifthackz.aisdv1.core.common.file.LOCAL_DIFFUSION_CUSTOM_PATH
 import com.shifthackz.aisdv1.core.common.schedulers.SchedulersToken
@@ -28,6 +29,10 @@ internal class PreferenceManagerImpl(
      */
     private val keyValueStore: KeyValueStore,
 ) : PreferenceManager {
+
+    init {
+        NetworkRequestTimeout.setSeconds(requestTimeoutSeconds)
+    }
 
     /**
      * Exposes the `preferencesChangedState` value used by the SDAI data layer.
@@ -429,6 +434,14 @@ internal class PreferenceManagerImpl(
         get() = keyValueStore.getInt(KEY_BACKGROUND_PROCESS_COUNT)
         set(value) = keyValueStore.putInt(KEY_BACKGROUND_PROCESS_COUNT, value)
 
+    override var requestTimeoutSeconds: Int
+        get() = keyValueStore.getInt(KEY_REQUEST_TIMEOUT_SECONDS, NetworkRequestTimeout.DEFAULT_SECONDS)
+        set(value) {
+            val seconds = value.coerceAtLeast(NetworkRequestTimeout.NO_LIMIT)
+            NetworkRequestTimeout.setSeconds(seconds)
+            putInt(KEY_REQUEST_TIMEOUT_SECONDS, seconds)
+        }
+
     /**
      * Exposes the `localGenerationBenchmarkPromptAnswered` value used by the SDAI data layer.
      *
@@ -485,6 +498,7 @@ internal class PreferenceManagerImpl(
                 localDiffusionSchedulerThread = localOnnxSchedulerThread,
                 monitorConnectivity = monitorConnectivity,
                 backgroundGeneration = backgroundGeneration,
+                requestTimeoutSeconds = requestTimeoutSeconds,
                 autoSaveAiResults = autoSaveAiResults,
                 saveToMediaStore = saveToMediaStore,
                 formAdvancedOptionsAlwaysShow = formAdvancedOptionsAlwaysShow,
@@ -832,6 +846,8 @@ internal class PreferenceManagerImpl(
          * @author Dmitriy Moroz
          */
         const val KEY_BACKGROUND_PROCESS_COUNT = "key_background_process_count"
+
+        const val KEY_REQUEST_TIMEOUT_SECONDS = "key_request_timeout_seconds"
         /**
          * Exposes the `KEY_LOCAL_GENERATION_BENCHMARK_PROMPT_ANSWERED` value used by the SDAI data layer.
          *

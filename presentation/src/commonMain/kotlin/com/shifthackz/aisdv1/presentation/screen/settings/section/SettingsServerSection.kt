@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.SettingsEthernet
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Storage
 import androidx.compose.material.icons.filled.Tag
+import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -190,6 +191,21 @@ internal fun SettingsServerSection(
                     },
                 )
             }
+            SettingsItem(
+                modifier = itemModifier,
+                loading = state.loading,
+                startIcon = Icons.Default.Timer,
+                text = text("settings_item_request_timeout"),
+                endValueText = if (state.requestTimeoutSeconds == 0) {
+                    text("settings_item_request_timeout_no_limit")
+                } else {
+                    Localization.string(
+                        "settings_item_request_timeout_value",
+                        state.requestTimeoutSeconds.toString(),
+                    ).asUiText()
+                },
+                onClick = { processIntent(SettingsIntent.Action.RequestTimeout.Edit) },
+            )
             SettingsItem(
                 modifier = itemModifier,
                 loading = state.loading,

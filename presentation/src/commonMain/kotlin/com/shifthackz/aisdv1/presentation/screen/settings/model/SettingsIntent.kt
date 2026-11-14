@@ -78,6 +78,12 @@ sealed interface SettingsIntent : MviIntent {
             data class Set(val grid: Grid) : GalleryGrid
         }
 
+        sealed interface RequestTimeout : Action {
+            data object Edit : RequestTimeout
+
+            data class Set(val seconds: Int) : RequestTimeout
+        }
+
         data object Donate : Action
 
         data object OnBoarding : Action

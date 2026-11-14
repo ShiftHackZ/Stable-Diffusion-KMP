@@ -271,6 +271,10 @@ interface PreferenceManager {
      */
     var backgroundProcessCount: Int
     /**
+     * HTTP request timeout for server calls, in seconds. `0` disables the timeout.
+     */
+    var requestTimeoutSeconds: Int
+    /**
      * Tracks whether the first local generation benchmark prompt has already
      * been answered.
      *

@@ -6,11 +6,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.input.KeyboardType
 import com.shifthackz.aisdv1.core.localization.Localization
 import com.shifthackz.aisdv1.core.model.UiText
 import com.shifthackz.aisdv1.core.model.asUiText
@@ -98,6 +105,33 @@ internal fun SettingsModalRenderer(
                 onSelected = {
                     processIntent(SettingsIntent.Action.GalleryGrid.Set(it))
                     dismiss()
+                },
+            )
+        }
+
+        is SettingsModal.RequestTimeout -> {
+            var input by remember(screenModal.seconds) {
+                mutableStateOf(screenModal.seconds.toString())
+            }
+            val parsed = input.toIntOrNull()?.takeIf { it >= 0 }
+            DecisionInteractiveDialog(
+                title = text("settings_item_request_timeout"),
+                text = text("settings_item_request_timeout_hint"),
+                confirmActionText = text("action_save"),
+                onConfirmAction = {
+                    parsed?.let { processIntent(SettingsIntent.Action.RequestTimeout.Set(it)) }
+                },
+                onDismissRequest = dismiss,
+                content = {
+                    OutlinedTextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = input,
+                        onValueChange = { value -> input = value.filter(Char::isDigit).take(6) },
+                        label = { Text(Localization.string("settings_item_request_timeout_label")) },
+                        isError = parsed == null,
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    )
                 },
             )
         }

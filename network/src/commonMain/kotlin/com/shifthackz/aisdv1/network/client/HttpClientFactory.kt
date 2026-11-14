@@ -48,6 +48,7 @@ fun createConfiguredHttpClient(
         requestTimeoutMillis = DEFAULT_TIMEOUT_MILLIS
         socketTimeoutMillis = DEFAULT_TIMEOUT_MILLIS
     }
+    install(ConfigurableRequestTimeout)
 
     install(Logging) {
         level = LogLevel.INFO

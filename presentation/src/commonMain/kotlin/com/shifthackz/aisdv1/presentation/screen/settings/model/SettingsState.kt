@@ -55,6 +55,7 @@ data class SettingsState(
     val backgroundGenerationAvailable: Boolean = false,
     val backgroundGeneration: Boolean = false,
     val monitorConnectivity: Boolean = false,
+    val requestTimeoutSeconds: Int = 120,
     val autoSaveAiResults: Boolean = false,
     val saveToMediaStore: Boolean = false,
     val formAdvancedOptionsAlwaysShow: Boolean = false,
@@ -122,4 +123,5 @@ sealed interface SettingsModal {
     data class SelectSdModel(val models: List<String>, val selected: String) : SettingsModal
     data class ManualPermission(val permission: String) : SettingsModal
     data class GalleryGrid(val grid: Grid) : SettingsModal
+    data class RequestTimeout(val seconds: Int) : SettingsModal
 }

@@ -343,6 +343,11 @@
     <string name="settings_item_language">Language</string>
     <string name="settings_item_demo">Demo mode</string>
     <string name="settings_item_monitor_connection">Monitor connection</string>
+    <string name="settings_item_request_timeout">Request timeout</string>
+    <string name="settings_item_request_timeout_label">Timeout, seconds</string>
+    <string name="settings_item_request_timeout_hint">How long to wait for a server response, in seconds. Set to 0 to wait without a limit.</string>
+    <string name="settings_item_request_timeout_value">%1$s s</string>
+    <string name="settings_item_request_timeout_no_limit">No limit</string>
     <string name="settings_item_background_generation">Background generation*</string>
     <string name="settings_item_background_generation_warning">*Background generation may be delayed or paused by the system. Please check that generation works before enabling this.</string>
     <string name="settings_item_background_generation_warning_ios">*Background generation may not work reliably with Silicon Diffusion. Make sure Silicon Diffusion works well on your iPhone before enabling this.</string>

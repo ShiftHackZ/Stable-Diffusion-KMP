@@ -57,6 +57,10 @@ data class Settings(
      */
     val backgroundGeneration: Boolean = false,
     /**
+     * HTTP request timeout for server calls, in seconds. `0` disables the timeout.
+     */
+    val requestTimeoutSeconds: Int = 120,
+    /**
      * Exposes the `autoSaveAiResults` value used by the SDAI domain layer.
      *
      * @author Dmitriy Moroz
