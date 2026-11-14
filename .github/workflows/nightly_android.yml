@@ -36,6 +36,7 @@ jobs:
   nightly:
     name: Build Android full nightly
     runs-on: ubuntu-24.04
+    environment: android-release
     timeout-minutes: 90
     env:
       TARGET_REF: ${{ github.event_name == 'workflow_dispatch' && inputs.target_ref || 'develop' }}
@@ -128,18 +129,24 @@ jobs:
             -Dkotlin.native.ignoreDisabledTargets=true \
             -Pkotlin.native.ignoreDisabledTargets=true
 
-      - name: Sign APK with apksigner key and certificate
+      - name: Sign APK with release JKS
         if: steps.plan.outputs.should_build == 'true'
         id: sign
         shell: bash
         env:
-          ANDROID_NIGHTLY_CERT_PEM_BASE64: ${{ secrets.ANDROID_NIGHTLY_CERT_PEM_BASE64 }}
-          ANDROID_NIGHTLY_KEY_PK8_BASE64: ${{ secrets.ANDROID_NIGHTLY_KEY_PK8_BASE64 }}
+          ANDROID_RELEASE_KEYSTORE_BASE64: ${{ secrets.ANDROID_RELEASE_KEYSTORE_BASE64 }}
+          ANDROID_RELEASE_STORE_PASSWORD: ${{ secrets.ANDROID_RELEASE_STORE_PASSWORD }}
+          ANDROID_RELEASE_KEY_ALIAS: ${{ secrets.ANDROID_RELEASE_KEY_ALIAS }}
+          ANDROID_RELEASE_KEY_PASSWORD: ${{ secrets.ANDROID_RELEASE_KEY_PASSWORD }}
+          ANDROID_RELEASE_CERT_SHA256: ${{ vars.ANDROID_RELEASE_CERT_SHA256 }}
         run: |
           set -euo pipefail
 
-          : "${ANDROID_NIGHTLY_CERT_PEM_BASE64:?Missing ANDROID_NIGHTLY_CERT_PEM_BASE64 secret.}"
-          : "${ANDROID_NIGHTLY_KEY_PK8_BASE64:?Missing ANDROID_NIGHTLY_KEY_PK8_BASE64 secret.}"
+          : "${ANDROID_RELEASE_KEYSTORE_BASE64:?Missing ANDROID_RELEASE_KEYSTORE_BASE64 secret.}"
+          : "${ANDROID_RELEASE_STORE_PASSWORD:?Missing ANDROID_RELEASE_STORE_PASSWORD secret.}"
+          : "${ANDROID_RELEASE_KEY_ALIAS:?Missing ANDROID_RELEASE_KEY_ALIAS secret.}"
+          : "${ANDROID_RELEASE_CERT_SHA256:?Missing ANDROID_RELEASE_CERT_SHA256 variable.}"
+          export ANDROID_RELEASE_KEY_PASSWORD="${ANDROID_RELEASE_KEY_PASSWORD:-${ANDROID_RELEASE_STORE_PASSWORD}}"
 
           unsigned_apk="$(find app/android/build/outputs/apk/full/release -type f -name '*-unsigned.apk' -print -quit)"
           if [[ -z "${unsigned_apk}" ]]; then
@@ -153,22 +160,30 @@ jobs:
           zipalign="${build_tools}/zipalign"
 
           signing_dir="${RUNNER_TEMP}/nightly-signing"
+          trap 'rm -rf -- "${signing_dir}"' EXIT
           output_dir="${RUNNER_TEMP}/nightly-output"
           install -m 700 -d "${signing_dir}" "${output_dir}"
 
-          key_file="${signing_dir}/nightly.pk8"
-          cert_file="${signing_dir}/nightly.x509.pem"
+          keystore="${signing_dir}/release.jks"
           aligned_apk="${output_dir}/sdai-full-nightly-aligned.apk"
           signed_apk="${output_dir}/${APK_NAME}"
 
-          printf "%s" "${ANDROID_NIGHTLY_KEY_PK8_BASE64}" | base64 --decode > "${key_file}"
-          printf "%s" "${ANDROID_NIGHTLY_CERT_PEM_BASE64}" | base64 --decode > "${cert_file}"
-          chmod 600 "${key_file}" "${cert_file}"
+          printf "%s" "${ANDROID_RELEASE_KEYSTORE_BASE64}" | base64 --decode > "${keystore}"
+          chmod 600 "${keystore}"
 
           "${zipalign}" -p -f 4 "${unsigned_apk}" "${aligned_apk}"
 
-          "${apksigner}" sign --key "${key_file}" --cert "${cert_file}" --out "${signed_apk}" "${aligned_apk}"
+          "${apksigner}" sign --ks "${keystore}" --ks-key-alias "${ANDROID_RELEASE_KEY_ALIAS}" \
+            --ks-pass env:ANDROID_RELEASE_STORE_PASSWORD --key-pass env:ANDROID_RELEASE_KEY_PASSWORD \
+            --out "${signed_apk}" "${aligned_apk}"
           "${apksigner}" verify --print-certs "${signed_apk}" > "${output_dir}/apksigner.txt"
+
+          expected_cert="$(printf '%s' "${ANDROID_RELEASE_CERT_SHA256}" | tr -d '[:space:]:' | tr '[:upper:]' '[:lower:]')"
+          actual_cert="$(sed -n 's/^Signer #1 certificate SHA-256 digest: //p' "${output_dir}/apksigner.txt" | tr '[:upper:]' '[:lower:]')"
+          if [[ ! "${expected_cert}" =~ ^[0-9a-f]{64}$ || "${actual_cert}" != "${expected_cert}" ]]; then
+            echo "Signed APK certificate does not match the release certificate." >&2
+            exit 1
+          fi
 
           sha256sum "${signed_apk}" > "${output_dir}/${APK_NAME}.sha256"
           echo "signed_apk=${signed_apk}" >> "${GITHUB_OUTPUT}"

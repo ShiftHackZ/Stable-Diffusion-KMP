@@ -34,16 +34,7 @@ The workflow does not upload separate GitHub Actions artifacts, so APK downloads
 
 ## Signing Model
 
-Nightly signing does not use JKS or Gradle `signing.properties`.
-
-The workflow signs the unsigned APK with Android SDK `apksigner` using:
-
-- `ANDROID_NIGHTLY_KEY_PK8_BASE64`: Base64-encoded plain PKCS#8 private key file.
-- `ANDROID_NIGHTLY_CERT_PEM_BASE64`: Base64-encoded X.509 certificate file.
-
-These values should be stored as repository or environment secrets. Do not commit them to the repository.
-
-If the nightly key is different from the normal `full` release signing certificate, Android will not install a nightly APK as an update over an existing `com.shifthackz.aisdv1.app.full` build. Testers must uninstall the old build first, or the nightly signing certificate must match the installed build.
+The workflow signs the unsigned APK with Android SDK `apksigner` using the same release JKS as normal `full` releases, configured in the `android-release` GitHub environment. See [release signing configuration](scripts/release/README.md#configure-signing).
 
 ## Manual Run
 
