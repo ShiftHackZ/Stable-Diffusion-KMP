@@ -7,6 +7,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
 
 class GetStableDiffusionSamplersUseCaseImplTest {
@@ -16,6 +17,16 @@ class GetStableDiffusionSamplersUseCaseImplTest {
     private val useCase = GetStableDiffusionSamplersUseCaseImpl(
         repository = stubStableDiffusionSamplersRepository,
     )
+
+    /**
+     * Models a successful refresh for cache-read tests; an unstubbed fetch is a failure.
+     *
+     * @author Dmitriy Moroz
+     */
+    @Before
+    fun initialize() {
+        coEvery { stubStableDiffusionSamplersRepository.fetchSamplers() } returns Unit
+    }
 
     @Test
     fun `given got samplers from repository, expected valid samplers value`() = runTest {

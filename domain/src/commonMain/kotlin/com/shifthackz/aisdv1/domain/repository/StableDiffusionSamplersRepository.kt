@@ -3,22 +3,22 @@ package com.shifthackz.aisdv1.domain.repository
 import com.shifthackz.aisdv1.domain.entity.StableDiffusionSampler
 
 /**
- * Defines the `StableDiffusionSamplersRepository` contract for the SDAI domain layer.
+ * Refreshes and reads disposable AUTOMATIC1111 sampler metadata for the selected connection.
  *
  * @author Dmitriy Moroz
  */
 interface StableDiffusionSamplersRepository {
     /**
-     * Loads SDAI data through `fetchSamplers`.
+     * Refreshes sampler metadata without publishing results from a connection that was replaced.
      *
      * @author Dmitriy Moroz
      */
     suspend fun fetchSamplers()
 
     /**
-     * Loads SDAI data through `getSamplers`.
+     * Reads a complete cache snapshot belonging to the current server and credentials.
      *
-     * @return Result produced by `getSamplers`.
+     * @return Cached samplers, or an empty list when this connection has no valid cache.
      * @author Dmitriy Moroz
      */
     suspend fun getSamplers(): List<StableDiffusionSampler>

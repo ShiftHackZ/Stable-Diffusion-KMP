@@ -80,6 +80,7 @@ class StableDiffusionSamplersRepositoryImplTest {
 
     @Test
     fun `given attempt to get samplers, local data source returns list, expected valid domain models list value`() = runTest {
+        populateCache()
         coEvery {
             stubLocalDataSource.getSamplers()
         } returns mockStableDiffusionSamplers
@@ -89,6 +90,7 @@ class StableDiffusionSamplersRepositoryImplTest {
 
     @Test
     fun `given attempt to get samplers, local data source returns empty list, expected empty domain models list value`() = runTest {
+        populateCache()
         coEvery {
             stubLocalDataSource.getSamplers()
         } returns emptyList()
@@ -98,6 +100,7 @@ class StableDiffusionSamplersRepositoryImplTest {
 
     @Test
     fun `given attempt to get samplers, local data source throws exception, expected error value`() = runTest {
+        populateCache()
         coEvery {
             stubLocalDataSource.getSamplers()
         } throws stubException
@@ -105,5 +108,20 @@ class StableDiffusionSamplersRepositoryImplTest {
         val actual = runCatching { repository.getSamplers() }.exceptionOrNull()
 
         assertTrue(actual === stubException)
+    }
+
+    /**
+     * Associates the local cache fixture with the configured connection before reading it.
+     *
+     * @author Dmitriy Moroz
+     */
+    private suspend fun populateCache() {
+        coEvery {
+            stubRemoteDataSource.fetchSamplers(stubBaseUrl, stubCredentials)
+        } returns mockStableDiffusionSamplers
+        coEvery {
+            stubLocalDataSource.insertSamplers(mockStableDiffusionSamplers)
+        } returns Unit
+        repository.fetchSamplers()
     }
 }

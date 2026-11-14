@@ -13,8 +13,12 @@ import kotlin.math.roundToInt
 
 /**
  * Maps shared generation form events into img2img intents.
+ *
+ * @return The corresponding screen action, or null for controls unsupported by img2img.
+ * @author Dmitriy Moroz
  */
 internal fun GenerationInputFormEvent.toImageToImageIntent(): ImageToImageIntent? = when (this) {
+    GenerationInputFormEvent.RetrySamplers -> ImageToImageIntent.RetrySamplers
     is GenerationInputFormEvent.EditTag -> ImageToImageIntent.ShowEditTag(
         prompt = prompt,
         negativePrompt = negativePrompt,

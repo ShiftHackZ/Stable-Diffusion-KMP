@@ -696,4 +696,5 @@
     <string name="open_ai_oauth_storage_error">受保护的账户存储不可用。请解锁设备后重试。</string>
     <string name="open_ai_oauth_error">ChatGPT 请求失败。请检查网络、账户访问权限和图像尺寸，然后重试。</string>
     <string name="open_ai_oauth_reset">重置本地会话</string>
+    <string name="error_samplers_unavailable">无法加载采样方法。请检查服务器连接后重试。</string>
 </resources>

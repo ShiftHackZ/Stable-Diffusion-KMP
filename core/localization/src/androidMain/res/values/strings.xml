@@ -681,4 +681,5 @@
     <string name="open_ai_oauth_storage_error">Protected account storage is unavailable. Unlock the device and try again.</string>
     <string name="open_ai_oauth_error">The ChatGPT request failed. Check your connection, account access and selected dimensions, then try again.</string>
     <string name="open_ai_oauth_reset">Reset local session</string>
+    <string name="error_samplers_unavailable">Could not load sampling methods. Check the server connection and retry.</string>
 </resources>

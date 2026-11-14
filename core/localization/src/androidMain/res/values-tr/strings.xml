@@ -644,4 +644,5 @@
     <string name="open_ai_oauth_storage_error">Korumalı hesap depolaması kullanılamıyor. Cihazın kilidini açıp yeniden deneyin.</string>
     <string name="open_ai_oauth_error">ChatGPT isteği başarısız oldu. Bağlantınızı, hesap erişimini ve görsel boyutlarını kontrol edip yeniden deneyin.</string>
     <string name="open_ai_oauth_reset">Yerel oturumu sıfırla</string>
+    <string name="error_samplers_unavailable">Örnekleme yöntemleri yüklenemedi. Sunucu bağlantısını kontrol edip yeniden deneyin.</string>
 </resources>

@@ -644,4 +644,5 @@
     <string name="open_ai_oauth_storage_error">Захищене сховище облікового запису недоступне. Розблокуйте пристрій і повторіть спробу.</string>
     <string name="open_ai_oauth_error">Запит до ChatGPT завершився помилкою. Перевірте з’єднання, доступ облікового запису й розмір зображення, потім повторіть спробу.</string>
     <string name="open_ai_oauth_reset">Скинути локальну сесію</string>
+    <string name="error_samplers_unavailable">Не вдалося завантажити методи семплювання. Перевірте з’єднання із сервером і повторіть спробу.</string>
 </resources>

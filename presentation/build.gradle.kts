@@ -56,6 +56,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.androidx.lifecycle.compose)
             implementation(libs.koin.core)
         }
 
@@ -78,7 +79,6 @@ kotlin {
             implementation(libs.androidx.compose.viewmodel)
             implementation(libs.androidx.compose.navigation)
             implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.compose)
 
             implementation(libs.koin.core)
             implementation(libs.koin.android)

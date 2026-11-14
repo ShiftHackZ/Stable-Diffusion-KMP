@@ -271,8 +271,12 @@ fun TextToImageContent(
 
 /**
  * Maps shared generation form events into txt2img intents.
+ *
+ * @return The corresponding screen action, or null for controls unsupported by txt2img.
+ * @author Dmitriy Moroz
  */
 internal fun GenerationInputFormEvent.toTextToImageIntent(): TextToImageIntent? = when (this) {
+    GenerationInputFormEvent.RetrySamplers -> TextToImageIntent.RetrySamplers
     is GenerationInputFormEvent.EditTag -> TextToImageIntent.ShowEditTag(
         prompt = prompt,
         negativePrompt = negativePrompt,

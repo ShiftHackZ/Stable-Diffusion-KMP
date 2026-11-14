@@ -24,7 +24,6 @@ import com.shifthackz.aisdv1.core.localization.Localization
 import com.shifthackz.aisdv1.core.model.asUiText
 import com.shifthackz.aisdv1.domain.entity.ServerSource
 import com.shifthackz.aisdv1.domain.entity.StabilityAiClipGuidance
-import com.shifthackz.aisdv1.domain.entity.StabilityAiSampler
 import com.shifthackz.aisdv1.domain.entity.StabilityAiStylePreset
 import com.shifthackz.aisdv1.presentation.theme.sliderColors
 import com.shifthackz.aisdv1.presentation.theme.textFieldColors
@@ -66,22 +65,7 @@ internal fun GenerationInputAdvancedOptions(
                 when (state.mode) {
                     ServerSource.STABILITY_AI,
                     ServerSource.ARLI_AI,
-                    ServerSource.AUTOMATIC1111 -> DropdownTextField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp),
-                        label = Localization.string("hint_sampler").asUiText(),
-                        value = state.selectedSampler,
-                        items = state.availableSamplers,
-                        onItemSelected = { onEvent(GenerationInputFormEvent.UpdateSampler(it)) },
-                        displayDelegate = { value ->
-                            if (value == StabilityAiSampler.NONE.toString()) {
-                                Localization.string("hint_autodetect").asUiText()
-                            } else {
-                                value.asUiText()
-                            }
-                        }
-                    )
+                    ServerSource.AUTOMATIC1111 -> GenerationSamplerField(state, onEvent)
 
                     else -> Unit
                 }

@@ -28,9 +28,14 @@ import com.shifthackz.aisdv1.presentation.widget.input.GenerationInputFormState
 /**
  * Complete render state for img2img.
  *
+ * @param samplersLoading Whether an AUTOMATIC1111 sampler request is running.
+ * @param samplersLoadFailed Whether the sampler field should offer an inline retry.
+ *
  * It extends the shared generation form state with source-image, inpaint, and
  * result handling fields while keeping platform-aware local provider controls
  * consistent with the txt2img screen.
+ *
+ * @author Dmitriy Moroz
  */
 @Immutable
 data class ImageToImageState(
@@ -69,6 +74,8 @@ data class ImageToImageState(
     override val availableForgeModules: List<ForgeModule> = emptyList(),
     override val selectedForgeModules: List<ForgeModule> = emptyList(),
     override val availableSamplers: List<String> = emptyList(),
+    override val samplersLoading: Boolean = false,
+    override val samplersLoadFailed: Boolean = false,
     override val selectedStylePreset: StabilityAiStylePreset = StabilityAiStylePreset.NONE,
     override val selectedClipGuidancePreset: StabilityAiClipGuidance = StabilityAiClipGuidance.NONE,
     override val openAiModel: OpenAiModel = OpenAiModel.default,

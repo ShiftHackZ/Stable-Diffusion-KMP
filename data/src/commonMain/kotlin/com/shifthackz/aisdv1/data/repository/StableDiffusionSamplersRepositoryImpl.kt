@@ -1,59 +1,77 @@
 package com.shifthackz.aisdv1.data.repository
 
 import com.shifthackz.aisdv1.domain.datasource.StableDiffusionSamplersDataSource
+import com.shifthackz.aisdv1.domain.entity.StableDiffusionSampler
+import com.shifthackz.aisdv1.domain.feature.auth.AuthorizationCredentials
 import com.shifthackz.aisdv1.domain.feature.auth.AuthorizationStore
 import com.shifthackz.aisdv1.domain.preference.PreferenceManager
 import com.shifthackz.aisdv1.domain.repository.StableDiffusionSamplersRepository
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 /**
- * Implements `StableDiffusionSamplersRepository` behavior in the SDAI data layer.
+ * Keeps sampler cache reads and replacement consistent, scoped to the configured server and credentials.
  *
+ * @param remoteDataSource Fetches sampler metadata from AUTOMATIC1111.
+ * @param localDataSource Stores disposable sampler metadata for this process.
+ * @param preferenceManager Supplies the active AUTOMATIC1111 server URL.
+ * @param authorizationStore Supplies credentials used to identify the cache owner.
  * @author Dmitriy Moroz
  */
 internal class StableDiffusionSamplersRepositoryImpl(
-    /**
-     * Exposes the `remoteDataSource` value used by the SDAI data layer.
-     *
-     * @author Dmitriy Moroz
-     */
     private val remoteDataSource: StableDiffusionSamplersDataSource.Remote,
-    /**
-     * Exposes the `localDataSource` value used by the SDAI data layer.
-     *
-     * @author Dmitriy Moroz
-     */
     private val localDataSource: StableDiffusionSamplersDataSource.Local,
-    /**
-     * Exposes the `preferenceManager` value used by the SDAI data layer.
-     *
-     * @author Dmitriy Moroz
-     */
     private val preferenceManager: PreferenceManager,
-    /**
-     * Exposes the `authorizationStore` value used by the SDAI data layer.
-     *
-     * @author Dmitriy Moroz
-     */
     private val authorizationStore: AuthorizationStore,
 ) : StableDiffusionSamplersRepository {
 
+    private val cacheMutex = Mutex()
+    private var cachedServerUrl: String? = null
+    private var cachedCredentials: AuthorizationCredentials? = null
+
     /**
-     * Loads SDAI data through `fetchSamplers`.
+     * Fetches a connection snapshot and caches it only while that connection remains selected.
+     * Reads cannot observe the intermediate empty table during cache replacement.
      *
      * @author Dmitriy Moroz
      */
     override suspend fun fetchSamplers() {
+        val serverUrl = preferenceManager.automatic1111ServerUrl
+        val credentials = authorizationStore.getAuthorizationCredentials()
         val samplers = remoteDataSource.fetchSamplers(
-            baseUrl = preferenceManager.automatic1111ServerUrl,
-            credentials = authorizationStore.getAuthorizationCredentials(),
+            baseUrl = serverUrl,
+            credentials = credentials,
         )
-        localDataSource.insertSamplers(samplers)
+        currentCoroutineContext().ensureActive()
+        cacheMutex.withLock {
+            if (
+                serverUrl != preferenceManager.automatic1111ServerUrl ||
+                credentials != authorizationStore.getAuthorizationCredentials()
+            ) return@withLock
+            cachedServerUrl = null
+            cachedCredentials = null
+            localDataSource.insertSamplers(samplers)
+            cachedServerUrl = serverUrl
+            cachedCredentials = credentials
+        }
     }
 
     /**
-     * Loads SDAI data through `getSamplers`.
+     * Returns only samplers fetched for the current connection; other-server cache is unavailable.
      *
+     * @return Cached samplers, or an empty list if the selected connection has no valid cache.
      * @author Dmitriy Moroz
      */
-    override suspend fun getSamplers() = localDataSource.getSamplers()
+    override suspend fun getSamplers(): List<StableDiffusionSampler> = cacheMutex.withLock {
+        if (
+            cachedServerUrl != preferenceManager.automatic1111ServerUrl ||
+            cachedCredentials != authorizationStore.getAuthorizationCredentials()
+        ) {
+            emptyList()
+        } else {
+            localDataSource.getSamplers()
+        }
+    }
 }
