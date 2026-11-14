@@ -605,4 +605,11 @@
     <string name="benchmark_issue_sdxl_tiny_experimental_only">SDXL здесь может сработать только как tiny experimental CPU запуск, поэтому не рекомендован.</string>
     <string name="benchmark_issue_sdxl_backend_not_validated">Vulkan API найден, но SDXL Vulkan backend не валидирован безопасным бенчмарком.</string>
     <string name="benchmark_issue_accelerator_api_not_available">Нужный API ускорения не найден.</string>
+    <string name="settings_generation_timeout">Тайм-аут генерации</string>
+    <string name="settings_generation_timeout_description">Максимальное время ожидания каждого сетевого запроса на генерацию изображений. Применяется к новым запросам.</string>
+    <string name="settings_generation_timeout_minutes">%1$s мин</string>
+    <string name="settings_generation_timeout_unlimited">Без ограничения</string>
+    <string name="settings_connection_timeout">Тайм-аут подключения</string>
+    <string name="settings_connection_timeout_description">Время на подключение к ИИ-провайдеру. Применяется к новым запросам.</string>
+    <string name="settings_connection_timeout_ios_description">iOS автоматически управляет временем подключения. Значение сохраняется, но не может применяться в iOS.</string>
 </resources>

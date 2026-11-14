@@ -102,6 +102,36 @@ internal fun SettingsModalRenderer(
             )
         }
 
+        is SettingsModal.GenerationTimeout -> ModalBottomSheet(
+            onDismissRequest = dismiss,
+            shape = RectangleShape,
+            containerColor = MaterialTheme.colorScheme.background,
+        ) {
+            NetworkTimeoutBottomSheet(
+                selected = screenModal.selected,
+                titleKey = "settings_generation_timeout",
+                descriptionKey = "settings_generation_timeout_description",
+                onSelected = { processIntent(SettingsIntent.SetGenerationTimeout(it)) },
+            )
+        }
+
+        is SettingsModal.ConnectionTimeout -> ModalBottomSheet(
+            onDismissRequest = dismiss,
+            shape = RectangleShape,
+            containerColor = MaterialTheme.colorScheme.background,
+        ) {
+            NetworkTimeoutBottomSheet(
+                selected = screenModal.selected,
+                titleKey = "settings_connection_timeout",
+                descriptionKey = if (screenModal.supported) {
+                    "settings_connection_timeout_description"
+                } else {
+                    "settings_connection_timeout_ios_description"
+                },
+                onSelected = { processIntent(SettingsIntent.SetConnectionTimeout(it)) },
+            )
+        }
+
         is SettingsModal.ManualPermission -> InfoDialog(
             title = text("premission_rationale_title"),
             subTitle = Localization.string(

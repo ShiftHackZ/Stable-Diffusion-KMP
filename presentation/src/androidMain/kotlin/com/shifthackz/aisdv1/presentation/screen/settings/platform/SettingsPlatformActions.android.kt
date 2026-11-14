@@ -75,6 +75,7 @@ private class AndroidSettingsPlatformActions(
         get() = Build.VERSION.SDK_INT < Build.VERSION_CODES.S_V2
 
     override val supportsBackgroundGeneration: Boolean = true
+    override val supportsConnectionTimeout: Boolean = true
     override val backgroundGenerationWarningKey = "settings_item_background_generation_warning"
 
     override suspend fun requestStoragePermission(): Boolean {

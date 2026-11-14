@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.SettingsEthernet
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Storage
 import androidx.compose.material.icons.filled.Tag
+import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -32,6 +33,7 @@ import com.shifthackz.aisdv1.core.localization.Localization
 import com.shifthackz.aisdv1.core.model.asUiText
 import com.shifthackz.aisdv1.presentation.screen.settings.model.SettingsIntent
 import com.shifthackz.aisdv1.presentation.screen.settings.model.SettingsState
+import com.shifthackz.aisdv1.presentation.screen.settings.model.label
 import com.shifthackz.aisdv1.presentation.screen.settings.model.shortTitle
 import com.shifthackz.aisdv1.presentation.screen.settings.model.text
 import com.shifthackz.aisdv1.presentation.widget.item.SettingsHeader
@@ -46,6 +48,7 @@ import com.shifthackz.aisdv1.presentation.widget.source.BetaBadge
  * @param itemModifier Modifier shared by Settings rows.
  * @param warningModifier Modifier used by the background-generation warning copy.
  * @param backgroundGenerationWarningKey Localization key for the current warning copy.
+ * @param showConnectionTimeout Whether this platform supports the connection timeout row.
  * @param processIntent Intent sink used to route row actions back to SettingsViewModel.
  *
  * @author Dmitriy Moroz
@@ -57,6 +60,7 @@ internal fun SettingsServerSection(
     itemModifier: Modifier,
     warningModifier: Modifier,
     backgroundGenerationWarningKey: String,
+    showConnectionTimeout: Boolean,
     processIntent: (SettingsIntent) -> Unit,
 ) {
         if (!state.onBoardingDemo) {
@@ -89,6 +93,26 @@ internal fun SettingsServerSection(
                     startIcon = Icons.Default.Circle,
                     text = text("settings_item_stability_ai_credits"),
                     endValueText = state.stabilityAiCredits.roundTo(4).toString().asUiText(),
+                )
+            }
+            if (state.showNetworkTimeoutSettings) {
+                if (showConnectionTimeout) {
+                    SettingsItem(
+                        modifier = itemModifier,
+                        loading = state.loading,
+                        startIcon = Icons.Default.Timer,
+                        text = text("settings_connection_timeout"),
+                        endValueText = state.connectionTimeout.label().asUiText(),
+                        onClick = { processIntent(SettingsIntent.PickConnectionTimeout) },
+                    )
+                }
+                SettingsItem(
+                    modifier = itemModifier,
+                    loading = state.loading,
+                    startIcon = Icons.Default.Timer,
+                    text = text("settings_generation_timeout"),
+                    endValueText = state.generationRequestTimeout.label().asUiText(),
+                    onClick = { processIntent(SettingsIntent.PickGenerationTimeout) },
                 )
             }
             if (state.showSdModelSelector) {

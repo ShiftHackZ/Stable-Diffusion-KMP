@@ -1,6 +1,7 @@
 package com.shifthackz.aisdv1.domain.preference
 
 import com.shifthackz.aisdv1.core.common.schedulers.SchedulersToken
+import com.shifthackz.aisdv1.domain.entity.NetworkTimeout
 import com.shifthackz.aisdv1.domain.entity.Grid
 import com.shifthackz.aisdv1.domain.entity.ServerSource
 import com.shifthackz.aisdv1.domain.entity.Settings
@@ -12,6 +13,20 @@ import kotlinx.coroutines.flow.Flow
  * @author Dmitriy Moroz
  */
 interface PreferenceManager {
+    /**
+     * Time allowed to establish provider connections, independent of generation waiting limits.
+     *
+     * @author Dmitriy Moroz
+     */
+    var connectionTimeout: NetworkTimeout
+
+    /**
+     * Waiting limit shared by all network-based AI generation providers.
+     *
+     * @author Dmitriy Moroz
+     */
+    var generationRequestTimeout: NetworkTimeout
+
     /**
      * Exposes the `automatic1111ServerUrl` value used by the SDAI domain layer.
      *

@@ -657,4 +657,11 @@
     <string name="benchmark_issue_sdxl_tiny_experimental_only">SDXL 在此处可能只能作为 tiny experimental CPU 运行，因此不推荐。</string>
     <string name="benchmark_issue_sdxl_backend_not_validated">检测到 Vulkan API，但安全基准测试未验证 SDXL Vulkan backend。</string>
     <string name="benchmark_issue_accelerator_api_not_available">未找到所需的加速 API。</string>
+    <string name="settings_generation_timeout">生成超时</string>
+    <string name="settings_generation_timeout_description">每个在线 AI 图像生成请求的最长等待时间。适用于新请求。</string>
+    <string name="settings_generation_timeout_minutes">%1$s 分钟</string>
+    <string name="settings_generation_timeout_unlimited">无限制</string>
+    <string name="settings_connection_timeout">连接超时</string>
+    <string name="settings_connection_timeout_description">连接到 AI 服务提供商所允许的时间。适用于新请求。</string>
+    <string name="settings_connection_timeout_ios_description">iOS 自动管理连接时长。此值会被保存，但无法在 iOS 上强制执行。</string>
 </resources>

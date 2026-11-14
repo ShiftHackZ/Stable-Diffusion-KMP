@@ -642,4 +642,11 @@
     <string name="benchmark_issue_sdxl_tiny_experimental_only">SDXL funktioniert hier möglicherweise nur als sehr kleiner experimenteller CPU-Lauf und wird daher nicht empfohlen.</string>
     <string name="benchmark_issue_sdxl_backend_not_validated">Die Vulkan-API wurde gefunden, aber das SDXL-Vulkan-Backend wurde nicht durch einen sicheren Benchmark validiert.</string>
     <string name="benchmark_issue_accelerator_api_not_available">Die erforderliche Beschleunigungs-API wurde nicht gefunden.</string>
+    <string name="settings_generation_timeout">Zeitlimit für die Bildgenerierung</string>
+    <string name="settings_generation_timeout_description">Maximale Wartezeit pro Anfrage zur KI-Bildgenerierung über das Netzwerk. Gilt für neue Anfragen.</string>
+    <string name="settings_generation_timeout_minutes">%1$s Min.</string>
+    <string name="settings_generation_timeout_unlimited">Unbegrenzt</string>
+    <string name="settings_connection_timeout">Verbindungszeitlimit</string>
+    <string name="settings_connection_timeout_description">Zeit zum Verbindungsaufbau mit einem KI-Anbieter. Gilt für neue Anfragen.</string>
+    <string name="settings_connection_timeout_ios_description">iOS verwaltet die Verbindungsdauer automatisch. Dieser Wert wird gespeichert, kann unter iOS aber nicht erzwungen werden.</string>
 </resources>

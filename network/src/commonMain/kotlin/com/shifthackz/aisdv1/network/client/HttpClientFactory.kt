@@ -25,12 +25,14 @@ expect fun platformHttpClientEngine(): HttpClientEngineFactory<HttpClientEngineC
  *
  * @param json json value consumed by the API.
  * @param installContentNegotiation install content negotiation value consumed by the API.
+ * @param connectionTimeoutProvider Optional live connection limit for AI provider clients.
  * @param configure configure value consumed by the API.
  * @author Dmitriy Moroz
  */
 fun createConfiguredHttpClient(
     json: Json = defaultNetworkJson,
     installContentNegotiation: Boolean = true,
+    connectionTimeoutProvider: ConnectionTimeoutProvider? = null,
     configure: HttpClientConfig<HttpClientEngineConfig>.() -> Unit = {},
 ): HttpClient = HttpClient(platformHttpClientEngine()) {
     expectSuccess = true
@@ -52,6 +54,8 @@ fun createConfiguredHttpClient(
     install(Logging) {
         level = LogLevel.INFO
     }
+
+    connectionTimeoutProvider?.let { install(connectionTimeoutPlugin(it)) }
 
     configure()
 }

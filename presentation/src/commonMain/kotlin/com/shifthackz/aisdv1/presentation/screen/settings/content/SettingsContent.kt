@@ -65,6 +65,7 @@ internal fun ContentSettingsState(
             itemModifier = itemModifier,
             warningModifier = warningModifier,
             backgroundGenerationWarningKey = platformActions.backgroundGenerationWarningKey,
+            showConnectionTimeout = platformActions.supportsConnectionTimeout,
             processIntent = processIntent,
         )
         SettingsLookAndFeelSection(

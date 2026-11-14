@@ -1,6 +1,8 @@
 package com.shifthackz.aisdv1.network.api.stabilityai
 
 import com.shifthackz.aisdv1.network.client.createConfiguredHttpClient
+import com.shifthackz.aisdv1.network.client.GenerationTimeoutProvider
+import com.shifthackz.aisdv1.network.client.applyGenerationTimeout
 import com.shifthackz.aisdv1.network.client.NetworkUsageCategory
 import com.shifthackz.aisdv1.network.client.defaultNetworkJson
 import com.shifthackz.aisdv1.network.client.recordUsageBytes
@@ -31,6 +33,7 @@ import kotlinx.serialization.json.Json
  * Ktor implementation of Stability AI generation calls with counted inference traffic.
  *
  * @param httpClient Configured Ktor client used to send provider requests.
+ * @param generationTimeoutProvider Reads the current waiting limit for each generation request.
  * @param baseUrl Stability AI API base URL.
  * @param json JSON codec used for counted request/response payloads.
  *
@@ -55,13 +58,25 @@ class KtorStabilityAiGenerationApi(
      * @author Dmitriy Moroz
      */
     private val json: Json = defaultNetworkJson,
+    private val generationTimeoutProvider: GenerationTimeoutProvider = GenerationTimeoutProvider.Default,
 ) : StabilityAiGenerationApi {
 
-    constructor(baseUrl: String) : this(
+    /**
+     * Creates the generation client with the standard timeout for account and balance calls.
+     *
+     * @param baseUrl Stability AI API base URL.
+     * @param generationTimeoutProvider Source of the current generation waiting limit.
+     * @author Dmitriy Moroz
+     */
+    constructor(
+        baseUrl: String,
+        generationTimeoutProvider: GenerationTimeoutProvider = GenerationTimeoutProvider.Default,
+    ) : this(
         httpClient = createConfiguredHttpClient(
             installContentNegotiation = false,
         ),
         baseUrl = baseUrl,
+        generationTimeoutProvider = generationTimeoutProvider,
     )
 
     override suspend fun validateBearerToken(apiKey: String) {
@@ -97,6 +112,7 @@ class KtorStabilityAiGenerationApi(
             .post {
                 url.takeFrom(baseUrl)
                 url.appendPathSegments(PATH_API_VERSION, PATH_GENERATION, engineId, PATH_TEXT_TO_IMAGE)
+                applyGenerationTimeout(generationTimeoutProvider)
                 header(HttpHeaders.Authorization, "Bearer $apiKey")
                 header(HttpHeaders.Accept, ContentType.Application.Json.toString())
                 setTrackedTextBody(
@@ -118,6 +134,7 @@ class KtorStabilityAiGenerationApi(
             .post {
                 url.takeFrom(baseUrl)
                 url.appendPathSegments(PATH_API_VERSION, PATH_GENERATION, engineId, PATH_IMAGE_TO_IMAGE)
+                applyGenerationTimeout(generationTimeoutProvider)
                 trackUsage(NetworkUsageCategory.INFERENCE)
                 recordUsageBytes(
                     category = NetworkUsageCategory.INFERENCE,

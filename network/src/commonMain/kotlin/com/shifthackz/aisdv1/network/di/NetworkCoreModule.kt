@@ -28,6 +28,9 @@ import com.shifthackz.aisdv1.network.api.swarmui.KtorSwarmUiGenerationApi
 import com.shifthackz.aisdv1.network.api.swarmui.KtorSwarmUiModelsApi
 import com.shifthackz.aisdv1.network.api.swarmui.SwarmUiGenerationApi
 import com.shifthackz.aisdv1.network.api.swarmui.SwarmUiModelsApi
+import com.shifthackz.aisdv1.network.client.createConfiguredHttpClient
+import io.ktor.client.HttpClient
+import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
 /**
@@ -46,42 +49,80 @@ val coreNetworkModule = module {
         KtorImageCdnApi(IMAGE_CDN_API_URL)
     }
     single<StabilityAiEnginesApi> {
-        KtorStabilityAiEnginesApi(STABILITY_AI_API_URL)
+        KtorStabilityAiEnginesApi(httpClient = providerHttpClient(false), baseUrl = STABILITY_AI_API_URL)
     }
     single<StabilityAiGenerationApi> {
-        KtorStabilityAiGenerationApi(STABILITY_AI_API_URL)
+        KtorStabilityAiGenerationApi(
+            httpClient = providerHttpClient(false),
+            baseUrl = STABILITY_AI_API_URL,
+            generationTimeoutProvider = get(),
+        )
     }
     single<OpenAiGenerationApi> {
-        KtorOpenAiGenerationApi(OPEN_AI_API_URL)
+        KtorOpenAiGenerationApi(
+            httpClient = providerHttpClient(),
+            baseUrl = OPEN_AI_API_URL,
+            generationTimeoutProvider = get(),
+        )
     }
     single<HordeGenerationApi> {
-        KtorHordeGenerationApi(HORDE_AI_API_URL)
+        KtorHordeGenerationApi(
+            httpClient = providerHttpClient(),
+            baseUrl = HORDE_AI_API_URL,
+            generationTimeoutProvider = get(),
+        )
     }
     single<HuggingFaceGenerationApi> {
-        KtorHuggingFaceGenerationApi(HUGGING_FACE_API_URL, HUGGING_FACE_INFERENCE_API_URL)
+        KtorHuggingFaceGenerationApi(
+            httpClient = providerHttpClient(false),
+            apiBaseUrl = HUGGING_FACE_API_URL,
+            inferenceBaseUrl = HUGGING_FACE_INFERENCE_API_URL,
+            generationTimeoutProvider = get(),
+        )
     }
     single<HuggingFaceModelsApi> {
-        KtorHuggingFaceModelsApi(HUGGING_FACE_API_URL)
+        KtorHuggingFaceModelsApi(httpClient = providerHttpClient(), apiBaseUrl = HUGGING_FACE_API_URL)
     }
     single<FalAiGenerationApi> {
-        KtorFalAiGenerationApi(FAL_AI_API_URL, FAL_AI_QUEUE_API_URL)
+        KtorFalAiGenerationApi(
+            httpClient = providerHttpClient(),
+            apiBaseUrl = FAL_AI_API_URL,
+            queueBaseUrl = FAL_AI_QUEUE_API_URL,
+            generationTimeoutProvider = get(),
+        )
     }
     single<ArliAiGenerationApi> {
-        KtorArliAiGenerationApi(ARLI_AI_API_URL)
+        KtorArliAiGenerationApi(
+            httpClient = providerHttpClient(),
+            baseUrl = ARLI_AI_API_URL,
+            generationTimeoutProvider = get(),
+        )
     }
     single<SwarmUiModelsApi> {
-        KtorSwarmUiModelsApi()
+        KtorSwarmUiModelsApi(httpClient = providerHttpClient())
     }
     single<SwarmUiGenerationApi> {
-        KtorSwarmUiGenerationApi()
+        KtorSwarmUiGenerationApi(httpClient = providerHttpClient(), generationTimeoutProvider = get())
     }
     single<Automatic1111MetadataApi> {
-        KtorAutomatic1111MetadataApi()
+        KtorAutomatic1111MetadataApi(httpClient = providerHttpClient())
     }
     single<Automatic1111GenerationApi> {
-        KtorAutomatic1111GenerationApi()
+        KtorAutomatic1111GenerationApi(httpClient = providerHttpClient(), generationTimeoutProvider = get())
     }
 }
+
+/**
+ * Builds a provider client with live connection preferences for all of its HTTP calls.
+ *
+ * @param installContentNegotiation Whether the provider uses Ktor JSON conversion rather than raw bodies.
+ * @author Dmitriy Moroz
+ */
+private fun Scope.providerHttpClient(installContentNegotiation: Boolean = true): HttpClient =
+    createConfiguredHttpClient(
+        installContentNegotiation = installContentNegotiation,
+        connectionTimeoutProvider = get(),
+    )
 
 /**
  * Exposes the `STABLE_DIFFUSION_APP_API_URL` value used by the SDAI network layer.

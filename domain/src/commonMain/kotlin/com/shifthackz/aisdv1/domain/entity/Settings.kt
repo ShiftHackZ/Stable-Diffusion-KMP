@@ -9,6 +9,18 @@ import com.shifthackz.aisdv1.core.common.schedulers.SchedulersToken
  */
 data class Settings(
     /**
+     * Time allowed to establish network provider connections; defaults to 120 seconds.
+     *
+     * @author Dmitriy Moroz
+     */
+    val connectionTimeout: NetworkTimeout = NetworkTimeout.TWO_MINUTES,
+    /**
+     * Request and socket waiting limit for network image generation.
+     *
+     * @author Dmitriy Moroz
+     */
+    val generationRequestTimeout: NetworkTimeout = NetworkTimeout.TWO_MINUTES,
+    /**
      * Exposes the `serverUrl` value used by the SDAI domain layer.
      *
      * @author Dmitriy Moroz

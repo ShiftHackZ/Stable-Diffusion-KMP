@@ -25,6 +25,12 @@ interface SettingsPlatformActions : StorageUsageByteMapper {
      */
     val supportsBackgroundGeneration: Boolean
     /**
+     * True when the networking engine supports the connection timeout setting shown in Settings.
+     *
+     * @author Dmitriy Moroz
+     */
+    val supportsConnectionTimeout: Boolean
+    /**
      * Localization key for the warning shown under the background generation toggle.
      *
      * @author Dmitriy Moroz
@@ -117,6 +123,7 @@ interface SettingsPlatformActions : StorageUsageByteMapper {
 object NoOpSettingsPlatformActions : SettingsPlatformActions {
     override val requiresStoragePermissionForMediaStore = false
     override val supportsBackgroundGeneration = false
+    override val supportsConnectionTimeout = false
     override val backgroundGenerationWarningKey = "settings_item_background_generation_warning"
 
     override suspend fun requestStoragePermission(): Boolean = true

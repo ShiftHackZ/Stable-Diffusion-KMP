@@ -1,6 +1,8 @@
 package com.shifthackz.aisdv1.network.api.swarmui
 
 import com.shifthackz.aisdv1.network.auth.BasicHttpAuthorization
+import com.shifthackz.aisdv1.network.client.GenerationTimeoutProvider
+import com.shifthackz.aisdv1.network.client.applyGenerationTimeout
 import com.shifthackz.aisdv1.network.client.createConfiguredHttpClient
 import com.shifthackz.aisdv1.network.client.NetworkUsageCategory
 import com.shifthackz.aisdv1.network.client.setTrackedJsonBody
@@ -24,6 +26,7 @@ import io.ktor.http.takeFrom
  * Ktor implementation of SwarmUI generation calls with counted inference traffic.
  *
  * @param httpClient Configured Ktor client used to send provider requests.
+ * @param generationTimeoutProvider Reads the current waiting limit for each image generation call.
  *
  * @author Dmitriy Moroz
  */
@@ -34,6 +37,7 @@ class KtorSwarmUiGenerationApi(
      * @author Dmitriy Moroz
      */
     private val httpClient: HttpClient = createConfiguredHttpClient(),
+    private val generationTimeoutProvider: GenerationTimeoutProvider = GenerationTimeoutProvider.Default,
 ) : SwarmUiGenerationApi {
 
     override suspend fun generate(
@@ -45,6 +49,7 @@ class KtorSwarmUiGenerationApi(
             .post {
                 url.takeFrom(baseUrl)
                 url.appendPathSegments(PATH_API, PATH_GENERATE)
+                applyGenerationTimeout(generationTimeoutProvider)
                 applyAuthorization(authorization)
                 setTrackedJsonBody(NetworkUsageCategory.INFERENCE, request)
             }
@@ -57,6 +62,7 @@ class KtorSwarmUiGenerationApi(
     ): ByteArray = httpClient
         .get {
             this.url.takeFrom(url)
+            applyGenerationTimeout(generationTimeoutProvider)
             trackUsage(NetworkUsageCategory.INFERENCE)
             applyAuthorization(authorization)
         }

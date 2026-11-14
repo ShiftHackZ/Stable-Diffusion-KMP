@@ -1,6 +1,8 @@
 package com.shifthackz.aisdv1.network.api.horde
 
 import com.shifthackz.aisdv1.network.client.createConfiguredHttpClient
+import com.shifthackz.aisdv1.network.client.GenerationTimeoutProvider
+import com.shifthackz.aisdv1.network.client.applyGenerationTimeout
 import com.shifthackz.aisdv1.network.client.NetworkUsageCategory
 import com.shifthackz.aisdv1.network.client.setTrackedJsonBody
 import com.shifthackz.aisdv1.network.client.trackUsage
@@ -24,6 +26,7 @@ import io.ktor.http.takeFrom
  * Ktor implementation of Horde generation, status polling, and image download calls.
  *
  * @param httpClient Configured Ktor client used to send provider requests.
+ * @param generationTimeoutProvider Reads the current waiting limit for each generation request.
  * @param baseUrl Horde API base URL.
  *
  * @author Dmitriy Moroz
@@ -41,17 +44,23 @@ class KtorHordeGenerationApi(
      * @author Dmitriy Moroz
      */
     private val baseUrl: String,
+    private val generationTimeoutProvider: GenerationTimeoutProvider = GenerationTimeoutProvider.Default,
 ) : HordeGenerationApi {
 
     /**
      * Creates a new SDAI component instance.
      *
      * @param baseUrl base url value consumed by the API.
+     * @param generationTimeoutProvider Source of the current generation waiting limit.
      * @author Dmitriy Moroz
      */
-    constructor(baseUrl: String) : this(
+    constructor(
+        baseUrl: String,
+        generationTimeoutProvider: GenerationTimeoutProvider = GenerationTimeoutProvider.Default,
+    ) : this(
         httpClient = createConfiguredHttpClient(),
         baseUrl = baseUrl,
+        generationTimeoutProvider = generationTimeoutProvider,
     )
 
     /**
@@ -69,6 +78,7 @@ class KtorHordeGenerationApi(
         .post {
             url.takeFrom(baseUrl)
             url.appendPathSegments(PATH_API, PATH_VERSION, PATH_GENERATE, PATH_ASYNC)
+            applyGenerationTimeout(generationTimeoutProvider)
             hordeApiKey(apiKey)
             setTrackedJsonBody(NetworkUsageCategory.INFERENCE, request)
         }
@@ -89,6 +99,7 @@ class KtorHordeGenerationApi(
         .get {
             url.takeFrom(baseUrl)
             url.appendPathSegments(PATH_API, PATH_VERSION, PATH_GENERATE, PATH_CHECK, id)
+            applyGenerationTimeout(generationTimeoutProvider)
             trackUsage(NetworkUsageCategory.INFERENCE)
             hordeApiKey(apiKey)
         }
@@ -109,6 +120,7 @@ class KtorHordeGenerationApi(
         .get {
             url.takeFrom(baseUrl)
             url.appendPathSegments(PATH_API, PATH_VERSION, PATH_GENERATE, PATH_STATUS, id)
+            applyGenerationTimeout(generationTimeoutProvider)
             trackUsage(NetworkUsageCategory.INFERENCE)
             hordeApiKey(apiKey)
         }
@@ -158,6 +170,7 @@ class KtorHordeGenerationApi(
     override suspend fun downloadImage(url: String): ByteArray = httpClient
         .get {
             this.url.takeFrom(url)
+            applyGenerationTimeout(generationTimeoutProvider)
             trackUsage(NetworkUsageCategory.INFERENCE)
         }
         .trackedByteArrayBody(NetworkUsageCategory.INFERENCE)
